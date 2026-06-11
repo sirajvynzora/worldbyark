@@ -15,7 +15,7 @@
 <style>
     /* ── CINEMATIC HERO ── */
     #ark-hero-scroll {
-        height: 500vh;
+        height: 1200vh;
         position: relative;
     }
     #ark-hero-sticky {
@@ -1672,10 +1672,11 @@
             const ctx = canvas.getContext('2d');
 
 
-            const totalFrames = 161;
-             const frameFolder = window.innerWidth <= 768
-            ? "{% static 'assets/frames2/' %}"
-            : "{% static 'assets/frames/' %}";
+            const folder1 = "{% static 'assets/frames/' %}";
+            const folder2 = "{% static 'assets/frames2/' %}";
+            const framesInFolder1 = 240;
+            const framesInFolder2 = 201;
+            const totalFrames = framesInFolder1 + framesInFolder2;
             const images = [];
             let loadedCount = 0;
 
@@ -1684,9 +1685,18 @@
             }
 
             function preload() {
-                for (let i = 1; i <= totalFrames; i++) {
+                for (let i = 1; i <= framesInFolder1; i++) {
                     const img = new Image();
-                    img.src = frameFolder + 'ezgif-frame-' + padded(i) + '.png';
+                    img.src = folder1 + 'ezgif-frame-' + padded(i) + '.png';
+                    img.onload = img.onerror = function () {
+                        loadedCount++;
+                        if (loadedCount === totalFrames) drawFrame(0);
+                    };
+                    images.push(img);
+                }
+                for (let i = 1; i <= framesInFolder2; i++) {
+                    const img = new Image();
+                    img.src = folder2 + 'ezgif-frame-' + padded(i) + '.png';
                     img.onload = img.onerror = function () {
                         loadedCount++;
                         if (loadedCount === totalFrames) drawFrame(0);
@@ -1727,11 +1737,6 @@
                 drawFrame(Math.round(progress * (totalFrames - 1)));
             }
 
-            function getActiveFolder() {
-            return window.innerWidth <= 768
-                ? "{% static 'assets/frames2/' %}"
-                : "{% static 'assets/frames/' %}";
-            }
 
             function getProgress() {
                 const section = document.getElementById('ark-hero-scroll');
