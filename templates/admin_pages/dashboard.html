@@ -1,7 +1,7 @@
 {% extends "admin_pages/base.html" %}
 {% load static %}
 
-{% block title %}Admin Dashboard | Koodaram{% endblock %}
+{% block title %}Admin Dashboard | WorldByArk{% endblock %}
 
 {% block content %}
 
@@ -25,20 +25,20 @@
 
         <div class="stat-card stat-blue">
             <div class="stat-top">
-                <span class="stat-label">Services</span>
-                <div class="stat-icon"><i class="icofont-leaf"></i></div>
+                <span class="stat-label">Gallery Images</span>
+                <div class="stat-icon"><i class="icofont-picture"></i></div>
             </div>
-            <div class="stat-value">{{ stats.total_services }}</div>
-            <div class="stat-footer">Active Categories</div>
+            <div class="stat-value">{{ stats.total_gallery }}</div>
+            <div class="stat-footer">Total Uploaded</div>
         </div>
 
         <div class="stat-card stat-purple">
             <div class="stat-top">
-                <span class="stat-label">Activities</span>
-                <div class="stat-icon"><i class="icofont-hiking"></i></div>
+                <span class="stat-label">Destinations</span>
+                <div class="stat-icon"><i class="icofont-location-pin"></i></div>
             </div>
-            <div class="stat-value">{{ stats.total_activities }}</div>
-            <div class="stat-footer">Total Offerings</div>
+            <div class="stat-value">{{ stats.total_destinations }}</div>
+            <div class="stat-footer">Total Listings</div>
         </div>
 
         <div class="stat-card stat-orange">
@@ -52,8 +52,8 @@
 
         <div class="stat-card stat-primary">
             <div class="stat-top">
-                <span class="stat-label">Glamping Packages</span>
-                <div class="stat-icon"><i class="icofont-tent"></i></div>
+                <span class="stat-label">Tour Packages</span>
+                <div class="stat-icon"><i class="icofont-package"></i></div>
             </div>
             <div class="stat-value">{{ stats.total_packages }}</div>
             <div class="stat-footer">Total Active</div>
@@ -115,7 +115,7 @@
         <div class="data-card">
             <div class="card-header">
                 <span class="card-title">Recent Packages</span>
-                <a href="{% url 'admin_camping_package_list' %}" class="view-all-link">View All →</a>
+                <a href="{% url 'admin_package_list' %}" class="view-all-link">View All →</a>
             </div>
             <ul class="feed-list">
                 {% for package in recent_packages %}
@@ -132,7 +132,7 @@
                     </div>
                 </li>
                 {% empty %}
-                <li class="feed-empty">No camping packages yet.</li>
+                <li class="feed-empty">No tour packages yet.</li>
                 {% endfor %}
             </ul>
         </div>
@@ -143,25 +143,25 @@
 
         <div class="data-card">
             <div class="card-header">
-                <span class="card-title">Recent Activities</span>
-                <a href="{% url 'admin_activity_list' %}" class="view-all-link">View All →</a>
+                <span class="card-title">Recent Destinations</span>
+                <a href="{% url 'admin_destination_list' %}" class="view-all-link">View All →</a>
             </div>
             <ul class="feed-list">
-                {% for activity in recent_activities %}
+                {% for destination in recent_destinations %}
                 <li class="feed-item">
                     <div class="feed-avatar feed-avatar-purple">
-                        <i class="icofont-hiking"></i>
+                        <i class="icofont-location-pin"></i>
                     </div>
                     <div class="feed-content">
-                        <p class="feed-name">{{ activity.title }}</p>
-                        <p class="feed-sub">{{ activity.duration|default:"Duration Unspecified" }}</p>
+                        <p class="feed-name">{{ destination.name }}</p>
+                        <p class="feed-sub">{{ destination.location|default:"Location TBD" }}</p>
                         <p class="feed-meta">
-                            {{ activity.created_at|timesince }} ago
+                            {{ destination.created_at|timesince }} ago
                         </p>
                     </div>
                 </li>
                 {% empty %}
-                <li class="feed-empty">No activities created yet.</li>
+                <li class="feed-empty">No destinations added yet.</li>
                 {% endfor %}
             </ul>
         </div>

@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from .models import Blog, Activity, CampingPackage
+from .models import Blog, TourPackage, Destination
 
 
 class StaticViewSitemap(Sitemap):
@@ -13,14 +13,11 @@ class StaticViewSitemap(Sitemap):
         return [
             "home",
             "about",
-            "trips",
-            "team",
-            "image_gallery",
-            "blog",
-            "activity_list",
-            "camping_packages",
+            "packages",
+            "destinations",
+            "blogs",
+            "gallery",
             "contact",
-            "booking",
         ]
 
     def location(self, item):
@@ -35,26 +32,31 @@ class BlogSitemap(Sitemap):
         return Blog.objects.all()
 
     def location(self, obj):
-        return reverse("blog_single", kwargs={"slug": obj.slug})
+        return reverse("blog_detail", kwargs={"slug": obj.slug})
 
 
-class CampingPackageSitemap(Sitemap):
+class TourPackageSitemap(Sitemap):
     priority = 0.9
     changefreq = "monthly"
 
     def items(self):
-        return CampingPackage.objects.all()
+        return TourPackage.objects.all()
 
     def location(self, obj):
-        return reverse("camping_package_single", kwargs={"slug": obj.slug})
+        return reverse("package_detail", kwargs={"slug": obj.slug})
 
 
-class ActivitySitemap(Sitemap):
+class DestinationSitemap(Sitemap):
     priority = 0.7
     changefreq = "monthly"
 
     def items(self):
-        return Activity.objects.all()
+        return Destination.objects.all()
 
     def location(self, obj):
-        return reverse("activity_single", kwargs={"slug": obj.slug})
+        return reverse("destination_detail", kwargs={"slug": obj.slug})
+
+
+# Aliases for backward compatibility with project urls.py
+CampingPackageSitemap = TourPackageSitemap
+ActivitySitemap = DestinationSitemap

@@ -13,7 +13,7 @@
     <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}Admin Dashboard | Koodaram{% endblock %}</title>
+    <title>{% block title %}Admin Dashboard | WorldByArk{% endblock %}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -1092,17 +1092,17 @@
                     </li>
                     {% endcomment %}
                     <li>
-                        <a href="{% url 'admin_camping_package_list' %}"
-                            class="{% if request.resolver_match.url_name == 'admin_camping_package_list' %}active{% endif %}">
-                            <i class="icofont-quote-left"></i>
-                            Camping Packages
+                        <a href="{% url 'admin_package_list' %}"
+                            class="{% if request.resolver_match.url_name == 'admin_package_list' %}active{% endif %}">
+                            <i class="icofont-package"></i>
+                            Tour Packages
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'admin_activity_list' %}"
-                            class="{% if request.resolver_match.url_name == 'admin_activity_list' %}active{% endif %}">
-                            <i class="icofont-quote-left"></i>
-                            Activities
+                        <a href="{% url 'admin_destination_list' %}"
+                            class="{% if request.resolver_match.url_name == 'admin_destination_list' %}active{% endif %}">
+                            <i class="icofont-location-pin"></i>
+                            Destinations
                         </a>
                     </li>
                     <li
@@ -1164,12 +1164,6 @@
                                     Contact Messages
                                 </a>
                             </li>
-                            <li>
-                                <a href="{% url 'admin_view_bookings' %}"
-                                    class="{% if request.resolver_match.url_name == 'admin_view_bookings' %}active{% endif %}">
-                                    Bookings
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
@@ -1186,7 +1180,7 @@
             <div class="dashboard-banner">
                 <div class="banner-content">
                     <h1 class="banner-title">Welcome back! Admin</h1>
-                    <p class="banner-subtitle">Manage Koodaram content and enquiries.</p>
+                    <p class="banner-subtitle">Manage WorldByArk content and enquiries.</p>
                 </div>
             </div>
 
