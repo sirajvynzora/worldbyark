@@ -40,6 +40,14 @@ class TourPackage(OptimizedImageModel):
     def __str__(self):
         return self.name
 
+    @property
+    def highlights_list(self):
+        return [h.strip() for h in self.highlights.splitlines() if h.strip()]
+
+    @property
+    def inclusions_list(self):
+        return [i.strip() for i in self.inclusions.splitlines() if i.strip()]
+
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = slugify(self.name)

@@ -55,7 +55,11 @@ def destinations(request):
     paginator = Paginator(destinations_qs, 9)
     page_number = request.GET.get("page")
     destinations_page = paginator.get_page(page_number)
-    return render(request, 'frontend/destinations.html', {"destinations": destinations_page})
+    packages_qs = TourPackage.objects.all().order_by("-created_at")[:8]
+    return render(request, 'frontend/destinations.html', {
+        "destinations": destinations_page,
+        "packages": packages_qs,
+    })
 
 
 def destination_detail(request, slug):
@@ -72,7 +76,11 @@ def blogs(request):
     paginator = Paginator(blogs_qs, 9)
     page_number = request.GET.get("page")
     blogs_page = paginator.get_page(page_number)
-    return render(request, 'frontend/blogs.html', {"blogs": blogs_page})
+    return render(request, 'frontend/blogs.html', {
+        "blogs": blogs_page,
+        "recent_blogs": Blog.objects.order_by("-created_at")[:3],
+        "latest_blogs": Blog.objects.order_by("-created_at")[:6],
+    })
 
 
 def blog_detail(request, slug):

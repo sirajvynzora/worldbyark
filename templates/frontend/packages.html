@@ -52,16 +52,17 @@
 
                     <div class="trv-popular-tours-row">
                         <div class="row">
-                            <!--BOX-1-->
+                            {% for package in packages %}
                             <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 m-b30">
                                 <div class="trv-popular-tour-st2">
                                     <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic1.jpg' %}" alt="Image"></a>
+                                        <a href="{% url 'package_detail' package.slug %}">
+                                            <img src="{{ package.main_image.url }}" alt="{{ package.name }}">
+                                        </a>
                                         <div class="trv-tour-title">
                                             <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    Kenya
+                                                <a href="{% url 'package_detail' package.slug %}">
+                                                    <i class="bi bi-geo-alt"></i> {{ package.name }}
                                                 </a>
                                             </h3>
                                         </div>
@@ -70,28 +71,25 @@
                                         <div class="trv-content-head-section">
                                             <div class="trv-tour-duration">
                                                 <i class="bi bi-calendar2-week"></i>
-                                                <span>8 Days / 7 Nights</span>
+                                                <span>{{ package.duration }}</span>
                                             </div>
                                             <div class="trv-tour-price">
-                                                <span class="price">₹2.2L</span>
-                                                <span class="price-duration"></span>
+                                                <span class="price">{{ package.price_from }}</span>
                                             </div>
                                         </div>
                                         <div class="trv-content-bottom-section">
                                             <div class="trv-tour-title2">
                                                 <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Kenya
+                                                    <a href="{% url 'package_detail' package.slug %}">
+                                                        <i class="bi bi-geo-alt"></i> {{ package.name }}
                                                     </a>
                                                 </h3>
                                             </div>
                                             <div class="trv-content-bottom-column">
                                                 <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
+                                                    <a href="{% url 'package_detail' package.slug %}" class="site-button outline white-txt">Book Now</a>
                                                 </div>
                                                 <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
                                                     <div class="trv-review-rating">
                                                         <i class="bi bi-star-fill"></i>
                                                         <i class="bi bi-star-fill"></i>
@@ -101,302 +99,27 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
                                         </div>
-                                        
                                     </div>
-                                    
                                 </div>
                             </div>
-                            <!--BOX-2-->
-                            <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 m-b30">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic2.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    Switzerland
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>5 Days / 4 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">₹1.25L</span>
-                                                <span class="price-duration"></span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                    Switzerland
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-3-->
-                            <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 m-b30">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic3.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                Greece
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>7 Days / 6 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">₹1.8L</span>
-                                                <span class="price-duration"></span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Greece
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-4-->
-                            <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 m-b30">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic4.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    Maldives
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 Days / 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">₹95K</span>
-                                                <span class="price-duration"></span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Maldives
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-5-->
-                            <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 m-b30">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic5.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    Australia
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>9 Days / 8 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">₹3.5L</span>
-                                                <span class="price-duration"></span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Australia
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-6-->
-                            <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 m-b30">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic6.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    Egypt
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>6 Days / 5 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">₹1.4L</span>
-                                                <span class="price-duration"></span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Egypt
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
+                            {% empty %}
+                            <p class="text-muted">No packages yet.</p>
+                            {% endfor %}
                         </div>
+                        {% if packages.has_other_pages %}
                         <ul class="custom-pagination clearfix">
-                            <li class="prev"><a href="#0"><span class="bi bi-chevron-left"></span></a></li>
-                            <li><a href="#0">1</a></li>
-                            <li><a href="#0">2</a></li>
-                            <li><a href="#0">3</a></li>
-                            <li><a href="#0">...</a></li>
-                            <li class="next"><a href="#0"><span class="bi bi-chevron-right"></span></a></li>
+                            {% if packages.has_previous %}
+                            <li class="prev"><a href="?page={{ packages.previous_page_number }}"><span class="bi bi-chevron-left"></span></a></li>
+                            {% endif %}
+                            {% for num in packages.paginator.page_range %}
+                            <li {% if packages.number == num %}class="active"{% endif %}><a href="?page={{ num }}">{{ num }}</a></li>
+                            {% endfor %}
+                            {% if packages.has_next %}
+                            <li class="next"><a href="?page={{ packages.next_page_number }}"><span class="bi bi-chevron-right"></span></a></li>
+                            {% endif %}
                         </ul>
+                        {% endif %}
                     </div>
                     
                 </div> 

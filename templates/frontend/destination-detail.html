@@ -38,38 +38,13 @@
         <!-- SECTION START -->
         <div class="section-full  p-t120 p-b90">
             <div class="trv-detail-mid-wrap">
-                    <!--Top SLider-->
+                    <!--Top Slider-->
                     <div class="trv-detail-slider">
                         <div class="swiper trv_d-slider">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="trv_d-slider-media">
-                                        <img src="{% static 'assets/images/detail-slider/slide1/pic1.jpg' %}" alt="Image">   
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="trv_d-slider-media">
-                                        <img src="{% static 'assets/images/detail-slider/slide1/pic2.jpg' %}" alt="Image">   
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="trv_d-slider-media">
-                                        <img src="{% static 'assets/images/detail-slider/slide1/pic3.jpg' %}" alt="Image">   
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="trv_d-slider-media">
-                                        <img src="{% static 'assets/images/detail-slider/slide1/pic4.jpg' %}" alt="Image">   
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="trv_d-slider-media">
-                                        <img src="{% static 'assets/images/detail-slider/slide1/pic5.jpg' %}" alt="Image">   
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="trv_d-slider-media">
-                                        <img src="{% static 'assets/images/detail-slider/slide1/pic6.jpg' %}" alt="Image">   
+                                        <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
                                     </div>
                                 </div>
                             </div>
@@ -78,13 +53,9 @@
                     </div>
                     <!--Info Start-->
                     <div class="trv-detail-bx-wrap">
-                        <h3 class="trv-inner-title-lg">Tokyo City Japan Overview</h3>
+                        <h3 class="trv-inner-title-lg">{{ destination.name }} Overview</h3>
                         <div class="trv-inr-para">
-                        <p>Tokyo, the capital city of Japan, is a dynamic metropolis that blends traditional culture with cutting-edge modernity. As one of the most populous cities in the world, Tokyo is known for its towering skyscrapers, bustling streets, and vibrant neighborhoods such as Shibuya and Shinjuku. The city offers a rich cultural experience, from historic temples like Senso-ji in Asakusa to the serene beauty of the Imperial Palace gardens. Tokyo is also a global hub for technology, fashion, and cuisine, offering everything from Michelin-starred restaurants to local ramen shops. With its efficient public transportation, safety, and endless attractions, Tokyo captivates visitors from around the world.</p>
-
-                        <p>Beyond its fast-paced urban life, Tokyo is a city where tradition and innovation exist side by side. In districts like Ginza, luxury shopping and high-end dining meet timeless Japanese hospitality, while areas like Akihabara and Harajuku showcase Japan's pop culture, gaming, and fashion subcultures. Tokyo also plays a central role in Japan's economy and politics, housing major corporations, government buildings, and global financial institutions.</p>
-
-                        <p>Nature and calm are never far away in Tokyo. Despite its modern skyline, the city is dotted with peaceful parks and green spaces such as Ueno Park, Yoyogi Park, and the Meiji Shrine forest. In spring, cherry blossoms (sakura) transform the city into a breathtaking landscape of pink, drawing crowds for traditional hanami (flower-viewing) picnics. Throughout the year, Tokyo hosts cultural festivals, sumo tournaments, and seasonal events that reflect Japan's deep-rooted customs.</p>
+                            {{ destination.description|linebreaks }}
                         </div>
 
                         <h4 class="trv-inner-title-sm">Destinations Features</h4>
@@ -196,248 +167,38 @@
                             </div>
                         </div>
 
-                        <h4 class="trv-inner-title-sm">Our Top Destinations</h4>
-
+                        <h4 class="trv-inner-title-sm">Related Destinations</h4>
                         <div class="row m-b10">
+                            {% for rel in related_destinations %}
                             <div class="col-lg-4 col-md-6 m-b30">
                                 <div class="trv-popular-tour-st3">
                                     <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style2/pic1.jpg' %}" alt="Image"></a>
+                                        <a href="{% url 'destination_detail' rel.slug %}">
+                                            <img src="{{ rel.image.url }}" alt="{{ rel.name }}">
+                                        </a>
                                     </div>
                                     <div class="trv-content">
                                         <h3 class="trv-title">
-                                            <a href="package-detail.html">
-                                                Bali, Indonesia
-                                            </a>
+                                            <a href="{% url 'destination_detail' rel.slug %}">{{ rel.name }}</a>
                                         </h3>
                                         <div class="trv-content-head-section">
                                             <div class="trv-tour-rating">
-                                                <span class="trv-tour-review-count">(4.8)</span>
                                                 <div class="trv-review-rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                                                     <i class="bi bi-star-fill"></i>
                                                 </div>
-                                            </div>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 days</span>
                                             </div>
                                         </div>
                                         <div class="trv-content-bottom-section">
                                             <div class="trv-book">
-                                                <a href="package-detail.html" class="site-button outline">Book Now</a>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per day</span>
+                                                <a href="{% url 'destination_detail' rel.slug %}" class="site-button outline">Explore</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-lg-4 col-md-6 m-b30">
-                                <div class="trv-popular-tour-st3">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style2/pic2.jpg' %}" alt="Image"></a>
-                                    </div>
-                                    <div class="trv-content">
-                                        <h3 class="trv-title">
-                                            <a href="package-detail.html">
-                                                South Korea
-                                            </a>
-                                        </h3>
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-rating">
-                                                <span class="trv-tour-review-count">(4.8)</span>
-                                                <div class="trv-review-rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 days</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-book">
-                                                <a href="package-detail.html" class="site-button outline">Book Now</a>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per day</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 m-b30">
-                                <div class="trv-popular-tour-st3">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style2/pic3.jpg' %}" alt="Image"></a>
-                                    </div>
-                                    <div class="trv-content">
-                                        <h3 class="trv-title">
-                                            <a href="package-detail.html">
-                                                Tokyo City japan
-                                            </a>
-                                        </h3>
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-rating">
-                                                <span class="trv-tour-review-count">(4.8)</span>
-                                                <div class="trv-review-rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 days</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-book">
-                                                <a href="package-detail.html" class="site-button outline">Book Now</a>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per day</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 m-b30">
-                                <div class="trv-popular-tour-st3">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style2/pic4.jpg' %}" alt="Image"></a>
-                                    </div>
-                                    <div class="trv-content">
-                                        <h3 class="trv-title">
-                                            <a href="package-detail.html">
-                                                Plateau in Slovenia
-                                            </a>
-                                        </h3>
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-rating">
-                                                <span class="trv-tour-review-count">(4.8)</span>
-                                                <div class="trv-review-rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 days</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-book">
-                                                <a href="package-detail.html" class="site-button outline">Book Now</a>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per day</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 m-b30">
-                                <div class="trv-popular-tour-st3">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style2/pic5.jpg' %}" alt="Image"></a>
-                                    </div>
-                                    <div class="trv-content">
-                                        <h3 class="trv-title">
-                                            <a href="package-detail.html">
-                                                Spain
-                                            </a>
-                                        </h3>
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-rating">
-                                                <span class="trv-tour-review-count">(4.8)</span>
-                                                <div class="trv-review-rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 days</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-book">
-                                                <a href="package-detail.html" class="site-button outline">Book Now</a>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per day</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 m-b30">
-                                <div class="trv-popular-tour-st3">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style2/pic6.jpg' %}" alt="Image"></a>
-                                    </div>
-                                    <div class="trv-content">
-                                        <h3 class="trv-title">
-                                            <a href="package-detail.html">
-                                                Mauritius
-                                            </a>
-                                        </h3>
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-rating">
-                                                <span class="trv-tour-review-count">(4.8)</span>
-                                                <div class="trv-review-rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 days</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-book">
-                                                <a href="package-detail.html" class="site-button outline">Book Now</a>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per day</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
 
                         <div class="twm-post-com-wrap">

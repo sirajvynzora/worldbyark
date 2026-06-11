@@ -56,44 +56,7 @@
                                     </ul>
                                     <h3 class="trv-inner-title-lg">{{ blog.title }}</h3>
                                     <div class="trv-inr-para">
-                                    <p>{{ blog.description }}</p>
-
-                                    <p>Here’s a curated overview of top travel destinations and what makes each one special, perfect for your next adventure or web project inspiration: Tropical beaches, spiritual retreats, water sports Futuristic tech, ancient temples, vibrant culture Desert landscapes, forts, palaces, vibrant festivals Table Mountain, vineyards, coastal drives Gaudí architecture, beaches, tapas Skyscrapers, desert safaris, luxury shopping Palaces, K-pop culture, street food Fjords, hiking trails, Maori culture Alps, lakes, scenic trains.</p>
-
-                                    <blockquote>
-                                        <div class="trv-bq-content">
-                                            <div class="quote-left">
-                                            <i class="bi bi-quote"></i>
-                                        </div>
-                                        Why do you go away? So that you can come back. So that you can see the  place  you came from with new eyes and extra colors. And the people there see you differently, too. Coming back to where you started is not the  same as never leaving.
-                                        </div>
-
-                                        <div class="trv-bq-atr-name">
-                                            Terry Pratchet
-                                        </div>
-                                    </blockquote>
-
-                                    <p>Choosing a destination can be exciting but also a bit overwhelming with so many amazing places out there! Let's narrow it Travlla is a multi-award-winning strategy and content creation agency that specializes in travel arketing. Morbi consequat risus consequat, porttitor orci sit amet, iaculis nisl. Integer quis sapien nec elit ultrices euismon sit amet id lacus. Sed a imperdiet erat. Duis eu est dignissim lacus dictum</p>
-
-                                    <div class="trv-blog-d-column-wrap">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 m-b30">
-                                                <div class="trv-blog-d-column-bx">
-                                                    <img src="{% static 'assets/images/trv-blog/blog-detail/bx-pic1.jpg' %}" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 m-b30">
-                                                <div class="trv-blog-d-column-bx">
-                                                    <img src="{% static 'assets/images/trv-blog/blog-detail/bx-pic2.jpg' %}" alt="#">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <h4 class="trv-inner-title-sm">International Tourists Arriving in Spain, Portugal, Greece, Italy, France Rose at Huge Rate, Now Over tourism…</h4>
-
-                                    <p>Choosing a destination can be exciting but also a bit overwhelming with so many amazing places out there! Let's narrow it Travlla is a multi-award-winning strategy and content creation agency that specializes in travel arketing. Morbi consequat risus consequat, porttitor orci sit amet, iaculis nisl. Integer quis sapien nec elit ultrices euismon sit amet id lacus. Sed a imperdiet erat. Duis eu est dignissim lacus dictum</p>
-                                    
+                                        {{ blog.description|linebreaks }}
                                     </div>
 
                                     <h4 class="trv-inner-title-sm">What precautions should we take while travelling?</h4>
@@ -261,39 +224,19 @@
 
                                 <!-- RECENT POSTS -->
                                 <div class="widget trv-recent-posts">
-                                    <div class="m-b20">
-                                        <h4 class="widget-title">Recent Posts</h4>
-                                    </div>
+                                    <div class="m-b20"><h4 class="widget-title">Recent Posts</h4></div>
                                     <div class="trv-recent-posts-bx">
+                                        {% for recent in recent_blogs %}
                                         <div class="trv-rc-po-st1">
-                                            <div class="post-date"><span>14</span>June</div>                                        
+                                            <div class="post-date"><span>{{ recent.created_at|date:"d" }}</span>{{ recent.created_at|date:"M" }}</div>
                                             <div class="trv-post-info">
-                                                <div class="post-category">Aidan Butler</div>
-                                                <div class="trv-post-title ">
-                                                    <h5 class="post-title"><a href="{% url 'blogs' %}">Resources for your first trip to overseas vacation</a></h5>
+                                                <div class="trv-post-title">
+                                                    <h5 class="post-title"><a href="{% url 'blog_detail' recent.slug %}">{{ recent.title }}</a></h5>
                                                 </div>
-                                            </div>                                
+                                            </div>
                                         </div>
-                                        <div class="trv-rc-po-st1">
-                                            <div class="post-date"><span>20</span>June</div>                                        
-                                            <div class="trv-post-info">
-                                                <div class="post-category">Ricardo Bell</div>
-                                                <div class="trv-post-title ">
-                                                    <h5 class="post-title"><a href="{% url 'blogs' %}">How to get acquainted with natives in a strange land</a></h5>
-                                                </div>
-                                            </div>                                
-                                        </div>
-                                        <div class="trv-rc-po-st1">
-                                            <div class="post-date"><span>24</span>June</div>                                        
-                                            <div class="trv-post-info">
-                                                <div class="post-category">Martin Hicks</div>
-                                                <div class="trv-post-title ">
-                                                    <h5 class="post-title"><a href="{% url 'blogs' %}">Step by step guide to planning your ideal holiday</a></h5>
-                                                </div>
-                                            </div>                                
-                                        </div>
+                                        {% endfor %}
                                     </div>
-                                    
                                 </div>
 
                                 <!-- Top Destinations -->   

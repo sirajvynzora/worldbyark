@@ -60,52 +60,26 @@
                                                 <i class="bi bi-star-fill"></i>
                                             </div>
                                         </div>
-                                        <h3 class="trv-inner-title-lg">The Most Beautiful Destination , Bali , Indonesia</h3>
+                                        <h3 class="trv-inner-title-lg">{{ package.name }}</h3>
+
+                                        <span class="trv-packege-esti-time">{{ package.duration }}</span>
+
                                         
 
-                                        <span class="trv-packege-esti-time">2N London| 3N Paris | 1N Netherlands | 1N Germany | 3N Central Switzerland | 1N Innsbruck | 1N Padova | 1N Tuscany | 1N Rome</span>
-
-                                        
-
-                                        <!--Top SLider-->
+                                        <!--Top Slider-->
                                         <div class="trv-detail-slider">
                                             <div class="swiper trv_d-slider">
                                                 <div class="swiper-wrapper">
                                                     <div class="swiper-slide">
                                                         <div class="trv_d-slider-media">
-                                                            <img src="{% static 'assets/images/detail-slider/slide2/pic1.jpg' %}" alt="Image">   
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <div class="trv_d-slider-media">
-                                                            <img src="{% static 'assets/images/detail-slider/slide2/pic2.jpg' %}" alt="Image">   
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <div class="trv_d-slider-media">
-                                                            <img src="{% static 'assets/images/detail-slider/slide2/pic3.jpg' %}" alt="Image">   
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <div class="trv_d-slider-media">
-                                                            <img src="{% static 'assets/images/detail-slider/slide2/pic4.jpg' %}" alt="Image">   
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <div class="trv_d-slider-media">
-                                                            <img src="{% static 'assets/images/detail-slider/slide2/pic5.jpg' %}" alt="Image">   
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <div class="trv_d-slider-media">
-                                                            <img src="{% static 'assets/images/detail-slider/slide2/pic6.jpg' %}" alt="Image">   
+                                                            <img src="{{ package.main_image.url }}" alt="{{ package.name }}">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="swiper-pagination"></div>
                                             </div>
                                         </div>
-                                        <!--Top SLider End-->
+                                        <!--Top Slider End-->
 
                                         <!-- Navigation -->
                                         <nav class="navbar-one">
@@ -119,56 +93,16 @@
                                         <section id="overview">
 
                                             <h3 class="trv-inner-title-sm">Package Overview</h3>
-                                        
-                                            <p>Bali, Indonesia is a volcanic island located just east of Java and west of Lombok, positioned about 8 degrees south of the equator. Its geography is defined by a rugged central mountain range dominated by active volcanoes such as Mount Agung and Mount Batur, surrounded by lush rainforests, river valleys, and terraced rice fields.</p>
+                                            {{ package.description|linebreaks }}
 
+                                            {% if package.highlights_list %}
+                                            <h3 class="trv-inner-title-sm">Highlights</h3>
                                             <ul class="trv-checklist-st1">
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Guided tours in 6 major cities London Paris Vaduz Florence Rome and the Vatican City.
-                                                </li>
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Unforgettable 15-day journey through 10 European countries.
-                                                </li>
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Professional and knowledgeable Tour Manager throughout the tour.
-                                                </li>
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Comfortable 4-star accommodations and daily buffet breakfast.
-                                                </li>
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Delectable Indian and local cuisine options including daily mineral water.
-                                                </li>
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Driver tips included.
-                                                </li>
+                                                {% for highlight in package.highlights_list %}
+                                                <li><i class="bi bi-check-circle-fill"></i>{{ highlight }}</li>
+                                                {% endfor %}
                                             </ul>
-
-                                            <h3 class="trv-inner-title-sm">Additional Easemytrip Delights</h3>
-
-                                            <ul class="trv-checklist-st1">
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Take home souvenirs from Holland and enjoy driver tips included.
-                                                </li>
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Savor a glass of Champagne in France Black Forest Cake in Germany and Chocolate Milkshake in Switzerland.
-                                                </li>
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Indulge in a Pizza and Pasta meal in Pisa Gelato Ice cream in Rome and Masala tea and hotel dinners in select cities.
-                                                </li>
-                                                <li>
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                    Join us for a value-packed European adventure filled with breathtaking sights delightful culinary experiences and treasured memories.
-                                                </li>
-                                            </ul>
+                                            {% endif %}
 
                                         </section>
 
@@ -429,34 +363,14 @@
                                                     <div class="col-xl-6 col-lg-12 col-md-12 trv-checklist-st2-mini-l">
                                                         <h3 class="trv-inner-title-sm">Inclusions</h3>
                                                         <ul class="trv-checklist-st2-mini">
+                                                            {% for item in package.inclusions_list %}
                                                             <li>
                                                                 <i class="bi bi-check-circle-fill"></i>
-                                                                02 nights accommodation in Sheraton Skyline / Mercure LHR / Holiday Inn or similar Hotel in London
+                                                                {{ item }}
                                                             </li>
-                                                            <li>
-                                                                <i class="bi bi-check-circle-fill"></i>
-                                                                03 nights accommodation in B&B / Millennium CDG / Hilton CDG or similar hotel in Paris
-                                                            </li>
-                                                            <li>
-                                                                <i class="bi bi-check-circle-fill"></i>
-                                                                01 night accommodation in Novotel / NH / Fletcher or similar hotel in Netherland
-                                                            </li>
-                                                            <li>
-                                                                <i class="bi bi-check-circle-fill"></i>
-                                                                01 night accommodation in Mercure / Rilano / NH or similar hotel Germany
-                                                            </li>
-                                                            <li>
-                                                                <i class="bi bi-check-circle-fill"></i>
-                                                                03 nights accommodation in Radisson / Ramada / Movenpick or similar hotel in Central Switzerland
-                                                            </li>
-                                                            <li>
-                                                                <i class="bi bi-check-circle-fill"></i>
-                                                                01 night accommodation in Alpenkoning / Alphotel or similar hotel Innsbruck / Seefeld
-                                                            </li>
-                                                            <li>
-                                                                <i class="bi bi-check-circle-fill"></i>
-                                                                01 night accommodation in Four Points by Sheraton / Unaway / Capital or similar hotel in Padova / Rovigo
-                                                            </li>
+                                                            {% empty %}
+                                                            <li><i class="bi bi-check-circle-fill"></i>Accommodation included</li>
+                                                            {% endfor %}
                                                         </ul>
                                                     </div>
                                                     <div class="col-xl-6 col-lg-12 col-md-12 trv-checklist-st2-mini-r">
@@ -568,7 +482,7 @@
                                 <div class="trv-tour-single-r-detail">
                                     <span class="trv-star-from">Starting from</span>
                                     <span class="trv-star-amount">
-                                        <s>$99</s> $79
+                                        {{ package.price_from }}
                                     </span>
                                     <span class="trv-star-from-person">/ Person</span>
                                     <div class="trv-emi_text">
@@ -586,11 +500,11 @@
                                             <ul>
                                                 <li>
                                                     <span class="trv-tmi-hlo"><i class="bi bi-clock"></i> Duration : </span>
-                                                    <span class="ng-binding"> 14 Nights &amp; 15 Days </span>
+                                                    <span class="ng-binding">{{ package.duration }}</span>
                                                 </li>
                                                 <li>
-                                                    <span  class="trv-tmi-hlo"><i class="bi bi-geo-alt"></i> Places to Visit :</span>
-                                                    <span class="trv-tmi-hlo-info">1N Germany | 3N Paris | 1N Rome | 1N Netherlands | 2N London | 3N Central Switzerland | 1N Innsbruck | 1N Padova | 1N Tuscany</span>
+                                                    <span class="trv-tmi-hlo"><i class="bi bi-geo-alt"></i> Destination :</span>
+                                                    <span class="trv-tmi-hlo-info">{{ package.name }}</span>
                                                 </li>
                                             </ul>
                                         </div>

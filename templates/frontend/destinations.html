@@ -41,127 +41,39 @@
 
                 <div class="section-content">
                     <div class="row">
+                        {% for destination in destinations %}
                         <div class="col-xl-3 col-lg-4 col-md-6 m-b30">
                             <div class="trv-destination-bx1">
                                 <div class="trv-media">
-                                    <a href="destination-detail.html"><img src="{% static 'assets/images/destinations/style1/pic1.jpg' %}" alt="Image"></a>
+                                    <a href="{% url 'destination_detail' destination.slug %}">
+                                        <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
+                                    </a>
                                 </div>
                                 <div class="trv-content">
-                                    <h3 class="trv-title"><a href="destination-detail.html">Paris</a></h3>
+                                    <h3 class="trv-title"><a href="{% url 'destination_detail' destination.slug %}">{{ destination.name }}</a></h3>
                                 </div>
                                 <div class="trv-on-hover">
                                     <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 m-b30">
-                            <div class="trv-destination-bx1">
-                                <div class="trv-media">
-                                    <a href="destination-detail.html"><img src="{% static 'assets/images/destinations/style1/pic2.jpg' %}" alt="Image"></a>
-                                </div>
-                                <div class="trv-content">
-                                    <h3 class="trv-title"><a href="destination-detail.html">Maldives</a></h3>
-                                </div>
-                                <div class="trv-on-hover">
-                                    <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 m-b30">
-                            <div class="trv-destination-bx1">
-                                <div class="trv-media">
-                                    <a href="destination-detail.html"><img src="{% static 'assets/images/destinations/style1/pic3.jpg' %}" alt="Image"></a>
-                                </div>
-                                <div class="trv-content">
-                                    <h3 class="trv-title"><a href="destination-detail.html">Hong Kong</a></h3>
-                                </div>
-                                <div class="trv-on-hover">
-                                    <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 m-b30">
-                            <div class="trv-destination-bx1">
-                                <div class="trv-media">
-                                    <a href="destination-detail.html"><img src="{% static 'assets/images/destinations/style1/pic4.jpg' %}" alt="Image"></a>
-                                </div>
-                                <div class="trv-content">
-                                    <h3 class="trv-title"><a href="destination-detail.html">Thailand</a></h3>
-                                </div>
-                                <div class="trv-on-hover">
-                                    <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 m-b30">
-                            <div class="trv-destination-bx1">
-                                <div class="trv-media">
-                                    <a href="destination-detail.html"><img src="{% static 'assets/images/destinations/style1/pic5.jpg' %}" alt="Image"></a>
-                                </div>
-                                <div class="trv-content">
-                                    <h3 class="trv-title"><a href="destination-detail.html">Bangkok</a></h3>
-                                </div>
-                                <div class="trv-on-hover">
-                                    <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 m-b30">
-                            <div class="trv-destination-bx1">
-                                <div class="trv-media">
-                                    <a href="destination-detail.html"><img src="{% static 'assets/images/destinations/style1/pic6.jpg' %}" alt="Image"></a>
-                                </div>
-                                <div class="trv-content">
-                                    <h3 class="trv-title"><a href="destination-detail.html">Tokyo</a></h3>
-                                </div>
-                                <div class="trv-on-hover">
-                                    <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 m-b30">
-                            <div class="trv-destination-bx1">
-                                <div class="trv-media">
-                                    <a href="destination-detail.html"><img src="{% static 'assets/images/destinations/style1/pic7.jpg' %}" alt="Image"></a>
-                                </div>
-                                <div class="trv-content">
-                                    <h3 class="trv-title"><a href="destination-detail.html">Spain</a></h3>
-                                </div>
-                                <div class="trv-on-hover">
-                                    <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 m-b30">
-                            <div class="trv-destination-bx1">
-                                <div class="trv-media">
-                                    <a href="destination-detail.html"><img src="{% static 'assets/images/destinations/style1/pic8.jpg' %}" alt="Image"></a>
-                                </div>
-                                <div class="trv-content">
-                                    <h3 class="trv-title"><a href="destination-detail.html">California</a></h3>
-                                </div>
-                                <div class="trv-on-hover">
-                                    <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                </div>
-                            </div>
-                        </div>
-
+                        {% empty %}
+                        <p class="text-muted">No destinations yet.</p>
+                        {% endfor %}
                     </div>
+                    {% if destinations.has_other_pages %}
                     <ul class="custom-pagination clearfix">
-                        <li class="prev"><a href="#0"><span class="bi bi-chevron-left"></span></a></li>
-                        <li><a href="#0">1</a></li>
-                        <li><a href="#0">2</a></li>
-                        <li><a href="#0">3</a></li>
-                        <li><a href="#0">...</a></li>
-                        <li class="next"><a href="#0"><span class="bi bi-chevron-right"></span></a></li>
+                        {% if destinations.has_previous %}
+                        <li class="prev"><a href="?page={{ destinations.previous_page_number }}"><span class="bi bi-chevron-left"></span></a></li>
+                        {% endif %}
+                        {% for num in destinations.paginator.page_range %}
+                        <li {% if destinations.number == num %}class="active"{% endif %}><a href="?page={{ num }}">{{ num }}</a></li>
+                        {% endfor %}
+                        {% if destinations.has_next %}
+                        <li class="next"><a href="?page={{ destinations.next_page_number }}"><span class="bi bi-chevron-right"></span></a></li>
+                        {% endif %}
                     </ul>
+                    {% endif %}
                 </div> 
 
             </div>
@@ -283,291 +195,53 @@
 
                     <div class="swiper trv-popular-tours-row trv-tours-st2-carousal swiper-nav-center-bottom">
                         <div class="swiper-wrapper">
-                            <!--BOX-1-->
+                            {% for package in packages %}
                             <div class="swiper-slide">
+                                <div class="trv-popular-tour-st2">
+                                    <div class="trv-media">
+                                        <a href="{% url 'package_detail' package.slug %}">
+                                            <img src="{{ package.main_image.url }}" alt="{{ package.name }}">
+                                        </a>
+                                        <div class="trv-tour-title">
+                                            <h3 class="trv-title">
+                                                <a href="{% url 'package_detail' package.slug %}">
+                                                    <i class="bi bi-geo-alt"></i> {{ package.name }}
+                                                </a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="trv-content">
+                                        <div class="trv-content-head-section">
+                                            <div class="trv-tour-duration">
+                                                <i class="bi bi-calendar2-week"></i>
+                                                <span>{{ package.duration }}</span>
+                                            </div>
+                                            <div class="trv-tour-price">
+                                                <span class="price">{{ package.price_from }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="trv-content-bottom-section">
+                                            <div class="trv-tour-title2">
+                                                <h3 class="trv-title2">
+                                                    <a href="{% url 'package_detail' package.slug %}">
+                                                        <i class="bi bi-geo-alt"></i> {{ package.name }}
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                            <div class="trv-content-bottom-column">
+                                                <div class="trv-book">
+                                                    <a href="{% url 'package_detail' package.slug %}" class="site-button outline white-txt">Book Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
                                 <div class="trv-popular-tour-st2">
                                     <div class="trv-media">
                                         <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic1.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    Bali, Indonesia
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>8 days , 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per Day</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Bali, Indonesia
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-2-->
-                            <div class="swiper-slide">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic2.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    South Korea
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>8 days , 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per Day</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                    South Korea
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-3-->
-                            <div class="swiper-slide">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic1.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                Tokyo City Japan
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>8 days , 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per Day</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Tokyo City Japan
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-4-->
-                            <div class="swiper-slide">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic4.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    Plateau in Slovenia
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>8 days , 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per Day</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Plateau in Slovenia
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-5-->
-                            <div class="swiper-slide">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic5.jpg' %}" alt="Image"></a>
-                                        <div class="trv-tour-title">
-                                            <h3 class="trv-title">
-                                                <a href="package-detail.html">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    Bali, Indonesia
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="trv-content">
-                                        <div class="trv-content-head-section">
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>8 days , 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-price">
-                                                <span class="price">$59</span>
-                                                <span class="price-duration">Per Day</span>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content-bottom-section">
-                                            <div class="trv-tour-title2">
-                                                <h3 class="trv-title2">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Bali, Indonesia
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="trv-content-bottom-column">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline white-txt">Book Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!--BOX-6-->
-                            <div class="swiper-slide">
-                                <div class="trv-popular-tour-st2">
-                                    <div class="trv-media">
-                                        <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic6.jpg' %}" alt="Image"></a>
                                         <div class="trv-tour-title">
                                             <h3 class="trv-title">
                                                 <a href="package-detail.html">
@@ -620,10 +294,10 @@
                                 </div>
                             </div>
 
-                        </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                     </div>
+
                     
                 </div> 
 

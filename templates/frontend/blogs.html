@@ -97,33 +97,16 @@
                                         <h4 class="widget-title">Recent Posts</h4>
                                     </div>
                                     <div class="trv-recent-posts-bx">
+                                        {% for recent in recent_blogs %}
                                         <div class="trv-rc-po-st1">
-                                            <div class="post-date"><span>14</span>June</div>                                        
+                                            <div class="post-date"><span>{{ recent.created_at|date:"d" }}</span>{{ recent.created_at|date:"M" }}</div>
                                             <div class="trv-post-info">
-                                                <div class="post-category">Aidan Butler</div>
-                                                <div class="trv-post-title ">
-                                                    <h5 class="post-title"><a href="{% url 'blogs' %}">Resources for your first trip to overseas vacation</a></h5>
+                                                <div class="trv-post-title">
+                                                    <h5 class="post-title"><a href="{% url 'blog_detail' recent.slug %}">{{ recent.title }}</a></h5>
                                                 </div>
-                                            </div>                                
+                                            </div>
                                         </div>
-                                        <div class="trv-rc-po-st1">
-                                            <div class="post-date"><span>20</span>June</div>                                        
-                                            <div class="trv-post-info">
-                                                <div class="post-category">Ricardo Bell</div>
-                                                <div class="trv-post-title ">
-                                                    <h5 class="post-title"><a href="{% url 'blogs' %}">How to get acquainted with natives in a strange land</a></h5>
-                                                </div>
-                                            </div>                                
-                                        </div>
-                                        <div class="trv-rc-po-st1">
-                                            <div class="post-date"><span>24</span>June</div>                                        
-                                            <div class="trv-post-info">
-                                                <div class="post-category">Martin Hicks</div>
-                                                <div class="trv-post-title ">
-                                                    <h5 class="post-title"><a href="{% url 'blogs' %}">Step by step guide to planning your ideal holiday</a></h5>
-                                                </div>
-                                            </div>                                
-                                        </div>
+                                        {% endfor %}
                                     </div>
                                     
                                 </div>
@@ -229,12 +212,10 @@
         <!--ALL BLOGS SECTION START-->
         <div class="trv-blog-all-style p-t120 p-b90">
             <div class="container">
-                <!-- TITLE START-->
                 <div class="row trv-column-style-head">
                     <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="section-head trv-head-title-wrap left-position">
                             <h2 class="trv-head-title">Explore<span class="site-text-yellow"> Latest News</span></h2>
-                            <div class="trv-head-discription">Maybe for a travel blog, wildlife site, or web development project here are a few sample templates you can use to simulate real-time news updates:</div>
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-6 col-md-12">
@@ -243,114 +224,25 @@
                         </div>
                     </div>
                 </div>
-                <!-- TITLE END-->
-
                 <div class="section-content">
-
                     <div class="row d-flex justify-content-center">
-
+                        {% for blog in latest_blogs %}
                         <div class="col-xl-4 col-lg-6 col-md-6">
                             <div class="trv-blog-st1">
                                 <div class="trv-post-media">
-                                    <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-sm/pic1.jpg' %}" alt="Image"></a>
+                                    <a href="{% url 'blog_detail' blog.slug %}"><img src="{{ blog.image.url }}" alt="{{ blog.title }}"></a>
                                 </div>
-                                
-                                <div class="post-date"><span>14</span>June</div>                                        
+                                <div class="post-date"><span>{{ blog.created_at|date:"d" }}</span>{{ blog.created_at|date:"M" }}</div>
                                 <div class="trv-post-info">
-                                    <div class="post-category">Aidan Butler</div>
-                                    <div class="trv-post-title ">
-                                        <h5 class="post-title"><a href="{% url 'blogs' %}">Resources for your first trip to overseas vacation</a></h5>
+                                    <div class="trv-post-title">
+                                        <h5 class="post-title"><a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a></h5>
                                     </div>
-                                </div>                                
-                            </div>
-
-                            <div class="trv-blog-st1">
-                                <div class="trv-post-media">
-                                    <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-sm/pic2.jpg' %}" alt="Image"></a>
                                 </div>
-                                
-                                <div class="post-date"><span>26</span>June</div>                                        
-                                <div class="trv-post-info">
-                                    <div class="post-category">Ricardo Bell</div>
-                                    <div class="trv-post-title ">
-                                        <h5 class="post-title"><a href="{% url 'blogs' %}">How to get acquainted with natives in a strange land</a></h5>
-                                    </div>
-                                </div>                                
                             </div>
-
-                            <div class="trv-blog-st1">
-                                <div class="trv-post-media">
-                                    <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-sm/pic3.jpg' %}" alt="Image"></a>
-                                </div>
-                                
-                                <div class="post-date"><span>20</span>June</div>                                        
-                                <div class="trv-post-info">
-                                    <div class="post-category">Martin Hicks</div>
-                                    <div class="trv-post-title ">
-                                        <h5 class="post-title"><a href="{% url 'blogs' %}">Resources for your first trip to overseas vacation</a></h5>
-                                    </div>
-                                </div>                                
-                            </div>
-
                         </div>
-
-                        <div class="col-xl-4 col-lg-6 col-md-6">
-                            <div class="trv-blog-st1">
-                                <div class="trv-post-media">
-                                    <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-sm/pic4.jpg' %}" alt="Image"></a>
-                                </div>
-                                
-                                <div class="post-date"><span>28</span>June</div>                                        
-                                <div class="trv-post-info">
-                                    <div class="post-category">Poul Ward</div>
-                                    <div class="trv-post-title ">
-                                        <h5 class="post-title"><a href="{% url 'blogs' %}">Step by step guide to planning your ideal holiday</a></h5>
-                                    </div>
-                                </div>                                
-                            </div>
-
-
-                            <div class="trv-blog-st2">
-                                <div class="trv-post-media">
-                                    <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-md/pic1.jpg' %}" alt="Image"></a>
-                                </div>
-                                
-                                <div class="post-date"><span>28</span>June</div>                                        
-                                <div class="trv-post-info">
-                                    <div class="post-category">Poul Ward</div>
-                                    <div class="trv-post-title ">
-                                        <h5 class="post-title"><a href="{% url 'blogs' %}">Step by step guide to planning your ideal holiday</a></h5>
-                                    </div>
-                                </div>                                
-                            </div>
-                        
-
-                        </div>
-
-                        <div class="col-xl-4 col-lg-6 col-md-6">
-
-                            <div class="trv-blog-st3">
-                                <div class="trv-post-media">
-                                    <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-lg/pic1.jpg' %}" alt="Image"></a>
-                                </div>
-                                
-                                <div class="post-date"><span>08</span>June</div>                                        
-                                <div class="trv-post-info">
-                                    <div class="post-category">By Joey Peterson</div>
-                                    <div class="trv-post-title ">
-                                        <h3 class="post-title"><a href="{% url 'blogs' %}">The Top Travel Destinations for Photography Enthusiasts</a></h3>
-                                    </div>
-                                </div>                                
-                            </div>
-
-                            
-
-                        </div>
-
+                        {% endfor %}
                     </div>
-                        
-                </div> 
-
+                </div>
             </div>
         </div>
         <!--ALL BLOGS SECTION END-->
