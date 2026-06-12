@@ -122,61 +122,16 @@
                                     </div>
                                     <div class="tw-sidebar-gallery">
                                         <ul>
-
+                                            {% for img in gallery_images %}
                                             <li>
                                                 <div class="tw-service-gallery-thumb">
-                                                    <a class="elem" href="{% static 'assets/images/trv-gallery/pic1.jpg' %}" title="Title 1" data-lcl-author="" data-lcl-thumb="images/trv-gallery/pic1.jpg">
-                                                        <img src="{% static 'assets/images/trv-gallery/pic1.jpg' %}" alt="">
+                                                    <a href="{% url 'gallery' %}" title="{{ img.title|default:'Gallery Image' }}">
+                                                        <img src="{{ img.image.url }}" alt="" style="object-fit: cover; aspect-ratio: 1 / 1; width: 100%; height: 100%;">
                                                         <i class="fa fa-file-image"></i>     
                                                     </a>
                                                 </div>
                                             </li>
-                                            
-                                            <li>
-                                                <div class="tw-service-gallery-thumb">
-                                                    <a class="elem" href="{% static 'assets/images/trv-gallery/pic2.jpg' %}" title="Title 2" data-lcl-author="" data-lcl-thumb="images/trv-gallery/pic2.jpg">
-                                                        <img src="{% static 'assets/images/trv-gallery/pic2.jpg' %}" alt="">
-                                                        <i class="fa fa-file-image"></i>     
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            
-                                            <li>
-                                                <div class="tw-service-gallery-thumb ">
-                                                    <a class="elem" href="{% static 'assets/images/trv-gallery/pic3.jpg' %}" title="Title 3"  data-lcl-author="" data-lcl-thumb="images/trv-gallery/pic3.jpg">
-                                                        <img src="{% static 'assets/images/trv-gallery/pic3.jpg' %}" alt="">
-                                                        <i class="fa fa-file-image"></i>     
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            
-                                            <li>
-                                                <div class="tw-service-gallery-thumb">
-                                                    <a class="elem" href="{% static 'assets/images/trv-gallery/pic4.jpg' %}" title="Title 4"  data-lcl-author="" data-lcl-thumb="images/trv-gallery/pic4.jpg">
-                                                        <img src="{% static 'assets/images/trv-gallery/pic4.jpg' %}" alt="">
-                                                        <i class="fa fa-file-image"></i>     
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            
-                                            <li>
-                                                <div class="tw-service-gallery-thumb">
-                                                    <a class="elem" href="{% static 'assets/images/trv-gallery/pic5.jpg' %}" title="Title 5"  data-lcl-author="" data-lcl-thumb="images/trv-gallery/pic5.jpg">
-                                                        <img src="{% static 'assets/images/trv-gallery/pic5.jpg' %}" alt="">
-                                                        <i class="fa fa-file-image"></i>     
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            
-                                            <li>
-                                                <div class="tw-service-gallery-thumb">
-                                                    <a class="elem" href="{% static 'assets/images/trv-gallery/pic6.jpg' %}" title="Title 6"  data-lcl-author="" data-lcl-thumb="images/trv-gallery/pic6.jpg">
-                                                        <img src="{% static 'assets/images/trv-gallery/pic6.jpg' %}" alt="">
-                                                        <i class="fa fa-file-image"></i>     
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            
+                                            {% endfor %}
                                         </ul>
                                     </div> 
                                 </div> 
@@ -197,43 +152,7 @@
         </div>   
         <!-- SECTION END -->
         
-        <!--ALL BLOGS SECTION START-->
-        <div class="trv-blog-all-style p-t120 p-b90">
-            <div class="container">
-                <div class="row trv-column-style-head">
-                    <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="section-head trv-head-title-wrap left-position">
-                            <h2 class="trv-head-title">Explore<span class="site-text-yellow"> Latest News</span></h2>
-                        </div>
-                    </div>
-                    <div class="col-xl-8 col-lg-6 col-md-12">
-                        <div class="trv-column-style-head-btn">
-                            <a href="{% url 'blogs' %}" class="site-button butn-bg-shape">See More Articles</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="section-content">
-                    <div class="row d-flex justify-content-center">
-                        {% for blog in latest_blogs %}
-                        <div class="col-xl-4 col-lg-6 col-md-6">
-                            <div class="trv-blog-st1">
-                                <div class="trv-post-media">
-                                    <a href="{% url 'blog_detail' blog.slug %}"><img src="{{ blog.image.url }}" alt="{{ blog.title }}"></a>
-                                </div>
-                                <div class="post-date"><span>{{ blog.created_at|date:"d" }}</span>{{ blog.created_at|date:"M" }}</div>
-                                <div class="trv-post-info">
-                                    <div class="trv-post-title">
-                                        <h5 class="post-title"><a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--ALL BLOGS SECTION END-->
+
 
 
     </div>

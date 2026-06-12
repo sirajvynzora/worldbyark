@@ -42,10 +42,16 @@
                                 {% for image in page_obj %}
                                 <div class="col-md-3 col-sm-4 col-6 mb-4">
                                     <div class="card h-100 shadow-sm">
+                                        {% if image.image %}
                                         <img src="{{ image.image.url }}" 
                                              class="card-img-top" 
                                              alt="{{ image.title|default:image.image.name }}" 
                                              style="height: 180px; object-fit: cover;">
+                                        {% else %}
+                                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light text-muted" style="height: 180px;">
+                                            <span>No Image File</span>
+                                        </div>
+                                        {% endif %}
                                         <div class="card-body">
                                             {% comment %} <h6 class="card-title text-truncate">{{ image.title|default:"Untitled" }}</h6> {% endcomment %}
                                             <p class="text-muted small">Uploaded: {{ image.uploaded_at|date:"M d, Y" }}</p>

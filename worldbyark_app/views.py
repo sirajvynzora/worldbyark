@@ -80,19 +80,25 @@ def blogs(request):
     paginator = Paginator(blogs_qs, 9)
     page_number = request.GET.get("page")
     blogs_page = paginator.get_page(page_number)
+    from .models import GalleryImage
+    gallery_images = GalleryImage.objects.all()[:6]
     return render(request, 'frontend/blogs.html', {
         "blogs": blogs_page,
         "recent_blogs": Blog.objects.order_by("-created_at")[:3],
         "latest_blogs": Blog.objects.order_by("-created_at")[:6],
+        "gallery_images": gallery_images,
     })
 
 
 def blog_detail(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     recent_blogs = Blog.objects.exclude(slug=slug).order_by("-created_at")[:4]
+    from .models import GalleryImage
+    gallery_images = GalleryImage.objects.all()[:6]
     return render(request, 'frontend/blog-detail.html', {
         "blog": blog,
         "recent_blogs": recent_blogs,
+        "gallery_images": gallery_images,
     })
 
 
