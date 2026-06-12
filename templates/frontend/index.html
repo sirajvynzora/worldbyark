@@ -31,45 +31,136 @@
         width: 100%; height: 100%;
         display: block;
     }
+    /* Base block — hidden by default */
     .ark-text-block {
         position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        color: #fff;
         opacity: 0;
-        transition: opacity 0.6s ease;
+        transition: opacity 0.7s ease;
         pointer-events: none;
         z-index: 10;
-        width: 90%;
+        color: #fff;
     }
     .ark-text-block.ark-visible {
         opacity: 1;
         pointer-events: auto;
     }
-    .ark-eyebrow {
+
+    /* Block 1 — center, large, opening statement */
+    #ark-block-1 {
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 90%;
+    }
+    #ark-block-1 .ark-eyebrow {
         display: block;
-        font-size: 0.9rem;
-        letter-spacing: 0.25em;
+        font-size: 0.8rem;
+        letter-spacing: 0.3em;
         text-transform: uppercase;
-        margin-bottom: 0.75rem;
-        opacity: 0.85;
+        margin-bottom: 0.6rem;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     }
-    .ark-heading-mid {
-        font-size: clamp(2.5rem, 7vw, 6rem);
+    #ark-block-1 .ark-heading {
+        font-size: clamp(3rem, 8vw, 7rem);
+        font-weight: 700;
+        line-height: 1.05;
+        text-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Block 2 — bottom-left, small, stat line */
+    #ark-block-2 {
+        bottom: 12%;
+        left: 6%;
+        text-align: left;
+        max-width: 340px;
+    }
+    #ark-block-2 .ark-eyebrow {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.75);
+    }
+    #ark-block-2 .ark-heading {
+        font-size: clamp(1.3rem, 2.8vw, 2rem);
+        font-weight: 600;
+        line-height: 1.2;
+        text-shadow: 0 3px 16px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Block 3 — center-right, mid journey */
+    #ark-block-3 {
+        top: 42%;
+        right: 6%;
+        text-align: right;
+        max-width: 360px;
+    }
+    #ark-block-3 .ark-eyebrow {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.75);
+    }
+    #ark-block-3 .ark-heading {
+        font-size: clamp(1.3rem, 2.8vw, 2rem);
+        font-weight: 600;
+        line-height: 1.2;
+        text-shadow: 0 3px 16px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Block 4 — bottom-center, three bold words */
+    #ark-block-4 {
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        width: 90%;
+    }
+    #ark-block-4 .ark-eyebrow {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.75);
+    }
+    #ark-block-4 .ark-heading {
+        font-size: clamp(1.8rem, 4vw, 3.2rem);
         font-weight: 700;
         line-height: 1.1;
+        letter-spacing: 0.08em;
+        text-shadow: 0 3px 20px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.8);
     }
-    .ark-heading-final {
-        font-size: clamp(2.5rem, 7vw, 6rem);
+
+    /* Block 5 — center, final CTA */
+    #ark-block-5 {
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 90%;
+    }
+    #ark-block-5 .ark-eyebrow {
+        display: block;
+        font-size: 0.8rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+    }
+    #ark-block-5 .ark-heading {
+        font-size: clamp(3rem, 8vw, 7rem);
         font-weight: 700;
-        line-height: 1.1;
+        line-height: 1.05;
         margin-bottom: 1rem;
+        text-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.8);
     }
-    .ark-subline {
-        font-size: clamp(1rem, 2vw, 1.3rem);
-        opacity: 0.9;
+    #ark-block-5 .ark-subline {
+        font-size: clamp(0.95rem, 1.8vw, 1.2rem);
         margin-bottom: 2rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.6);
     }
     .ark-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 </style>
@@ -83,16 +174,34 @@
                 <div id="ark-hero-sticky">
                     <canvas id="ark-hero-canvas"></canvas>
 
-                    <!-- Mid scroll text -->
+                    <!-- Block 1: Opening — 0% to 18% -->
                     <div class="ark-text-block ark-visible" id="ark-block-1">
                         <span class="ark-eyebrow">World By ARK</span>
-                        <div class="ark-heading-mid">The World Awaits</div>
+                        <div class="ark-heading">The World Awaits</div>
                     </div>
 
-                    <!-- Final text with CTAs -->
-                    <div class="ark-text-block ark-final" id="ark-block-2">
+                    <!-- Block 2: Bottom-left stat — 22% to 38% -->
+                    <div class="ark-text-block" id="ark-block-2">
+                        <span class="ark-eyebrow">Every journey starts with a single step</span>
+                        <div class="ark-heading">50+ Destinations.<br>One Agency.</div>
+                    </div>
+
+                    <!-- Block 3: Right side, mid — 42% to 56% -->
+                    <div class="ark-text-block" id="ark-block-3">
+                        <span class="ark-eyebrow">Crafted For You</span>
+                        <div class="ark-heading">Experiences Beyond<br>the Ordinary</div>
+                    </div>
+
+                    <!-- Block 4: Bottom-center, arrival — 60% to 74% -->
+                    <div class="ark-text-block" id="ark-block-4">
+                        <span class="ark-eyebrow">Kerala &amp; Beyond</span>
+                        <div class="ark-heading">Nature. Culture. Wonder.</div>
+                    </div>
+
+                    <!-- Block 5: Final CTA — 78% to 100% -->
+                    <div class="ark-text-block" id="ark-block-5">
                         <span class="ark-eyebrow">Luxury Travel Redefined</span>
-                        <div class="ark-heading-final">Your Journey<br>Begins Here</div>
+                        <div class="ark-heading">Your Journey<br>Begins Here</div>
                         <p class="ark-subline">Curated experiences. Seamless journeys. Unforgettable destinations.</p>
                         <div class="ark-cta-group">
                             <a href="{% url 'packages' %}" class="site-button butn-bg-shape">Explore Packages</a>
@@ -1769,18 +1878,15 @@
 
                 const block1 = document.getElementById('ark-block-1');
                 const block2 = document.getElementById('ark-block-2');
+                const block3 = document.getElementById('ark-block-3');
+                const block4 = document.getElementById('ark-block-4');
+                const block5 = document.getElementById('ark-block-5');
 
-                if (progress >= 0 && progress <= 0.25) {
-                    block1.classList.add('ark-visible');
-                } else {
-                    block1.classList.remove('ark-visible');
-                }
-
-                if (progress >= 0.75) {
-                    block2.classList.add('ark-visible');
-                } else {
-                    block2.classList.remove('ark-visible');
-                }
+                block1.classList.toggle('ark-visible', progress >= 0    && progress <= 0.18);
+                block2.classList.toggle('ark-visible', progress >= 0.22 && progress <= 0.38);
+                block3.classList.toggle('ark-visible', progress >= 0.42 && progress <= 0.56);
+                block4.classList.toggle('ark-visible', progress >= 0.60 && progress <= 0.74);
+                block5.classList.toggle('ark-visible', progress >= 0.78);
             });
 
             window.addEventListener('resize', resize);
