@@ -1763,13 +1763,7 @@
 
 
 
-        <!-- Video Lightbox Modal -->
-        <div id="adv-video-modal">
-            <div class="adv-modal-inner">
-                <button class="adv-modal-close" id="adv-modal-close" aria-label="Close">&times;</button>
-                <iframe id="adv-video-iframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
-            </div>
-        </div>
+
 {% endblock %}
 
 {% block pre_footer %}{% endblock %}
@@ -1897,35 +1891,6 @@
         })();
     </script>
     <script src="{% static 'assets/js/moment.min.js' %}"></script>
-    <script>
-        (function () {
-            var modal = document.getElementById('adv-video-modal');
-            var iframe = document.getElementById('adv-video-iframe');
-            var trigger = document.getElementById('adv-play-trigger');
-            var closer = document.getElementById('adv-modal-close');
-            var videoSrc = 'https://www.youtube.com/embed/iUtnZpzkbG8?autoplay=1&rel=0';
 
-            function openModal() {
-                iframe.src = videoSrc;
-                modal.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeModal() {
-                iframe.src = '';
-                modal.classList.remove('open');
-                document.body.style.overflow = '';
-            }
-
-            trigger.addEventListener('click', openModal);
-            closer.addEventListener('click', closeModal);
-            modal.addEventListener('click', function (e) {
-                if (e.target === modal) closeModal();
-            });
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') closeModal();
-            });
-        })();
-    </script>
     <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script><!-- BOOTSTRAP DATEPICKER -->
 {% endblock %}

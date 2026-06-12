@@ -124,16 +124,9 @@
 
                         <li class="has-child"><a href="{% url 'destinations' %}">Destinations</a>
                             <ul class="sub-menu">
-                                <li><a href="{% url 'destinations' %}">Adventure</a></li>
-                                <li><a href="{% url 'destinations' %}">Africa</a></li>
-                                <li><a href="{% url 'destinations' %}">Australia</a></li>
-                                <li><a href="{% url 'destinations' %}">Ayurveda & Spa</a></li>
-                                <li><a href="{% url 'destinations' %}">Beaches</a></li>
-                                <li><a href="{% url 'destinations' %}">Europe</a></li>
-                                <li><a href="{% url 'destinations' %}">Honeymoon</a></li>
-                                <li><a href="{% url 'destinations' %}">India</a></li>
-                                <li><a href="{% url 'destinations' %}">Islands</a></li>
-                                <li><a href="{% url 'destinations' %}">USA</a></li>
+                                {% for dest in nav_destinations %}
+                                <li><a href="{% url 'destination_detail' slug=dest.slug %}">{{ dest.name }}</a></li>
+                                {% endfor %}
                             </ul>
                         </li>
 

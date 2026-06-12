@@ -18,19 +18,23 @@ from .models import Blog, Category, ContactMessage, GalleryImage, Testimonial, T
 def home(request):
     packages = TourPackage.objects.all().order_by("-created_at")[:6]
     testimonials = Testimonial.objects.all()[:8]
-    destinations = Destination.objects.all().order_by("-created_at")[:6]
-    blogs = Blog.objects.all().order_by("-created_at")[:3]
+    destinations = Destination.objects.all().order_by("-created_at")[:8]
+    latest_blogs = Blog.objects.all().order_by("-created_at")[:6]
     return render(request, 'frontend/index.html', {
         "packages": packages,
         "testimonials": testimonials,
         "destinations": destinations,
-        "blogs": blogs,
+        "latest_blogs": latest_blogs,
     })
 
 
 def about(request):
     testimonials = Testimonial.objects.all()[:8]
-    return render(request, 'frontend/about.html', {"testimonials": testimonials})
+    destinations = Destination.objects.all().order_by("-created_at")[:8]
+    return render(request, 'frontend/about.html', {
+        "testimonials": testimonials,
+        "destinations": destinations,
+    })
 
 
 def packages(request):

@@ -111,248 +111,29 @@
 
                                             <h3 class="trv-inner-title-sm">Day Wise Itinerary</h3>
                                         
+                                            {% if package.highlights_list %}
                                             <div class="trv-clist-st-3-wrap">
                                                 <ul class="trv-list-st-3">
-                                                    
+                                                    {% for item in package.highlights_list %}
                                                     <li>
                                                         <div class="trv-list-content">
                                                             <div class="duration">
                                                                 <div class="media">
-                                                                    <div class="green-bg">01</div>
+                                                                    <div class="green-bg">{{ forloop.counter|stringformat:"02d" }}</div>
                                                                 </div>
                                                                 <span class="day">DAY</span>
                                                             </div>
                                                             <div class="info">
-                                                                <h4 class="trv-title">Day 1 Arrival in London </h4>
-                                                                <ul class="trv-checklist-mini">
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Guided tours in 6 major cities London Paris Vaduz Florence Rome and the Vatican City.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Unforgettable 15-day journey through 10 European countries.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Professional and knowledgeable Tour Manager throughout the tour.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Comfortable 4-star accommodations and daily buffet breakfast.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Delectable Indian and local cuisine options including daily mineral water.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Driver tips included.
-                                                                    </li>
-                                                                </ul>
+                                                                <h4 class="trv-title">{{ item }}</h4>
                                                             </div>
                                                         </div>
                                                     </li>
-
-                                                    <li>
-                                                        <div class="trv-list-content">
-                                                            <div class="duration">
-                                                                <div class="media">
-                                                                    <div class="green-bg">02</div>
-                                                                </div>
-                                                                <span class="day">DAY</span>
-                                                            </div>
-                                                            <div class="info">
-                                                                <h4 class="trv-title">Day 2 London Exploration</h4>
-                                                                <ul class="trv-checklist-mini">
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Visit iconic landmarks: Big Ben, Houses of Parliament, Wetrv-oack-sepainster Abbey, Trafalgar Square, Piccadilly Circus, Tower Bridge, River Thames, Hyde Park.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Witness the Changing of the Guards at Buckingham Palace (subject to operation).
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Visit the legendary Lord’s Cricket Ground; ride the London Eye.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Overnight in London (Breakfast, Lunch, Dinner included).
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Guided city tour with an expert local guide.
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-
-                                                    <li>
-                                                        <div class="trv-list-content">
-                                                            <div class="duration">
-                                                                <div class="media">
-                                                                    <div class="green-bg">03</div>
-                                                                </div>
-                                                                <span class="day">DAY</span>
-                                                            </div>
-                                                            <div class="info">
-                                                                <h4 class="trv-title">Day 3 Arrival in Paris - The City of Romance, Lights, and Glamour </h4>
-                                                                <b>
-                                                                    Rising to 1,717 meters above sea level, it offers adventurous travelers a moderately 
-                                                                    challenging hike that rewards.
-                                                                </b>
-                                                                <div class="trv-blog-d-column-wrap">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6 col-md-6 m-b20">
-                                                                            <div class="trv-blog-d-column-bx">
-                                                                                <img src="{% static 'assets/images/trv-blog/blog-detail/bx-pic1.jpg' %}" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-6 col-md-6 m-b20">
-                                                                            <div class="trv-blog-d-column-bx">
-                                                                                <img src="{% static 'assets/images/trv-blog/blog-detail/bx-pic2.jpg' %}" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <ul class="trv-checklist-mini">
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Check out of your hotel and proceed to visit the renowned Madame Tussauds wax museum.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Travel by high-speed Eurostar train(02nd Class) from London to Paris.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Arrive in Paris and check-in at your hotel.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Leisure day - take the opportunity to explore McArthurGlen, just a short distance from your hotel.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Overnight in Paris (Breakfast, Lunch, Dinner included).
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-
-                                                    <li>
-                                                        <div class="trv-list-content">
-                                                            <div class="duration">
-                                                                <div class="media">
-                                                                    <div class="green-bg">04</div>
-                                                                </div>
-                                                                <span class="day">DAY</span>
-                                                            </div>
-                                                            <div class="info">
-                                                                <h4 class="trv-title">Day 4 Paris City Tour & Versailles Palace Visit</h4>
-                                                                <ul class="trv-checklist-mini">
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Guided city tour of Paris with an expert local guide.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Discover iconic attractions: Place Vendôme, Place de l’Opéra Garnier, Musée d’Orsay, Place de la Concorde, Champs Elysées, Arc de Triomphe, Alexander Bridge, Les Invalides, and more.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Ascend to the Eiffel Tower's 3rd (top) level for breathtaking views of Paris (subject to operation).
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Overnight in Paris (Breakfast, Lunch, Dinner included).
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Visit the magnificent Palace of Versailles, a world-renowned UNESCO site.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        (Please note that access to the Eiffel Tower's 3rd level is contingent on its operational status. If it happens to be closed during our visit, we will explore the 2nd level instead, which offers fantastic views and insights into the Eiffel Tower's history.)
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-
-                                                    <li>
-                                                        <div class="trv-list-content">
-                                                            <div class="duration">
-                                                                <div class="media">
-                                                                    <div class="green-bg">05</div>
-                                                                </div>
-                                                                <span class="day">DAY</span>
-                                                            </div>
-                                                            <div class="info">
-                                                                <h4 class="trv-title">Day 5 Disneyland® Paris Adventure & Romantic Seine River Cruise  </h4>
-                                                                
-                                                                <div class="trv-blog-d-column-wrap">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-4 col-md-4 m-b20">
-                                                                            <div class="trv-blog-d-column-bx">
-                                                                                <img src="{% static 'assets/images/trv-gallery/pic1.jpg' %}" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4 col-md-4 m-b20">
-                                                                            <div class="trv-blog-d-column-bx">
-                                                                                <img src="{% static 'assets/images/trv-gallery/pic2.jpg' %}" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4 col-md-4 m-b20">
-                                                                            <div class="trv-blog-d-column-bx">
-                                                                                <img src="{% static 'assets/images/trv-gallery/pic3.jpg' %}" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4 col-md-4 m-b20">
-                                                                            <div class="trv-blog-d-column-bx">
-                                                                                <img src="{% static 'assets/images/trv-gallery/pic4.jpg' %}" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4 col-md-4 m-b20">
-                                                                            <div class="trv-blog-d-column-bx">
-                                                                                <img src="{% static 'assets/images/trv-gallery/pic5.jpg' %}" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4 col-md-4 m-b20">
-                                                                            <div class="trv-blog-d-column-bx">
-                                                                                <img src="{% static 'assets/images/trv-gallery/pic6.jpg' %}" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <ul class="trv-checklist-mini">
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Choose between Disney® Park or Walt Disney Studios® Park - experience thrilling rides, shows, and attractions.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Romantic Seine River cruise - glide across Notre Dame, the Eiffel Tower, and the Louvre.
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        Overnight in Paris (Breakfast, Lunch, Dinner included).
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="bi bi-check-circle-fill"></i>
-                                                                        (Note: The Tour Manager reserves the right to alter the itinerary if necessary, but all attractions will be covered.)
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-
+                                                    {% endfor %}
                                                 </ul>
                                             </div>
+                                            {% else %}
+                                            <p class="text-muted">Itinerary details will be provided upon booking confirmation.</p>
+                                            {% endif %}
 
                                         </section>
 

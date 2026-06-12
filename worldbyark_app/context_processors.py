@@ -18,3 +18,9 @@ def google_reviews(request) -> dict[str, Any]:
 def footer_packages(request) -> dict[str, Any]:
     packages = TourPackage.objects.only("name", "slug").order_by("-created_at")[:5]
     return {"footer_packages": packages}
+
+from .models import Destination
+
+def nav_destinations(request) -> dict[str, Any]:
+    destinations = Destination.objects.only("name", "slug").order_by("name")
+    return {"nav_destinations": destinations}

@@ -50,6 +50,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'worldbyark_app.context_processors.google_reviews',
                 'worldbyark_app.context_processors.footer_packages',
+                'worldbyark_app.context_processors.nav_destinations',
             ],
         },
     },
