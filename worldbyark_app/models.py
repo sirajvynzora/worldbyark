@@ -165,3 +165,21 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.phone}"
+
+
+class BookingEnquiry(models.Model):
+    name        = models.CharField(max_length=150)
+    phone       = models.CharField(max_length=20)
+    package     = models.CharField(max_length=200, blank=True, null=True)
+    start_date  = models.DateField()
+    end_date    = models.DateField()
+    adults      = models.PositiveIntegerField()
+    children    = models.PositiveIntegerField(default=0)
+    created_at  = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Booking Enquiries"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.name} - {self.package} ({self.created_at.date()})"

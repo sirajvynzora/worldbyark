@@ -1,5 +1,53 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
+
+{% block extra_css %}
+<style>
+
+    /* Fix image height */
+.trv-blog-list-st .trv-media img {
+    height: 380px !important;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 30px 30px 30px 30px;
+    padding:15px;
+}
+
+/* Fix description to max 3 lines */
+.trv-blog-list-st .trv-info p {
+    height: 72px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Fix title to max 2 lines */
+.trv-blog-list-st .trv-info h3,
+.trv-blog-list-st .trv-info h4,
+.trv-blog-list-st .trv-info h2 {
+    height: 56px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Remove fixed height from info box */
+.trv-blog-list-st .trv-info {
+    height: auto !important;
+}
+
+/* Equal card heights in a row */
+.trv-blog-list-st {
+    height: 100%;
+}
+
+</style>
+{% endblock %}
+
+
 {% block content %}
 <div class="page-content">
 
@@ -21,139 +69,60 @@
                 </div>
                 <!-- BREADCRUMB ROW END -->                        
             </div>
-            <div class="trv-inr-bnr-cloud">            
-                <div class="marquee">
-                    <img src="{% static 'assets/images/inr-banner-cloud.png' %}" alt="Image">
-                </div>
-            </div>
-            <div class="trv-inr-bnr-plane">
-                <div class="trv-inr-bnr-plane-bx"><img src="{% static 'assets/images/airplane.png' %}" alt="Image"></div>
-                
-            </div>
             <div class="trv-inr-bnr-bloon-1"><img src="{% static 'assets/images/hotballon-Left.png' %}" alt="Image"></div>
             <div class="trv-inr-bnr-bloon-2"><img src="{% static 'assets/images/hotballon-right.png' %}" alt="Image"></div>
         </div>
         <!-- INNER PAGE BANNER END -->
         
         <!-- SECTION START -->
-        <div class="section-full  p-t120 p-b90">
-            <div class="container">
-            
-                <!-- BLOG SECTION START -->
-                <div class="section-content">
-                    <div class="row d-flex justify-content-center">
-                    
-                        <div class="col-xl-8 col-lg-8 col-md-12 m-b30">
-                            <div class="blog-list-outer">
+<div class="section-content p-t120 p-b90">
+    <div class="row">
 
-                                {% for blog in blogs %}
-                                <div class="trv-blog-list-st m-b30">
-                                    <div class="trv-media">
-                                        <a href="{% url 'blog_detail' blog.slug %}"><img src="{{ blog.image.url }}" alt="{{ blog.title }}"></a>
-                                    </div>
-                                    <div class="trv-info">
-                                        <ul class="trv-post-meta">
-                                            <li class="post-comment">{{ blog.created_at|date:"d M Y" }}</li>
-                                        </ul>
-                                        <h3 class="trv-title">
-                                            <a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a>
-                                        </h3>
-                                        <p>{{ blog.description|truncatewords:30 }}</p>
-                                        <a class="site-button butn-bg-shape" href="{% url 'blog_detail' blog.slug %}">Read More</a>
-                                    </div>
-                                </div>
-                                {% empty %}
-                                <p class="text-muted">No blog posts yet. Check back soon!</p>
-                                {% endfor %}
-
-                            </div>
-
-                            <!-- Pagination -->
-                            {% if blogs.has_other_pages %}
-                            <ul class="custom-pagination clearfix">
-                                {% if blogs.has_previous %}
-                                <li class="prev"><a href="?page={{ blogs.previous_page_number }}"><span class="bi bi-chevron-left"></span></a></li>
-                                {% endif %}
-                                {% for num in blogs.paginator.page_range %}
-                                <li {% if blogs.number == num %}class="active"{% endif %}><a href="?page={{ num }}">{{ num }}</a></li>
-                                {% endfor %}
-                                {% if blogs.has_next %}
-                                <li class="next"><a href="?page={{ blogs.next_page_number }}"><span class="bi bi-chevron-right"></span></a></li>
-                                {% endif %}
-                            </ul>
-                            {% endif %}
-                        </div> 
-                        
-                        <!-- SIDE BAR START -->
-                        <div class="col-xl-4 col-lg-4 col-md-12 rightSidebar  m-b30">
-                        
-                            <aside  class="side-bar">
-
-    
-
-                                <!-- RECENT POSTS -->
-                                <div class="widget trv-recent-posts">
-                                    <div class="m-b20">
-                                        <h4 class="widget-title">Recent Posts</h4>
-                                    </div>
-                                    <div class="trv-recent-posts-bx">
-                                        {% for recent in recent_blogs %}
-                                        <div class="trv-rc-po-st1">
-                                            <div class="post-date"><span>{{ recent.created_at|date:"d" }}</span>{{ recent.created_at|date:"M" }}</div>
-                                            <div class="trv-post-info">
-                                                <div class="trv-post-title">
-                                                    <h5 class="post-title"><a href="{% url 'blog_detail' recent.slug %}">{{ recent.title }}</a></h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-                                    </div>
-                                    
-                                </div>
-
-
-
-
-
-                                <!-- GALLERY -->
-                                <div class="widget widget_gallery">
-                                    <div class="m-b20">
-                                        <h4 class="widget-title">Gallery</h4>
-                                    </div>
-                                    <div class="tw-sidebar-gallery">
-                                        <ul>
-                                            {% for img in gallery_images %}
-                                            <li>
-                                                <div class="tw-service-gallery-thumb">
-                                                    <a href="{% url 'gallery' %}" title="{{ img.title|default:'Gallery Image' }}">
-                                                        <img src="{{ img.image.url }}" alt="" style="object-fit: cover; aspect-ratio: 1 / 1; width: 100%; height: 100%;">
-                                                        <i class="fa fa-file-image"></i>     
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div> 
-                                </div> 
-
-                                
-
-                            </aside>
-
-                        </div>
-                        <!-- SIDE BAR END -->                          
-                                                    
-                    </div>
-
+        {% for blog in blogs %}
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 m-b30">
+            <div class="trv-blog-list-st">
+                <div class="trv-media">
+                    <a href="{% url 'blog_detail' blog.slug %}">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    </a>
                 </div>
-                
+                <div class="trv-info">
+                    <ul class="trv-post-meta">
+                        <li class="post-comment">{{ blog.created_at|date:"d M Y" }}</li>
+                    </ul>
+                    <h3 class="trv-title">
+                        <a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a>
+                    </h3>
+                    <p>{{ blog.description|striptags|safe|truncatewords:30 }}</p>
+                    <a class="site-button butn-bg-shape" href="{% url 'blog_detail' blog.slug %}">Read More</a>
+                </div>
             </div>
-            
-        </div>   
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted text-center">No blog posts yet. Check back soon!</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- Pagination -->
+    {% if blogs.has_other_pages %}
+    <ul class="custom-pagination clearfix">
+        {% if blogs.has_previous %}
+        <li class="prev"><a href="?page={{ blogs.previous_page_number }}"><span class="bi bi-chevron-left"></span></a></li>
+        {% endif %}
+        {% for num in blogs.paginator.page_range %}
+        <li {% if blogs.number == num %}class="active"{% endif %}><a href="?page={{ num }}">{{ num }}</a></li>
+        {% endfor %}
+        {% if blogs.has_next %}
+        <li class="next"><a href="?page={{ blogs.next_page_number }}"><span class="bi bi-chevron-right"></span></a></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+</div>
         <!-- SECTION END -->
-        
-
-
 
     </div>
     <!-- CONTENT END -->

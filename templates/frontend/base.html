@@ -1,257 +1,933 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- META -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-    <meta name="robots" content="">
-    <meta name="description"
-        content="World By ARK introduces world-class luxury travel packages and services. Customize your travel plan as per your interest and preferences across global destinations.">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta
+      name="description"
+      content="World By ARK introduces world-class luxury travel packages and services. Customize your travel plan as per your interest and preferences across global destinations."
+    />
 
     <!-- FAVICONS ICON -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/favicon/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/favicon/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/favicon/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'assets/images/favicon/site.webmanifest' %}">
-    <link rel="shortcut icon" href="{% static 'assets/images/favicon/favicon.ico' %}">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'assets/images/favicon/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'assets/images/favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'assets/images/favicon/favicon-16x16.png' %}"
+    />
+    <link
+      rel="manifest"
+      href="{% static 'assets/images/favicon/site.webmanifest' %}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{% static 'assets/images/favicon/favicon.ico' %}"
+    />
 
     <!-- PAGE TITLE HERE -->
     <title>World By ARK | Luxury Travel & Custom Packages</title>
 
     <!-- MOBILE SPECIFIC -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"><!-- BOOTSTRAP STYLE SHEET -->
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-select.min.css' %}"><!-- BOOTSTRAP SELECT BOX CSS -->
-    <link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}"><!-- FONTAWESOME STYLE SHEET -->
-    <link rel="stylesheet" href="{% static 'assets/css/feather.css' %}"><!-- FEATHER ICON SHEET -->
-    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}"><!-- OWL CAROUSEL STYLE SHEET -->
-    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.min.css' %}"><!-- MAGNIFIC POPUP STYLE SHEET -->
-    <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.min.css' %}"><!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}"><!-- MAIN STYLE SHEET -->
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datetimepicker.css' %}"><!-- DATEPICKER STYLE SHEET -->
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-icons.css' %}"><!-- BOOTSTRAP ICON STYLE SHEET -->
-    <link rel="stylesheet" href="{% static 'assets/css/lc_lightbox.css' %}"><!-- Lc light box popup -->
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-slider.min.css' %}"><!-- Price Range Slider -->
-
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <!-- BOOTSTRAP STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/bootstrap-select.min.css' %}"
+    />
+    <!-- BOOTSTRAP SELECT BOX CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/font-awesome.min.css' %}"
+    />
+    <!-- FONTAWESOME STYLE SHEET -->
+    <link rel="stylesheet" href="{% static 'assets/css/feather.css' %}" />
+    <!-- FEATHER ICON SHEET -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/owl.carousel.min.css' %}"
+    />
+    <!-- OWL CAROUSEL STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/magnific-popup.min.css' %}"
+    />
+    <!-- MAGNIFIC POPUP STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/swiper-bundle.min.css' %}"
+    />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+    <!-- MAIN STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/bootstrap-datetimepicker.css' %}"
+    />
+    <!-- DATEPICKER STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/bootstrap-icons.css' %}"
+    />
+    <!-- BOOTSTRAP ICON STYLE SHEET -->
+    <link rel="stylesheet" href="{% static 'assets/css/lc_lightbox.css' %}" />
+    <!-- Lc light box popup -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/bootstrap-slider.min.css' %}"
+    />
+    <!-- Price Range Slider -->
 
     <style>
-        .loading-area { display: none !important; }
-        #ark-preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            transition: opacity 0.7s ease, visibility 0.7s ease;
-        }
-        #ark-preloader.ark-hide {
-            opacity: 0;
-            visibility: hidden;
-        }
-        #ark-preloader-gif {
-            width: 280px;
-            max-width: 60vw;
-        }
+
+
+
+      /* Modal Content */
+/* ===== QUICK BOOKING MODAL ===== */
+
+/* Modal backdrop */
+#bookingModal .modal-dialog {
+    max-width: 560px;        /* smaller width */
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+#bookingModal {
+    padding-top: 80px !important;  /* navbar height offset */
+    padding-bottom: 20px !important;
+}
+
+body.modal-open {
+    overflow: auto !important;
+    padding-right: 0 !important;
+}
+
+#bookingEnquiryForm .row {
+    --bs-gutter-y: 0.5rem;
+}
+
+/* Modal Content */
+.booking-modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+}
+
+/* Header */
+.booking-modal-header {
+    background: linear-gradient(135deg, #2d1e64 0%, #3b2a7a 100%) !important;
+    padding: 18px 24px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative plane + dashed path + pin (pure CSS/emoji alternative) */
+.booking-modal-header::before {
+    content: '✈';
+    position: absolute;
+    right: 60px;
+    top: 18px;
+    font-size: 22px;
+    opacity: 0.5;
+    color: #fff;
+    transform: rotate(-30deg);
+}
+
+.booking-modal-header::after {
+    content: '📍';
+    position: absolute;
+    right: 30px;
+    top: 36px;
+    font-size: 16px;
+    opacity: 0.45;
+}
+
+.booking-modal-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.booking-modal-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.booking-modal-icon i {
+    color: #fff;
+    font-size: 18px;
+}
+
+.booking-modal-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    line-height: 1.2;
+}
+
+.booking-modal-subtitle {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    margin: 0;
+}
+
+.booking-modal-close {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+    transition: background 0.2s, opacity 0.2s;
+    flex-shrink: 0;
+}
+
+.booking-modal-close:hover {
+    background: rgba(255,255,255,0.28);
+    opacity: 1;
+}
+
+/* Body */
+.booking-modal-body {
+    padding: 18px 24px 12px;
+    background: #fff;
+}
+
+.booking-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Input wrapper with icon */
+.booking-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.booking-input-icon {
+    position: absolute;
+    left: 12px;
+    color: #6c63ff;
+    font-size: 16px;
+    pointer-events: none;
+    background: #ebe9ff;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.booking-input {
+    width: 100%;
+    padding: 9px 14px 9px 48px;
+    border: 1.5px solid #e8e6f0;
+    border-radius: 12px;
+    font-size: 13px;
+    color: #333;
+    background: #f7f6ff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.booking-input:focus {
+    outline: none;
+    border-color: #6c63ff;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
+}
+
+/* Select arrow */
+select.booking-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236c63ff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+/* Footer */
+.booking-modal-footer {
+    padding: 12px 24px 18px;
+    background: #fff;
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    border-top: none;
+    position: relative;
+}
+
+/* Hot air balloon decoration */
+.booking-modal-footer::before {
+    content: '🎈';
+    position: absolute;
+    left: 20px;
+    bottom: 18px;
+    font-size: 34px;
+    opacity: 0.55;
+}
+
+.booking-btn-cancel {
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: 1.5px solid #6c63ff;
+    background: transparent;
+    color: #6c63ff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.booking-btn-cancel:hover {
+    background: #f0eeff;
+}
+
+.booking-btn-whatsapp {
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #f26388, #f07040);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 14px rgba(242, 99, 126, 0.4);
+}
+
+.booking-btn-whatsapp:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.booking-btn-whatsapp .bi-whatsapp {
+    font-size: 18px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    padding: 3px;
+}
+
+   /* Modal style  Content end */
+
+      .loading-area {
+        display: none !important;
+      }
+      #ark-preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition:
+          opacity 0.7s ease,
+          visibility 0.7s ease;
+      }
+      #ark-preloader.ark-hide {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #ark-preloader-gif {
+        width: 280px;
+        max-width: 60vw;
+      }
+
+    /* Default state - reduce size */
+    .payment-btn-wrapper {
+    display: flex;
+    align-items: center;
+}
+/* Align the payment button li vertically with other nav items */
+.nav.navbar-nav li:has(.payment-btn) {
+    display: flex;
+    align-items: center;
+}
+.payment-btn {
+    background-image: linear-gradient(135deg, rgb(242, 153, 121), rgb(242, 99, 126));
+    border:none;
+    color: white;
+    padding: 18px 24px !important;
+    border-radius: 50px !important;
+    transition: 0.3s ease;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.3s ease !important;
+}
+
+.payment-btn:hover {
+
+  transform: translateY(-3px);
+  color: #fff;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
+
+}
+
+
+{% comment %} .payment-btn:hover {
+    background: #2a034f !important;
+    color: #fff !important;
+    cursor: pointer;
+} {% endcomment %}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .nav.navbar-nav li a {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        font-size: 13px !important;
+    }
+
+    .payment-btn {
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+        border-width: 1.5px !important;
+    }
+
+    .main-bar {
+        flex-wrap: nowrap !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .nav.navbar-nav li a {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        font-size: 13px !important;
+    }
+
+    /* Shrink both buttons equally */
+    .payment-btn,
+    .site-button.butn-bg-shape {
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+    }
+
+    .payment-btn {
+        border-width: 1.5px !important;
+    }
+
+    .extra-nav.header-1-nav {
+        gap: 6px !important;
+    }
+    .main-bar {
+        flex-wrap: nowrap !important;
+    }
+} 
+
+@media (min-width: 1100px) and (max-width: 1300px) {
+    .nav.navbar-nav li a {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        font-size: 18px !important;
+    }
+
+    /* Shrink both buttons equally */
+    .payment-btn,
+    .site-button.butn-bg-shape {
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+    }
+
+    .payment-btn {
+        border-width: 1.5px !important;
+    }
+
+    .extra-nav.header-1-nav {
+        gap: 6px !important;
+    }
+    .main-bar {
+        flex-wrap: nowrap !important;
+    }
+}
+/* Fix wrapping when sticky/scrolled */
+.sticky-header .main-bar {
+    flex-wrap: nowrap !important;
+}
+
+.sticky-header .extra-nav.header-1-nav {
+    flex-shrink: 0 !important;
+}
+
+
+    
     </style>
-{% block extra_css %}{% endblock %}
-</head>
+    {% block extra_css %}{% endblock %}
+  </head>
 
-<body>
-
-<!-- PRELOADER START -->
-<div id="ark-preloader">
-    <img src="{% static 'assets/preloader/preloader.gif' %}" alt="Loading" id="ark-preloader-gif">
-</div>
-<!-- PRELOADER END -->
+  <body>
+    <!-- PRELOADER START -->
+    <div id="ark-preloader">
+      <img
+        src="{% static 'assets/preloader/preloader.gif' %}"
+        alt="Loading"
+        id="ark-preloader-gif"
+      />
+    </div>
+    <!-- PRELOADER END -->
 
     <!-- LOADING AREA START ===== -->
     <div class="loading-area">
-        <div class="loading-box"></div>
-        <div class="loading-pic">
-            <figure class="loader">
-                <div class="dot white"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </figure>
-        </div>
+      <div class="loading-box"></div>
+      <div class="loading-pic">
+        <figure class="loader">
+          <div class="dot white"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </figure>
+      </div>
     </div>
     <!-- LOADING AREA  END ====== -->
 
     <!-- Curser Pointer -->
-    <div class="cursor"></div>
-    <div class="cursor2"></div>
+   
 
     <!-- HEADER START -->
     <header class="sticky-header site-header {% block header_class %}header-style-2{% endblock %} mobile-sider-drawer-menu">
-        <div class="main-bar-wraper  navbar-expand-lg">
-            <div class="main-bar">
+      <div class="main-bar-wraper navbar-expand-lg">
+        <div class="main-bar">
+          <!-- NAV Toggle Button -->
+          <button
+            id="mobile-side-drawer"
+            data-target=".header-nav"
+            data-toggle="collapse"
+            type="button"
+            class="navbar-toggler collapsed"
+          >
+            <span class="sr-only">Menu</span>
+            <span class="icon-bar icon-bar-first"></span>
+            <span class="icon-bar icon-bar-two"></span>
+            <span class="icon-bar icon-bar-three"></span>
+          </button>
 
-                <!-- NAV Toggle Button -->
-                <button id="mobile-side-drawer" data-target=".header-nav" data-toggle="collapse" type="button"
-                    class="navbar-toggler collapsed">
-                    <span class="sr-only">Menu</span>
-                    <span class="icon-bar icon-bar-first"></span>
-                    <span class="icon-bar icon-bar-two"></span>
-                    <span class="icon-bar icon-bar-three"></span>
-                </button>
-
-                <div class="logo-header">
-                    <div class="logo-header-inner logo-header-one">
-                        <a href="{% url 'home' %}">
-                            {% block logo_img %}<img src="{% static 'assets/images/logo-light.png' %}" alt="">{% endblock %}
-                        </a>
-                    </div>
-                </div>
-
-                <!-- MAIN Vav -->
-                <div class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-end">
-
-                    <ul class="nav navbar-nav">
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'about' %}">About Us</a></li>
-
-                        <li class="has-child"><a href="{% url 'destinations' %}">Destinations</a>
-                            <ul class="sub-menu">
-                                {% for dest in nav_destinations %}
-                                <li><a href="{% url 'destination_detail' slug=dest.slug %}">{{ dest.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-
-                        <li><a href="{% url 'packages' %}">Packages</a></li>
-                        <li><a href="{% url 'blogs' %}">Blogs</a></li>
-                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
-                    </ul>
-
-                </div>
-
-                {% block extra_nav %}
-<!-- Header Right Section-->
-                <div class="extra-nav header-1-nav d-none d-lg-flex">
-                    <div class="extra-cell one">
-                        <div class="trv-hdr-1-social">
-                            <ul>
-                                <li><a href="https://www.facebook.com"><i class="feather feather-facebook"></i></a></li>
-                                <li><a href="https://www.instagram.com"><i class="feather feather-instagram"></i></a>
-                                </li>
-                                <li><a href="https://www.linkedin.com"><i class="feather feather-linkedin"></i></a></li>
-                                <li><a href="https://www.x.com"><i class="bi bi-twitter-x"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="extra-cell">
-                        <a href="contact.html" class="site-button butn-bg-shape">Contact</a>
-                    </div>
-                </div>
-
-                {% endblock %}
-                <!-- SITE Search -->
-                <div id="search">
-                    <span class="close-btn">X</span>
-                    <form role="search" id="searchform" action="/search" method="get" class="radius-xl">
-                        <div class="input-group">
-                            <input class="form-control" value="" name="q" type="search" placeholder="Search...">
-                            <span class="input-group-append">
-                                <button type="button" class="search-btn">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-
+          <div class="logo-header">
+            <div class="logo-header-inner logo-header-one">
+              <a href="{% url 'home' %}">
+                {% block logo_img %}<img
+                  src="{% static 'assets/images/logo-light.png' %}"
+                  alt=""
+                />{% endblock %}
+              </a>
             </div>
-        </div>
-        <!-- Sidebar popup Item -->
-        <div class="xs-sidebar-group info-group">
-            <div class="xs-overlay xs-bg-black"></div>
-            <div class="xs-sidebar-widget">
-                <div class="sidebar-widget-container">
-                    <div class="widget-heading">
-                        <a href="#" class="close-side-widget">
-                            <i class="bi bi-x-square-fill"></i>
-                        </a>
-                    </div>
-                    <div class="sidebar-textwidget">
-                        <!-- Sidebar Info Content -->
-                        <div class="sidebar-info-contents">
-                            <div class="content-inner">
-                                <div class="content-box">
+          </div>
 
-                                    <div class="trv-side-pnl-info">
-                                        <div class="trv-side-pnl-logo">
-                                            <img src="{% static 'assets/images/logo-dark.png' %}" alt="Image">
-                                        </div>
-                                        <div class="trv-side-pnl-content">
+          <!-- MAIN Vav -->
+          <div class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-end">
+            <ul class="nav navbar-nav">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'about' %}">About Us</a></li>
 
-                                            <div class="trv-side-pnl-content-mid">
-                                                <h3 class="trv-sm-title">It’s Time to Traveling</h3>
-                                                <h3 class="trv-lg-title">Plan Your Next Holiday</h3>
-                                                <p>Travlla is a multi-award-winning strategy and content creation agency
-                                                    that specializes in travel marketing.</p>
-                                            </div>
+              <li class="has-child">
+                <a href="{% url 'destinations' %}">Destinations</a>
+                <ul class="sub-menu">
+                  {% for dest in nav_destinations %}
+                  <li>
+                    <a href="{% url 'destination_detail' slug=dest.slug %}"
+                      >{{ dest.name }}</a
+                    >
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
 
-                                            <h3 class="trv-sm-title">Don't miss out this offers!</h3>
-                                            <ul class="trv-side-pnl-plan">
-                                                <li>
-                                                    <h2 class="trv-side-pnl-plan-count">$199</h2>
-                                                    <span>Basic Plan</span>
-                                                </li>
-                                                <li>
-                                                    <h2 class="trv-side-pnl-plan-count">$299</h2>
-                                                    <span>Pro Plan</span>
-                                                </li>
-                                                <li>
-                                                    <h2 class="trv-side-pnl-plan-count">$399</h2>
-                                                    <span>Full Plan</span>
-                                                </li>
-                                            </ul>
+              <li><a href="{% url 'packages' %}">Packages</a></li>
+              <li><a href="{% url 'blogs' %}">Blogs</a></li>
+              <li><a href="{% url 'gallery' %}">Gallery</a></li>
+              <li class="d-lg-none"> <a href="#" class="payment-btn" data-bs-toggle="modal" data-bs-target="#paymentModal">Make Payment</a></li>
+            </ul>
+          </div>
 
-                                            <ul class="social-icons">
-                                                <li><a href="https://www.x.com"><i class="bi bi-twitter-x"></i></a></li>
-                                                <li><a href="https://www.facebook.com "><i
-                                                            class="bi bi-facebook"></i></a></li>
-                                                <li><a href="https://www.instagram.com"><i
-                                                            class="bi bi-instagram"></i></a></li>
-                                                <li><a href="https://www.pinterest.com/"><i
-                                                            class="bi bi-pinterest"></i></a></li>
-                                            </ul>
-
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          {% block extra_nav %}
+          <!-- Header Right Section-->
+          <div class="extra-nav header-1-nav d-none d-lg-flex">
+            <div class="extra-cell">
+                <a href="#" class="payment-btn" data-bs-toggle="modal" data-bs-target="#paymentModal">Make Payment</a>
             </div>
+            <div class="extra-cell">
+              <a href="{% url 'contact' %}" class="site-button butn-bg-shape">Contact</a>
+            </div>
+          </div>
+
+          {% endblock %}
+          <!-- SITE Search -->
+          <div id="search">
+            <span class="close-btn">X</span>
+            <form
+              role="search"
+              id="searchform"
+              action="/search"
+              method="get"
+              class="radius-xl"
+            >
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  value=""
+                  name="q"
+                  type="search"
+                  placeholder="Search..."
+                />
+                <span class="input-group-append">
+                  <button type="button" class="search-btn">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
         </div>
-        <!--End Sidebar popup Item -->
+      </div>
+      <!-- Sidebar popup Item -->
+      <div class="xs-sidebar-group info-group">
+        <div class="xs-overlay xs-bg-black"></div>
+        <div class="xs-sidebar-widget">
+          <div class="sidebar-widget-container">
+            <div class="widget-heading">
+              <a href="#" class="close-side-widget">
+                <i class="bi bi-x-square-fill"></i>
+              </a>
+            </div>
+            <div class="sidebar-textwidget">
+              <!-- Sidebar Info Content -->
+              <div class="sidebar-info-contents">
+                <div class="content-inner">
+                  <div class="content-box">
+                    <div class="trv-side-pnl-info">
+                      <div class="trv-side-pnl-logo">
+                        <img
+                          src="{% static 'assets/images/logo-dark.png' %}"
+                          alt="Image"
+                        />
+                      </div>
+                      <div class="trv-side-pnl-content">
+                        <div class="trv-side-pnl-content-mid">
+                          <h3 class="trv-sm-title">It’s Time to Traveling</h3>
+                          <h3 class="trv-lg-title">Plan Your Next Holiday</h3>
+                          <p>
+                            Travlla is a multi-award-winning strategy and
+                            content creation agency that specializes in travel
+                            marketing.
+                          </p>
+                        </div>
+
+                        <h3 class="trv-sm-title">
+                          Don't miss out this offers!
+                        </h3>
+                        <ul class="trv-side-pnl-plan">
+                          <li>
+                            <h2 class="trv-side-pnl-plan-count">$199</h2>
+                            <span>Basic Plan</span>
+                          </li>
+                          <li>
+                            <h2 class="trv-side-pnl-plan-count">$299</h2>
+                            <span>Pro Plan</span>
+                          </li>
+                          <li>
+                            <h2 class="trv-side-pnl-plan-count">$399</h2>
+                            <span>Full Plan</span>
+                          </li>
+                        </ul>
+
+                        <ul class="social-icons">
+                          <li>
+                            <a href="https://www.x.com"
+                              ><i class="bi bi-twitter-x"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="https://www.facebook.com "
+                              ><i class="bi bi-facebook"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="https://www.instagram.com"
+                              ><i class="bi bi-instagram"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="https://www.pinterest.com/"
+                              ><i class="bi bi-pinterest"></i
+                            ></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--End Sidebar popup Item -->
     </header>
     <!-- HEADER END -->
 
     <div class="page-wraper">
 
-        
-{% block content %}
-{% endblock %}
-<!-- FOOTER START -->
-        <footer class="site-footer footer-dark">
-            <!-- 
+    <!-- Toast Notification start -->
+<div id="global-toast" style="
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    min-width: 300px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    z-index: 99999;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border-left: 4px solid #4CAF50;
+">
+    <span id="global-toast-icon" style="font-size:20px; margin-right:12px;"></span>
+    <span id="global-toast-message" style="font-size:14px; color:#333;"></span>
+</div>
+
+<!-- Toast Notification end -->
+
+<!-- PAYMENT MODAL -->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:520px;">
+        <div class="modal-content booking-modal-content">
+
+            <!-- Header -->
+            <div class="booking-modal-header">
+                <div class="booking-modal-title-wrap">
+                    <div class="booking-modal-icon">
+                        <i class="bi bi-credit-card"></i>
+                    </div>
+                    <div>
+                        <h5 class="booking-modal-title">Make Payment</h5>
+                        <p class="booking-modal-subtitle">Secure payment for your booking</p>
+                    </div>
+                </div>
+                <button type="button" class="booking-modal-close" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="booking-modal-body">
+                <form id="paymentForm">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <label class="booking-label">Full Name <span class="text-danger">*</span></label>
+                            <div class="booking-input-wrap">
+                                <div class="booking-input-icon"><i class="bi bi-person"></i></div>
+                                <input type="text" class="booking-input" name="name" placeholder="Your name" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="booking-label">Phone <span class="text-danger">*</span></label>
+                            <div class="booking-input-wrap">
+                                <div class="booking-input-icon"><i class="bi bi-telephone"></i></div>
+                                <input type="tel" class="booking-input" name="phone" placeholder="Phone number" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="booking-label">Email <span class="text-danger">*</span></label>
+                            <div class="booking-input-wrap">
+                                <div class="booking-input-icon"><i class="bi bi-envelope"></i></div>
+                                <input type="email" class="booking-input" name="email" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="booking-label">Amount (₹) <span class="text-danger">*</span></label>
+                            <div class="booking-input-wrap">
+                                <div class="booking-input-icon"><i class="bi bi-currency-rupee"></i></div>
+                                <input type="number" class="booking-input" name="amount" placeholder="Enter amount" min="1" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="booking-label">Package / Purpose</label>
+                            <div class="booking-input-wrap">
+                                <div class="booking-input-icon"><i class="bi bi-briefcase"></i></div>
+                                <input type="text" class="booking-input" name="package" placeholder="e.g. Maldives honeymoon package">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="booking-modal-footer">
+                <button type="button" class="booking-btn-cancel" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="booking-btn-whatsapp" id="proceedPaymentBtn">
+                    <i class="bi bi-credit-card"></i> Proceed to Pay
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- PAYMENT MODAL END -->
+
+
+
+
+      <!-- QUICK BOOKING MODAL -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content booking-modal-content">
+            
+            <!-- Header -->
+             <div class="booking-modal-header">
+                <div class="booking-modal-title-wrap">
+                   <div class="booking-modal-icon">
+                     <i class="bi bi-send"></i>
+                   </div>
+                   <div>
+                     <h5 class="booking-modal-title">Quick Booking Enquiry</h5>
+                     <p class="booking-modal-subtitle">Fill the details below and we'll get back to you</p>
+                   </div>
+                </div>
+                <button type="button" class="booking-modal-close" data-bs-dismiss="modal">
+                 <i class="bi bi-x-lg"></i>
+                </button>
+             </div>
+
+            <!-- Body -->
+            <div class="booking-modal-body">
+                <form id="bookingEnquiryForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="bookingPackageName" name="package_name">
+
+                    <div class="row g-3">
+    <div class="col-6">
+        <label class="booking-label">Name <span class="text-danger">*</span></label>
+        <div class="booking-input-wrap">
+            <div class="booking-input-icon"><i class="bi bi-person"></i></div>
+            <input type="text" class="booking-input" name="name" placeholder="Your name" required>
+        </div>
+    </div>
+    <div class="col-6">
+        <label class="booking-label">Phone <span class="text-danger">*</span></label>
+        <div class="booking-input-wrap">
+            <div class="booking-input-icon"><i class="bi bi-telephone"></i></div>
+            <input type="tel" class="booking-input" name="phone" placeholder="Phone number" required>
+        </div>
+    </div>
+    <div class="col-6">
+        <label class="booking-label">Start Date <span class="text-danger">*</span></label>
+        <div class="booking-input-wrap">
+            <div class="booking-input-icon"><i class="bi bi-calendar3"></i></div>
+            <input type="date" class="booking-input" name="start_date" required>
+        </div>
+    </div>
+    <div class="col-6">
+        <label class="booking-label">End Date <span class="text-danger">*</span></label>
+        <div class="booking-input-wrap">
+            <div class="booking-input-icon"><i class="bi bi-calendar3"></i></div>
+            <input type="date" class="booking-input" name="end_date" required>
+        </div>
+    </div>
+    <div class="col-6">
+        <label class="booking-label">Adults <span class="text-danger">*</span></label>
+        <div class="booking-input-wrap">
+            <div class="booking-input-icon"><i class="bi bi-people"></i></div>
+            <input type="number" class="booking-input" name="adults" placeholder="No. of adults" min="1" required>
+        </div>
+    </div>
+    <div class="col-6">
+        <label class="booking-label">Children</label>
+        <div class="booking-input-wrap">
+            <div class="booking-input-icon"><i class="bi bi-people"></i></div>
+            <input type="number" class="booking-input" name="children" value="0" min="0">
+        </div>
+    </div>
+    <div class="col-12">
+        <label class="booking-label">Package</label>
+        <div class="booking-input-wrap">
+            <div class="booking-input-icon"><i class="bi bi-briefcase"></i></div>
+            <input type="text" class="booking-input" id="bookingPackageDisplay" placeholder="Enter package name">
+        </div>
+    </div>
+</div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="booking-modal-footer">
+                <button type="button" class="booking-btn-cancel" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="booking-btn-whatsapp" id="sendWhatsApp">
+                    <i class="bi bi-whatsapp"></i> Send via WhatsApp
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div> 
+<!-- QUICK BOOKING MODAL end -->
+
+
+      {% block content %} {% endblock %}
+      <!-- FOOTER START -->
+      <footer class="site-footer footer-dark">
+        <!-- 
 <div class="trv-subscribe-nl trv-full-bx">
                 <div class="container">
                     <div class="trv-left-section">
@@ -273,183 +949,384 @@
             </div>
 -->
 
-            <!-- FOOTER BLOCKES START -->
-            <div class="container">
-                <div class="footer-top">
-                    <div class="row">
+        <!-- FOOTER BLOCKES START -->
+        <div class="container">
+          <div class="footer-top">
+            <div class="row">
+              <div class="col-xl-3 col-lg-6 col-md-12">
+                <div class="widget widget_about">
+                  <div class="logo-footer clearfix">
+                    <a href="index.html"
+                      ><img
+                        src="{% static 'assets/images/logo-dark.png' %}"
+                        alt=""
+                    /></a>
+                  </div>
+                  <p>
+                    World By ARK is your trusted travel partner, offering unforgettable journeys, holiday packages, and seamless travel booking services.
+                  </p>
 
-                        <div class="col-xl-3 col-lg-6 col-md-12">
-
-                            <div class="widget widget_about">
-                                <div class="logo-footer clearfix">
-                                    <a href="index.html"><img src="{% static 'assets/images/logo-dark.png' %}" alt=""></a>
-                                </div>
-                                <p>Travlla is a multi-award-winning strategy and content creation agency that
-                                    specializes in travel marketing.</p>
-
-                                <ul class="social-icons">
-                                    <li><a href="https://www.x.com"><i class="bi bi-twitter-x"></i></a></li>
-                                    <li><a href="https://www.facebook.com "><i class="bi bi-facebook"></i></a></li>
-                                    <li><a href="https://www.instagram.com"><i class="bi bi-instagram"></i></a></li>
-                                    <li><a href="https://www.pinterest.com/"><i class="bi bi-pinterest"></i></a></li>
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-4 col-4 m-b20">
-                            <div class="widget widget_services">
-                                <h3 class="widget-title">Explore</h3>
-                                <ul>
-                                    <li><a href="{% url 'about' %}">About us</a></li>
-                                    <li><a href="faq.html">FAQ’s</a></li>
-                                    <li><a href="services.html">Services</a></li>
-                                    <li><a href="our-team.html">Team</a></li>
-                                    <li><a href="{% url 'blogs' %}">News & Articles</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-4 col-4 m-b20">
-                            <div class="widget widget_services">
-                                <h3 class="widget-title">Destinations</h3>
-                                <ul>
-                                    <li><a href="destination-detail.html">Tokyo</a></li>
-                                    <li><a href="package-detail.html">France</a></li>
-                                    <li><a href="package-detail.html">Dubai</a></li>
-                                    <li><a href="destination-detail.html">Kenya</a></li>
-                                    <li><a href="package-detail.html">Vietnam</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-2 col-lg-6 col-md-6 col-sm-4 col-4 m-b20">
-                            <div class="widget widget_services">
-                                <h3 class="widget-title">Legal</h3>
-                                <ul>
-                                    <li><a href="{% url 'about' %}">Terms & Condition</a></li>
-                                    <li><a href="{% url 'about' %}">Privacy Policy</a></li>
-                                    <li><a href="{% url 'contact' %}">Contact</a></li>
-                                    <li><a href="services.html">Careers</a></li>
-                                    <li><a href="faq.html">Help</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-6 col-md-6">
-                            <div class="widget f-top-space">
-                                <ul class="widget_address">
-                                    <li>
-                                        <div class="trv-icon"><i class="bi bi-telephone"></i></div>
-                                        <a href="tel:918138999007"><span class="trv-contact">+91 81 38 999
-                                                007</span></a>
-                                    </li>
-
-                                    <li>
-                                        <div class="trv-icon"><i class="bi bi-envelope"></i></div>
-                                        <span>info@worldbyark.com</span>
-                                    </li>
-                                    <li>
-                                        <div class="trv-icon"><i class="bi bi-house-door"></i></div>
-                                        <span>Junior Janatha Road, Vyttila, Kochi-682 019, Kerala, India.</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
+                  <ul class="social-icons">
+                    <li>
+                      <a href="https://www.x.com"
+                        ><i class="bi bi-twitter-x"></i
+                      ></a>
+                    </li>
+                    <li>
+                      <a href="https://www.facebook.com/worldbyark"
+                        ><i class="bi bi-facebook"></i
+                      ></a>
+                    </li>
+                    <li>
+                      <a href="https://www.instagram.com/worldbyark/"
+                        ><i class="bi bi-instagram"></i
+                      ></a>
+                    </li>
+                    <li>
+                      <a href="https://www.pinterest.com/"
+                        ><i class="bi bi-pinterest"></i
+                      ></a>
+                    </li>
+                  </ul>
                 </div>
-                {% block pre_footer %}
-                <div class="footer-follow-instagram">
-                    <h3 class="widget-title">Follow Instagram</h3>
-                    <ul class="trv-ftr-insta-gall">
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic1.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic2.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic3.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic4.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic5.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic6.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic7.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic8.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href="https://www.instagram.com"><img src="{% static 'assets/images/insta-gallery/pic9.jpg' %}"
-                                    alt="image"><span><i class="bi bi-instagram"></i></span></a></li>
-                    </ul>
+              </div>
+
+              <div class="col-xl-2 col-lg-3 col-md-6 col-sm-4 col-4 m-b20">
+                <div class="widget widget_services">
+                  <h3 class="widget-title">Explore</h3>
+                  <ul>
+                    <li><a href="{% url 'about' %}">About us</a></li>
+                    <li><a href="{% url 'packages' %}">Packages</a></li>
+                    <li><a href="{% url 'about' %}#services">Services</a></li>
+                    <li><a href="{% url 'blogs' %}">News & Articles</a></li>
+                  </ul>
                 </div>
-                {% endblock %}
-                <div class="footer-bottom">
-                    <div class="container">
-                        <div class="copyrights-text">Copyright © 2016 World By ARK. All rights reserved</div>
-                    </div>
+              </div>
+
+              <div class="col-xl-2 col-lg-3 col-md-6 col-sm-4 col-4 m-b20">
+                <div class="widget widget_services">
+                  <h3 class="widget-title">Destinations</h3>
+                   <ul>
+                     {% for dest in footer_destinations %}
+                     <li>
+                      <a href="{% url 'destination_detail' slug=dest.slug %}">{{ dest.name }}</a>
+                     </li>
+                     {% endfor %}
+                   </ul>
                 </div>
+              </div>
+
+              <div class="col-xl-2 col-lg-6 col-md-6 col-sm-4 col-4 m-b20">
+                <div class="widget widget_services">
+                  <h3 class="widget-title">Legal</h3>
+                  <ul>
+                    <li><a href="{% url 'about' %}">Terms & Condition</a></li>
+                    <li><a href="{% url 'about' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-lg-6 col-md-6">
+                <div class="widget f-top-space">
+                  <ul class="widget_address">
+                    <li>
+                      <div class="trv-icon">
+                        <i class="bi bi-telephone"></i>
+                      </div>
+                      <a href="tel:918138999007"
+                        ><span class="trv-contact">+91 81 38 999 007</span></a
+                      >
+                    </li>
+
+                    <li>
+                      <div class="trv-icon"><i class="bi bi-envelope"></i></div>
+                      <span>info@worldbyark.com</span>
+                    </li>
+                    <li>
+                      <div class="trv-icon">
+                        <i class="bi bi-house-door"></i>
+                      </div>
+                      <span
+                        >Junior Janatha Road, Vyttila, Kochi-682 019, Kerala,
+                        India.</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <!-- FOOTER COPYRIGHT -->
+          </div>
+          {% block pre_footer %} {% endblock %}
+          <div class="footer-bottom">
+            <div class="container">
+              <div class="copyrights-text">
+                Copyright © 2026 World By ARK. All rights reserved. Designed By <a class="text-white" href="https://vynzora.com">VynZora</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- FOOTER COPYRIGHT -->
+      </footer>
+      <!-- FOOTER END -->
 
-        </footer>
-        <!-- FOOTER END -->
-
-        <!-- BUTTON TOP START -->
-        <button class="scroltop vert-move"><span class="relative" id="btn-vibrate"><img src="{% static 'assets/images/scroll-top.png' %}"
-                    alt="image"></span></button>
-
+      <!-- BUTTON TOP START -->
+      <button class="scroltop vert-move">
+        <span class="relative" id="btn-vibrate"
+          ><img src="{% static 'assets/images/scroll-top.png' %}" alt="image"
+        /></span>
+      </button>
     </div>
 
-
-
     <!-- JAVASCRIPT  FILES ========================================= -->
-    <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}"></script><!-- JQUERY.MIN JS -->
-    <script src="{% static 'assets/js/popper.min.js' %}"></script><!-- POPPER.MIN JS -->
-    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script><!-- BOOTSTRAP.MIN JS -->
-    <script src="{% static 'assets/js/bootstrap-select.min.js' %}"></script><!-- BOOTSTRAP SELECT.MIN JS -->
-    <script src="{% static 'assets/js/magnific-popup.min.js' %}"></script><!-- MAGNIFIC-POPUP JS -->
-    <script src="{% static 'assets/js/waypoints.min.js' %}"></script><!-- WAYPOINTS JS -->
-    <script src="{% static 'assets/js/counterup.min.js' %}"></script><!-- COUNTERUP JS -->
-    <script src="{% static 'assets/js/isotope.pkgd.min.js' %}"></script><!-- MASONRY  -->
-    <script src="{% static 'assets/js/imagesloaded.pkgd.min.js' %}"></script><!-- MASONRY  -->
-    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script><!-- OWL  SLIDER  -->
-    <script src="{% static 'assets/js/theia-sticky-sidebar.js' %}"></script><!-- STICKY SIDEBAR  -->
-    <script src="{% static 'assets/js/jquery.bootstrap-touchspin.js' %}"></script><!-- FORM JS -->
-    <script src="{% static 'assets/js/lc_lightbox.lite.js' %}"></script><!-- IMAGE POPUP -->
-    <script src="{% static 'assets/js/bootstrap-slider.min.js' %}"></script><!-- Form js -->
-    <script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script> <!-- Swiper JS -->
-    <script src="{% static 'assets/js/img-parallax.js' %}"></script><!-- Image Parallax -->
+    <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}"></script>
+    <!-- JQUERY.MIN JS -->
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <!-- POPPER.MIN JS -->
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <!-- BOOTSTRAP.MIN JS -->
+    <script src="{% static 'assets/js/bootstrap-select.min.js' %}"></script>
+    <!-- BOOTSTRAP SELECT.MIN JS -->
+    <script src="{% static 'assets/js/magnific-popup.min.js' %}"></script>
+    <!-- MAGNIFIC-POPUP JS -->
+    <script src="{% static 'assets/js/waypoints.min.js' %}"></script>
+    <!-- WAYPOINTS JS -->
+    <script src="{% static 'assets/js/counterup.min.js' %}"></script>
+    <!-- COUNTERUP JS -->
+    <script src="{% static 'assets/js/isotope.pkgd.min.js' %}"></script>
+    <!-- MASONRY  -->
+    <script src="{% static 'assets/js/imagesloaded.pkgd.min.js' %}"></script>
+    <!-- MASONRY  -->
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <!-- OWL  SLIDER  -->
+    <script src="{% static 'assets/js/theia-sticky-sidebar.js' %}"></script>
+    <!-- STICKY SIDEBAR  -->
+    <script src="{% static 'assets/js/jquery.bootstrap-touchspin.js' %}"></script>
+    <!-- FORM JS -->
+    <script src="{% static 'assets/js/lc_lightbox.lite.js' %}"></script>
+    <!-- IMAGE POPUP -->
+    <script src="{% static 'assets/js/bootstrap-slider.min.js' %}"></script>
+    <!-- Form js -->
+    <script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
+    <!-- Swiper JS -->
+    <script src="{% static 'assets/js/img-parallax.js' %}"></script>
+    <!-- Image Parallax -->
 
-    <script src="{% static 'assets/js/gsap.min.js' %}"></script><!-- CURSOR -->
-    <script src="{% static 'assets/js/custom.js' %}"></script><!-- CUSTOM FUCTIONS  -->
-    <script>
-        function hidePreloader() {
-            jQuery('.loading-area').hide();
-            setTimeout(function () {
-                var pre = document.getElementById('ark-preloader');
-                if (pre) {
-                    pre.classList.add('ark-hide');
-                    setTimeout(function () {
-                        pre.style.display = 'none';
-                        jQuery(window).trigger('scroll');
-                    }, 750);
-                }
-            }, 250);
-        }
-        if (document.readyState === 'complete') {
-            hidePreloader();
+    <script src="{% static 'assets/js/gsap.min.js' %}"></script>
+    <!-- CURSOR -->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+
+
+     <!-- WhatsApp Booking Modal start -->
+     <script>
+// Your WhatsApp number (with country code, no + or spaces)
+const WHATSAPP_NUMBER = "9048651027"; // change this
+
+function openBookingModal(packageName) {
+    document.getElementById('bookingPackageName').value = packageName;
+    document.getElementById('bookingPackageDisplay').value = packageName;
+}
+
+document.getElementById('sendWhatsApp').addEventListener('click', async function () {
+    const form = document.getElementById('bookingEnquiryForm');
+
+    const name         = form.querySelector('[name="name"]').value.trim();
+    const phone        = form.querySelector('[name="phone"]').value.trim();
+    const start_date   = form.querySelector('[name="start_date"]').value;
+    const end_date     = form.querySelector('[name="end_date"]').value;
+    const adults       = form.querySelector('[name="adults"]').value;
+    const children     = form.querySelector('[name="children"]').value;
+    const package_name = document.getElementById('bookingPackageDisplay').value.trim();
+
+    // Basic validation
+   if (!name || !phone || !start_date || !end_date || !adults) {
+    showGlobalToast('Please fill in all required fields.', 'warning');
+    return;
+   }
+
+    const btn = this;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving...';
+
+    try {
+        // Step 1: Save to database
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        const response = await fetch("{% url 'save_booking_enquiry' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({
+                name, phone, 
+                package: package_name,
+                start_date, end_date, 
+                adults, children
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            // Step 2: Open WhatsApp
+            const message =
+`*Quick Booking Enquiry - World By ARK*
+
+*Name:* ${name}
+*Phone:* ${phone}
+*Package:* ${package_name}
+*Start Date:* ${start_date}
+*End Date:* ${end_date}
+*Adults:* ${adults}
+*Children:* ${children}`;
+
+            const encoded = encodeURIComponent(message);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
+
+            // Step 3: Close modal and reset form
+            bootstrap.Modal.getInstance(
+                document.getElementById('bookingModal')
+            ).hide();
+            form.reset();
+
         } else {
-            jQuery(window).on('load', hidePreloader);
+           showGlobalToast('Something went wrong. Please try again.', 'error');
         }
+
+    } catch (err) {
+        console.error(err);
+        showGlobalToast('Network error. Please try again.', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-whatsapp"></i> Send via WhatsApp';
+    }
+});
+</script>
+    <!-- WhatsApp Booking Modal End -->
+     
+  <!-- payment  Modal start -->
+    <script>
+document.getElementById('proceedPaymentBtn').addEventListener('click', async function () {
+    const form = document.getElementById('paymentForm');
+    const name    = form.querySelector('[name="name"]').value.trim();
+    const phone   = form.querySelector('[name="phone"]').value.trim();
+    const email   = form.querySelector('[name="email"]').value.trim();
+    const amount  = form.querySelector('[name="amount"]').value.trim();
+    const package_name = form.querySelector('[name="package"]').value.trim();
+
+    if (!name || !phone || !email || !amount) {
+        showGlobalToast('Please fill in all required fields.', 'warning');
+        return;
+    }
+
+    const btn = this;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Processing...';
+
+    try {
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        {% comment %} const response = await fetch("{% url 'save_payment' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({ name, phone, email, amount, package: package_name })
+        }); {% endcomment %}
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            // Redirect to Razorpay / payment gateway URL returned from backend
+            if (result.payment_url) {
+                window.location.href = result.payment_url;
+            } else {
+                showGlobalToast('Payment initiated! We will contact you shortly.', 'success');
+                bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+                form.reset();
+            }
+        } else {
+            showGlobalToast(result.message || 'Something went wrong. Please try again.', 'error');
+        }
+    } catch (err) {
+        console.error(err);
+        showGlobalToast('Network error. Please try again.', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-credit-card"></i> Proceed to Pay';
+    }
+});
+</script>
+
+
+
+    <!-- popup message js-->
+    <script>
+function showGlobalToast(message, type = 'success') {
+    const toast = document.getElementById('global-toast');
+    const msg   = document.getElementById('global-toast-message');
+    const icon  = document.getElementById('global-toast-icon');
+
+    const config = {
+        success: { color: '#4CAF50', icon: '✅' },
+        error:   { color: '#f44336', icon: '❌' },
+        warning: { color: '#ff9800', icon: '⚠️' },
+        info:    { color: '#2196F3', icon: 'ℹ️' },
+    };
+
+    const c = config[type] || config.info;
+    toast.style.borderLeftColor = c.color;
+    icon.textContent  = c.icon;
+    msg.textContent   = message;
+
+    // Show
+    toast.style.transform = 'translateX(0)';
+    toast.style.opacity   = '1';
+
+    // Auto hide after 4 seconds
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+        toast.style.transform = 'translateX(120%)';
+        toast.style.opacity   = '0';
+    }, 4000);
+}
+
+// Click to dismiss
+document.getElementById('global-toast').addEventListener('click', function () {
+    this.style.transform = 'translateX(120%)';
+    this.style.opacity   = '0';
+});
+</script>
+<!-- popup message js end-->
+
+    <!-- CUSTOM FUCTIONS  -->
+    <script>
+      function hidePreloader() {
+        jQuery(".loading-area").hide();
+        setTimeout(function () {
+          var pre = document.getElementById("ark-preloader");
+          if (pre) {
+            pre.classList.add("ark-hide");
+            setTimeout(function () {
+              pre.style.display = "none";
+              jQuery(window).trigger("scroll");
+            }, 750);
+          }
+        }, 250);
+      }
+      if (document.readyState === "complete") {
+        hidePreloader();
+      } else {
+        jQuery(window).on("load", hidePreloader);
+      }
     </script>
     <script src="{% static 'assets/js/moment.min.js' %}"></script>
-    <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script><!-- BOOTSTRAP DATEPICKER -->
+    <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <!-- BOOTSTRAP DATEPICKER -->
 
-
-
-{% block extra_js %}{% endblock %}
-</body>
-
+    {% block extra_js %}{% endblock %}
+  </body>
 </html>

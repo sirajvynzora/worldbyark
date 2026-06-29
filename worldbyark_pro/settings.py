@@ -51,6 +51,7 @@ TEMPLATES = [
                 'worldbyark_app.context_processors.google_reviews',
                 'worldbyark_app.context_processors.footer_packages',
                 'worldbyark_app.context_processors.nav_destinations',
+                'worldbyark_app.context_processors.footer_destinations',
             ],
         },
     },
@@ -110,3 +111,14 @@ RECAPTCHA_SITE_KEY = "your-recaptcha-site-key"
 RECAPTCHA_SECRET_KEY = "your-recaptcha-secret-key"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# EMAIL SETTINGS - only one block!
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # prints in terminal for testing
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "sirajvynzora@gmail.com"
+EMAIL_HOST_PASSWORD = "lrvx lzeh qyde xklu"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = 'sirajvynzora@gmail.com'

@@ -6,30 +6,49 @@ from django.db.models.functions import Lower
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
+from django.conf import settings
+from bs4 import BeautifulSoup
+
+from django.core.mail import send_mail
+from django.contrib import messages
 
 from .forms import BlogForm, ContactForm, TestimonialForm, GalleryImageForm, CategoryForm, TourPackageForm, DestinationForm
-from .models import Blog, Category, ContactMessage, GalleryImage, Testimonial, TourPackage, Destination
+from .models import Blog, Category, ContactMessage, GalleryImage, Testimonial, TourPackage, Destination, BookingEnquiry
 
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+import json
 
 # ==========================================
 # FRONTEND VIEWS
 # ==========================================
 
+
+
 def home(request):
     packages = TourPackage.objects.all().order_by("-created_at")[:6]
-    testimonials = Testimonial.objects.all()[:8]
+    testimonials = Testimonial.objects.all()
     destinations = Destination.objects.all().order_by("-created_at")[:8]
-    latest_blogs = Blog.objects.all().order_by("-created_at")[:6]
+    latest_blogs = list(Blog.objects.all().order_by("-created_at")[:6])
+    latest_blogs.reverse()
+    category_images = []
+    categories = Category.objects.all()
+    for category in categories:
+        image = GalleryImage.objects.filter(category=category).order_by("-uploaded_at").first()
+        if image:
+            category_images.append(image)
+    
     return render(request, 'frontend/index.html', {
         "packages": packages,
         "testimonials": testimonials,
         "destinations": destinations,
         "latest_blogs": latest_blogs,
+        "category_images": category_images,
     })
 
 
 def about(request):
-    testimonials = Testimonial.objects.all()[:8]
+    testimonials = Testimonial.objects.all()
     destinations = Destination.objects.all().order_by("-created_at")[:8]
     return render(request, 'frontend/about.html', {
         "testimonials": testimonials,
@@ -39,7 +58,7 @@ def about(request):
 
 def packages(request):
     packages_qs = TourPackage.objects.all().order_by("-created_at")
-    paginator = Paginator(packages_qs, 9)
+    paginator = Paginator(packages_qs, 6)
     page_number = request.GET.get("page")
     packages_page = paginator.get_page(page_number)
     return render(request, 'frontend/packages.html', {"packages": packages_page})
@@ -56,7 +75,7 @@ def package_detail(request, slug):
 
 def destinations(request):
     destinations_qs = Destination.objects.all().order_by("-created_at")
-    paginator = Paginator(destinations_qs, 9)
+    paginator = Paginator(destinations_qs, 8)
     page_number = request.GET.get("page")
     destinations_page = paginator.get_page(page_number)
     packages_qs = TourPackage.objects.all().order_by("-created_at")[:8]
@@ -66,18 +85,48 @@ def destinations(request):
     })
 
 
+
+
 def destination_detail(request, slug):
     destination = get_object_or_404(Destination, slug=slug)
-    related_destinations = Destination.objects.exclude(slug=slug).order_by("-created_at")[:4]
+    related_destinations = Destination.objects.exclude(slug=slug).order_by("-created_at")[:6]
+
+    soup = BeautifulSoup(destination.description, "html.parser")
+    
+    plain_paragraphs = []
+    list_items = []
+    has_real_lists = False
+
+    for element in soup.children:
+        if element.name in ["ul", "ol"]:
+            has_real_lists = True
+            for li in element.find_all("li"):
+                text = li.get_text(strip=True)
+                if text:
+                    list_items.append(text)
+        elif element.name in ["p", "h1", "h2", "h3", "h4", "h5", "h6"]:
+            text = element.get_text(strip=True)
+            if text:
+                plain_paragraphs.append(text)
+        elif isinstance(element, str) and element.strip():
+            plain_paragraphs.append(element.strip())
+
+    if not has_real_lists:
+        list_items = []
+
     return render(request, 'frontend/destination-detail.html', {
         "destination": destination,
         "related_destinations": related_destinations,
+        "plain_paragraphs": plain_paragraphs,
+        "list_items": list_items,
+        "has_real_lists": has_real_lists,
     })
+
 
 
 def blogs(request):
     blogs_qs = Blog.objects.all().order_by("-created_at")
-    paginator = Paginator(blogs_qs, 9)
+    paginator = Paginator(blogs_qs, 4)
     page_number = request.GET.get("page")
     blogs_page = paginator.get_page(page_number)
     from .models import GalleryImage
@@ -90,35 +139,113 @@ def blogs(request):
     })
 
 
+
+
 def blog_detail(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     recent_blogs = Blog.objects.exclude(slug=slug).order_by("-created_at")[:4]
     from .models import GalleryImage
     gallery_images = GalleryImage.objects.all()[:6]
+    soup = BeautifulSoup(blog.description, "html.parser")
+    prev_blog = Blog.objects.filter(created_at__lt=blog.created_at).order_by("-created_at").first()
+    next_blog = Blog.objects.filter(created_at__gt=blog.created_at).order_by("created_at").first()
+
+
+    plain_paragraphs = []
+    list_items = []
+    has_real_lists = False  # Track if there are actual <ul>/<ol> tags
+
+    for element in soup.children:
+        if element.name in ["ul", "ol"]:
+            has_real_lists = True
+            for li in element.find_all("li"):
+                text = li.get_text(strip=True)
+                if text:
+                    list_items.append(text)
+        elif element.name in ["p", "h1", "h2", "h3", "h4", "h5", "h6"]:
+            text = element.get_text(strip=True)
+            if text:
+                plain_paragraphs.append(text)
+        elif isinstance(element, str) and element.strip():
+            plain_paragraphs.append(element.strip())
+    if not has_real_lists:
+        list_items = []
+
     return render(request, 'frontend/blog-detail.html', {
         "blog": blog,
         "recent_blogs": recent_blogs,
         "gallery_images": gallery_images,
+        "plain_paragraphs": plain_paragraphs,
+        "list_items": list_items,
+        "has_real_lists": has_real_lists,
+        "prev_blog": prev_blog,
+        "next_blog": next_blog,
     })
+
 
 
 def gallery(request):
     categories = Category.objects.prefetch_related("images").all()
-    all_images = GalleryImage.objects.all().order_by("-uploaded_at")
+    destinations = Destination.objects.all().order_by("-created_at")
+    
+    selected_category = request.GET.get('category', 'all')
+    
+    if selected_category and selected_category != 'all':
+        all_images = GalleryImage.objects.filter(
+            category__name=selected_category
+        ).order_by("-uploaded_at")
+    else:
+        all_images = GalleryImage.objects.all().order_by("-uploaded_at")
+    
     return render(request, 'frontend/gallery.html', {
         "categories": categories,
         "all_images": all_images,
+        "destinations": destinations,
+        "selected_category": selected_category,
     })
-
 
 def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Your message has been sent. We will get back to you soon.")
+            contact_msg = form.save()
+            try:
+                send_mail(
+                    subject=f"For Enquiry The Package Details from {contact_msg.first_name} {contact_msg.last_name}",
+                    message=f"""
+Name    : {contact_msg.first_name} {contact_msg.last_name}
+Phone   : {contact_msg.phone}
+Email   : {contact_msg.email}
+Message : {contact_msg.message}
+                    """,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.ADMIN_EMAIL],
+                    fail_silently=False,
+                )
+                # Confirmation email to user
+                if contact_msg.email:
+                    send_mail(
+                        subject="We received your message! - World By ARK",
+                        message=f"""Hi {contact_msg.first_name},
+
+Thank you for reaching out! We have received your message and will get back to you shortly.
+
+Best regards,
+World By ARK Team
++91 81 38 999 007
+info@worldbyark.com""",
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[contact_msg.email],
+                        fail_silently=True,
+                    )
+            except Exception as e:
+                messages.warning(request, "Message saved but email failed.")
+                return redirect("contact")
+
+            messages.success(request, "Your message has been sent. We will get back to you soon!")
             return redirect("contact")
-        messages.error(request, "Please check the form and try again.")
+        else:
+            messages.error(request, "Please check the form and try again.")
     else:
         form = ContactForm()
     return render(request, 'frontend/contact.html', {"form": form})
@@ -126,6 +253,51 @@ def contact(request):
 
 def page_not_found(request, exception):
     return render(request, 'frontend/404.html', status=404)
+
+
+@require_POST
+def save_booking_enquiry(request):
+    try:
+        data = json.loads(request.body)
+
+        name       = data.get('name', '').strip()
+        phone      = data.get('phone', '').strip()
+        package    = data.get('package', '').strip()
+        start_date = data.get('start_date')
+        end_date   = data.get('end_date')
+        adults     = data.get('adults', 1)
+        children   = data.get('children', 0)
+
+        # Basic validation
+        if not all([name, phone, start_date, end_date, adults]):
+            return JsonResponse({
+                'status': 'error',
+                'message': 'All required fields must be filled.'
+            }, status=400)
+
+        enquiry = BookingEnquiry.objects.create(
+            name       = name,
+            phone      = phone,
+            package    = package,
+            start_date = start_date,
+            end_date   = end_date,
+            adults     = int(adults),
+            children   = int(children),
+        )
+
+        return JsonResponse({
+            'status': 'success',
+            'id': enquiry.id
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=400)
+
+
+
 
 
 # ==========================================
@@ -171,6 +343,7 @@ def admin_dashboard(request):
         'total_destinations': Destination.objects.count(),
         'total_contacts': ContactMessage.objects.count(),
         'total_gallery': GalleryImage.objects.count(),
+        'total_enquiries': BookingEnquiry.objects.count(),
     }
 
     recent_blogs = Blog.objects.all().order_by('-created_at')[:4]
@@ -492,3 +665,24 @@ def delete_contact(request, pk):
         contact.delete()
         messages.success(request, "Contact deleted!")
     return redirect("view_contacts")
+
+# ==========================================
+# booking enquiry (ADMIN)
+# ==========================================
+
+
+@login_required(login_url="admin_login")
+def admin_enquiry_list(request):
+    enquiries = Paginator(
+        BookingEnquiry.objects.all().order_by("-created_at"), 10
+    ).get_page(request.GET.get("page"))
+    return render(request, "admin_pages/enquiry_list.html", {"enquiries": enquiries})
+
+
+@login_required(login_url="admin_login")
+def admin_enquiry_delete(request, pk):
+    enquiry = get_object_or_404(BookingEnquiry, pk=pk)
+    if request.method == "POST":
+        enquiry.delete()
+        messages.success(request, "Enquiry deleted successfully!")
+    return redirect("admin_enquiry_list")

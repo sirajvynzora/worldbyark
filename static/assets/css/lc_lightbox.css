@@ -1,12 +1,12 @@
 @font-face {
-	font-family: 'lc_lightbox';
-	src:url('../fonts/lc_lightbox.eot');
-	src:url('../fonts/lc_lightbox.eot') format('embedded-opentype'),
-		url('../fonts/lc_lightbox.woff') format('woff'),
-		url('../fonts/lc_lightbox.ttf') format('truetype'),
-		url('../fonts/lc_lightbox.svg') format('svg');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'lc_lightbox';
+    src: url('/static/assets/fonts/lc_lightbox.eot');
+    src: url('/static/assets/fonts/lc_lightbox.eot') format('embedded-opentype'),
+         url('/static/assets/fonts/lc_lightbox.woff') format('woff'),
+         url('/static/assets/fonts/lc_lightbox.ttf') format('truetype'),
+         url('/static/assets/fonts/lc_lightbox.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 

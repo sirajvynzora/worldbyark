@@ -814,69 +814,198 @@ All JavaScript fuctions Start
 	}
 
 	//------ Tour Category Slider Start ------------//
-	function trv_tour_cat_carousal(){
-		const featureTitle = document.querySelector(".trv-feature h2");
-		const featureDescription = document.querySelector(".trv-feature p");
-		const featureUrl = document.querySelector(".trv-feature a");
-		var swiper = new Swiper(".trv-tr-cat-carousal", {
-		slidesPerView: 2,
-		spaceBetween: 30,
-		autoplay: {
-			delay: 4500,
-			disableOnInteraction: false
-		},
-		navigation: {
-			nextEl: ".swiper-button-next",
-			prevEl: ".swiper-button-prev"
-		},
-		breakpoints: {
-			0: {
-				slidesPerView: 1,
-			}, 
-			540: {
-			  slidesPerView: 2,
-			},
-			1024: {
-			  slidesPerView: 2,
-			},
-		},
-		on: {
-			init: function () {
-			let activeSlide = document.querySelector(".trv-cat-sld.swiper-slide-active");
-			featureTitle.textContent = activeSlide.getAttribute("data-title");
-			featureDescription.textContent = activeSlide.getAttribute(
-				"data-description"
-			);
-			featureTitle.classList.add("animate-title");
-			featureDescription.classList.add("animate-description");
-			featureUrl.classList.add("animate-url");
-			},
-			slideChangeTransitionStart: function () {
-			featureTitle.classList.remove("animate-title");
-			featureDescription.classList.remove("animate-description");
-			featureUrl.classList.remove("animate-url");
-			featureTitle.classList.add("animate-away");
-			featureDescription.classList.add("animate-away");
-			featureUrl.classList.add("animate-away");
-			setTimeout(() => {
-				featureTitle.classList.remove("animate-away");
-				featureDescription.classList.remove("animate-away");
-				featureUrl.classList.remove("animate-away");
-			}, 500);
-			},
-			slideChangeTransitionEnd: function () {
-			let activeSlide = document.querySelector(".trv-cat-sld.swiper-slide-active");
-			featureTitle.textContent = activeSlide.getAttribute("data-title");
-			featureDescription.textContent = activeSlide.getAttribute(
-				"data-description"
-			);
-			featureTitle.classList.add("animate-title");
-			featureDescription.classList.add("animate-description");
-			featureUrl.classList.add("animate-url");
-			}
-		}
-		});
-	}
+	// function trv_tour_cat_carousal(){
+	// 	const featureTitle = document.querySelector(".trv-feature h2");
+	// 	const featureDescription = document.querySelector(".trv-feature p");
+	// 	const featureUrl = document.querySelector(".trv-feature a");
+	// 	var swiper = new Swiper(".trv-tr-cat-carousal", {
+    //   slidesPerView: 2,
+    //   spaceBetween: 30,
+    //   autoplay: {
+    //     delay: 4500,
+    //     disableOnInteraction: false,
+    //   },
+    //   navigation: {
+    //     nextEl: ".swiper-button-next",
+    //     prevEl: ".swiper-button-prev",
+    //   },
+    //   breakpoints: {
+    //     0: {
+    //       slidesPerView: 1,
+    //     },
+    //     540: {
+    //       slidesPerView: 2,
+    //     },
+    //     1024: {
+    //       slidesPerView: 2,
+    //     },
+    //   },
+    //   on: {
+    //     init: function () {
+    //       let activeSlide = document.querySelector(
+    //         ".trv-cat-sld.swiper-slide-active",
+	// 	  );
+	// 	  if (!activeSlide) return;
+    //       featureTitle.textContent = activeSlide.getAttribute("data-title");
+    //       featureDescription.textContent =
+    //         activeSlide.getAttribute("data-description");
+    //       featureTitle.classList.add("animate-title");
+    //       featureDescription.classList.add("animate-description");
+    //       featureUrl.classList.add("animate-url");
+    //     },
+	// 	  slideChangeTransitionStart: function () {
+	// 		if (!featureTitle) return;
+    //       featureTitle.classList.remove("animate-title");
+    //       featureDescription.classList.remove("animate-description");
+    //       featureUrl.classList.remove("animate-url");
+    //       featureTitle.classList.add("animate-away");
+    //       featureDescription.classList.add("animate-away");
+    //       featureUrl.classList.add("animate-away");
+    //       setTimeout(() => {
+    //         featureTitle.classList.remove("animate-away");
+    //         featureDescription.classList.remove("animate-away");
+    //         featureUrl.classList.remove("animate-away");
+    //       }, 500);
+    //     },
+    //     slideChangeTransitionEnd: function () {
+    //       let activeSlide = document.querySelector(
+    //         ".trv-cat-sld.swiper-slide-active",
+    //       );
+    //       if (!activeSlide) return; // ← ADD THIS ONE LINE
+    //       featureTitle.textContent = activeSlide.getAttribute("data-title");
+    //       featureDescription.textContent =
+    //         activeSlide.getAttribute("data-description");
+    //       featureTitle.classList.add("animate-title");
+    //       featureDescription.classList.add("animate-description");
+    //       featureUrl.classList.add("animate-url");
+    //     },
+    //   },
+    // });
+	// }
+	function trv_tour_cat_carousal() {
+    // ── Guard: exit if required elements don't exist on this page ──
+    
+	const container = document.querySelector(".trv-tr-cat-carousal");
+    if (!container) return;	
+	const featureTitle = document.querySelector(".trv-feature h2");
+    const featureDescription = document.querySelector(".trv-feature p");
+    const featureUrl = document.querySelector(".trv-feature a");
+
+    var swiper = new Swiper(".trv-tr-cat-carousal", {
+      slidesPerView: 2,
+      spaceBetween: 30,
+      autoplay: {
+        delay: 4500,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        0: { slidesPerView: 1 },
+        540: { slidesPerView: 2 },
+        1024: { slidesPerView: 2 },
+      },
+      //   on: {
+      //     init: function () {
+      //       let activeSlide = document.querySelector(
+      //         ".trv-cat-sld.swiper-slide-active",
+      //       );
+      //       if (!activeSlide) return;
+      //       featureTitle.textContent = activeSlide.getAttribute("data-title");
+      //       featureDescription.textContent =
+      //         activeSlide.getAttribute("data-description");
+      //       featureTitle.classList.add("animate-title");
+      //       featureDescription.classList.add("animate-description");
+      //       featureUrl.classList.add("animate-url");
+      //     },
+      //     slideChangeTransitionStart: function () {
+      //       featureTitle.classList.remove("animate-title");
+      //       featureDescription.classList.remove("animate-description");
+      //       featureUrl.classList.remove("animate-away");
+      //       featureTitle.classList.add("animate-away");
+      //       featureDescription.classList.add("animate-away");
+      //       featureUrl.classList.add("animate-away");
+      //       setTimeout(() => {
+      //         featureTitle.classList.remove("animate-away");
+      //         featureDescription.classList.remove("animate-away");
+      //         featureUrl.classList.remove("animate-away");
+      //       }, 500);
+      //     },
+      //     slideChangeTransitionEnd: function () {
+      //       let activeSlide = document.querySelector(
+      //         ".trv-cat-sld.swiper-slide-active",
+      //       );
+      //       if (!activeSlide) return;
+      //       featureTitle.textContent = activeSlide.getAttribute("data-title");
+      //       featureDescription.textContent =
+      //         activeSlide.getAttribute("data-description");
+      //       featureTitle.classList.add("animate-title");
+      //       featureDescription.classList.add("animate-description");
+      //       featureUrl.classList.add("animate-url");
+      //     },
+      //   },
+      on: {
+        init: function () {
+          try {
+            let activeSlide = document.querySelector(
+              ".trv-cat-sld.swiper-slide-active",
+            );
+            if (!activeSlide) return;
+            if (featureTitle)
+              featureTitle.textContent = activeSlide.getAttribute("data-title");
+            if (featureDescription)
+              featureDescription.textContent =
+                activeSlide.getAttribute("data-description");
+            if (featureTitle) featureTitle.classList.add("animate-title");
+            if (featureDescription)
+              featureDescription.classList.add("animate-description");
+            if (featureUrl) featureUrl.classList.add("animate-url");
+          } catch (e) {}
+        },
+        slideChangeTransitionStart: function () {
+          try {
+            if (featureTitle) {
+              featureTitle.classList.remove("animate-title");
+              featureTitle.classList.add("animate-away");
+            }
+            if (featureDescription) {
+              featureDescription.classList.remove("animate-description");
+              featureDescription.classList.add("animate-away");
+            }
+            if (featureUrl) {
+              featureUrl.classList.remove("animate-url");
+              featureUrl.classList.add("animate-away");
+            }
+            setTimeout(() => {
+              if (featureTitle) featureTitle.classList.remove("animate-away");
+              if (featureDescription)
+                featureDescription.classList.remove("animate-away");
+              if (featureUrl) featureUrl.classList.remove("animate-away");
+            }, 500);
+          } catch (e) {}
+        },
+        slideChangeTransitionEnd: function () {
+          try {
+            let activeSlide = document.querySelector(
+              ".trv-cat-sld.swiper-slide-active",
+            );
+            if (!activeSlide) return;
+            if (featureTitle)
+              featureTitle.textContent = activeSlide.getAttribute("data-title");
+            if (featureDescription)
+              featureDescription.textContent =
+                activeSlide.getAttribute("data-description");
+            if (featureTitle) featureTitle.classList.add("animate-title");
+            if (featureDescription)
+              featureDescription.classList.add("animate-description");
+            if (featureUrl) featureUrl.classList.add("animate-url");
+          } catch (e) {}
+        },
+      },
+    });
+  }
 
 	//  Selectpicker function = bootstrap-select.min.js________//
 	if(jQuery('select').length){
@@ -1055,6 +1184,7 @@ All JavaScript fuctions Start
 	function Cursor_section(){
 		let cursor = document.querySelector(".cursor");
 		let cursor2 = document.querySelector(".cursor2");
+		if (!cursor || !cursor2) return;
 		let cursorScale = document.querySelectorAll(".cursor-scale");
 		let mouseX = 0;
 		let mouseY = 0;
@@ -1440,31 +1570,31 @@ All JavaScript fuctions Start
 	======================================*/
 
 	// > Contact form function by = custom.js	
-	jQuery(document).on('submit', 'form.trv-cons-contact-form', function(e){
-		e.preventDefault();
-		var form = jQuery(this);
-		/* sending message */
-		jQuery.ajax({
-			url: 'https://thewebmax.org/travlla/phpmailer/mail.php',
+	// jQuery(document).on('submit', 'form.trv-cons-contact-form', function(e){
+	// 	e.preventDefault();
+	// 	var form = jQuery(this);
+	// 	/* sending message */
+	// 	jQuery.ajax({
+	// 		url: 'https://thewebmax.org/travlla/phpmailer/mail.php',
 			
-			data: form.serialize() + "&action=contactform",
-			type: 'POST',
-			dataType: 'JSON',
-			beforeSend: function() {
-				jQuery('.loading-area').show();
-			},
-			success:function(data){
-				jQuery('.loading-area').hide();
-				if(data['success']){
-				jQuery("<div class='alert alert-success'>"+data['message']+"</div>").insertBefore('form.trv-cons-contact-form');
-				}else{
-				jQuery("<div class='alert alert-danger'>"+data['message']+"</div>").insertBefore('form.trv-cons-contact-form');	
-				}
-			}
-		});
-		jQuery('.trv-cons-contact-form').trigger("reset");
-		return false;
-	});
+	// 		data: form.serialize() + "&action=contactform",
+	// 		type: 'POST',
+	// 		dataType: 'JSON',
+	// 		beforeSend: function() {
+	// 			jQuery('.loading-area').show();
+	// 		},
+	// 		success:function(data){
+	// 			jQuery('.loading-area').hide();
+	// 			if(data['success']){
+	// 			jQuery("<div class='alert alert-success'>"+data['message']+"</div>").insertBefore('form.trv-cons-contact-form');
+	// 			}else{
+	// 			jQuery("<div class='alert alert-danger'>"+data['message']+"</div>").insertBefore('form.trv-cons-contact-form');	
+	// 			}
+	// 		}
+	// 	});
+	// 	jQuery('.trv-cons-contact-form').trigger("reset");
+	// 	return false;
+	// });
 
 	/*==================================
 	Document on  Submit FUNCTION END

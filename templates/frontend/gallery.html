@@ -1,5 +1,113 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
+{% block extra_css %}
+<style>
+{% comment %} category filterinng button style start here {% endcomment %}
+/* Custom Dropdown */
+.trv-custom-dropdown {
+    position: relative;
+    min-width: 200px;
+    user-select: none;
+}
+
+.trv-custom-dropdown-selected {
+    padding: 10px 20px;
+    border: 2px solid #F29979;
+    border-radius: 30px;
+    background-image: linear-gradient(135deg, rgb(242, 153, 121), rgb(242, 99, 126));
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.trv-custom-dropdown-selected:hover {
+    color:white;
+}
+
+.trv-dropdown-arrow {
+    font-size: 12px;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.trv-custom-dropdown.open .trv-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.trv-custom-dropdown-list {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 2px solid #F29979;
+    border-radius: 16px;
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+    z-index: 999;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.trv-custom-dropdown.open .trv-custom-dropdown-list {
+    display: block;
+}
+
+.trv-custom-dropdown-list li {
+    padding: 9px 20px;
+    font-size: 14px;
+    color: #F29979;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.trv-custom-dropdown-list li:hover {
+    background-color: #F29979;
+    color: white;
+}
+
+.trv-custom-dropdown-list li.active {
+    color:black;
+    font-weight: 600;
+}
+
+.trv-filter-label{
+   color: #3C2D73; 
+}
+
+{% comment %} category style end here {% endcomment %}
+
+
+    .trv-gallery-rev-st1-media {
+    position: relative;
+    overflow: hidden;
+}
+
+.trv-gallery-rev-st1-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
+    border-radius: 0 0 12px 12px;
+}
+
+.trv-gallery-rev-st1-title {
+    color: #fff;
+    margin: 0;
+    font-size: 20px;
+}
+</style>
+{% endblock %}
 {% block content %}
 <div class="page-content">
 
@@ -21,15 +129,6 @@
                 </div>
                 <!-- BREADCRUMB ROW END -->                        
             </div>
-            <div class="trv-inr-bnr-cloud">            
-                <div class="marquee">
-                    <img src="{% static 'assets/images/inr-banner-cloud.png' %}" alt="Image">
-                </div>
-            </div>
-            <div class="trv-inr-bnr-plane">
-                <div class="trv-inr-bnr-plane-bx"><img src="{% static 'assets/images/airplane.png' %}" alt="Image"></div>
-                
-            </div>
             <div class="trv-inr-bnr-bloon-1"><img src="{% static 'assets/images/hotballon-Left.png' %}" alt="Image"></div>
             <div class="trv-inr-bnr-bloon-2"><img src="{% static 'assets/images/hotballon-right.png' %}" alt="Image"></div>
         </div>
@@ -49,86 +148,157 @@
                     </div>
                 <!-- TITLE END-->
 
+<!-- FILTER FORM -->
+<form method="GET" action="{% url 'gallery' %}" id="filterForm">
+    <div class="trv-filter-bar d-flex align-items-center gap-3 mb-5 flex-wrap">
+
+        <!-- Custom Dropdown -->
+        <div class="trv-custom-dropdown" id="customDropdown">
+            <div class="trv-custom-dropdown-selected" id="dropdownSelected">
+                {% if selected_category == 'all' %}All Categories{% else %}{{ selected_category }}{% endif %}
+                <i class="bi bi-chevron-down trv-dropdown-arrow"></i>
+            </div>
+            <ul class="trv-custom-dropdown-list" id="dropdownList">
+                <li data-value="all" {% if selected_category == 'all' %}class="active"{% endif %}>
+                    All Categories
+                </li>
+                {% for cat in categories %}
+                <li data-value="{{ cat.name }}" 
+                    {% if selected_category == cat.name %}class="active"{% endif %}>
+                    {{ cat.name }}
+                </li>
+                {% endfor %}
+            </ul>
+            <!-- Hidden input to submit value -->
+            <input type="hidden" name="category" id="categoryInput" 
+                   value="{{ selected_category }}">
+        </div>
+
+    </div>
+</form>
+<!-- FILTER FORM END -->
+
                 <div class="section-content">
 
                     <div class="trv-gallery-section row">
 
-                        <!-- COLUMNS 1 -->
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
-                            <div class="trv-gallery-st1 l-pic">
-                                <div class="trv-gallery-st1-media">
-                                    <img src="{% static 'assets/images/gallery/l-pic1.jpg' %}" alt="image">
-                                    <a class="elem trv-gallery-st1-btn" href="{% static 'assets/images/gallery/l-pic1.jpg' %}" title="Bali Indonesia" data-lcl-txt="" data-lcl-author="" data-lcl-thumb="images/gallery/l-pic1.jpg"><i class="bi bi-arrows-fullscreen"></i>    
-                                    </a>
-                                </div>
-                            </div> 
-                            <div class="trv-gallery-st1 l-pic">
-                                <div class="trv-gallery-st1-media">
-                                    <img src="{% static 'assets/images/gallery/l-pic2.jpg' %}" alt="image">
-                                    <a class="elem trv-gallery-st1-btn" href="{% static 'assets/images/gallery/l-pic2.jpg' %}" title="Spain" data-lcl-txt="" data-lcl-author="" data-lcl-thumb="images/gallery/l-pic2.jpg"><i class="bi bi-arrows-fullscreen"></i>    
-                                    </a>
-                                </div>
-                            </div>                      
-                        </div>
+    <!-- COLUMNS 1 -->
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+        {% with img=all_images.0 %}
+        {% if img %}
+        <div class="trv-gallery-st1 l-pic">
+            <div class="trv-gallery-st1-media">
+                <img src="{{ img.image.url }}" alt="{{ img.title }}">
+                <a class="elem trv-gallery-st1-btn" href="{{ img.image.url }}"
+                   title="{{ img.category }}" data-lcl-txt="" data-lcl-author=""
+                   data-lcl-thumb="{{ img.image.url }}">
+                    <i class="bi bi-arrows-fullscreen"></i>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
 
-                        <!-- COLUMNS 2 -->
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6  col-6">
-                            <div class="trv-gallery-st1 p-pic">
-                                <div class="trv-gallery-st1-media">
-                                    <img src="{% static 'assets/images/gallery/p-pic1.jpg' %}" alt="image">
-                                    <a class="elem trv-gallery-st1-btn" href="{% static 'assets/images/gallery/p-pic1.jpg' %}" title="Plateau in Slovenia" data-lcl-txt="" data-lcl-author="" data-lcl-thumb="images/gallery/p-pic1.jpg"><i class="bi bi-arrows-fullscreen"></i>    
-                                    </a>
-                                </div>
-                            </div> 
-                        </div>
+        {% with img=all_images.1 %}
+        {% if img %}
+        <div class="trv-gallery-st1 l-pic">
+            <div class="trv-gallery-st1-media">
+                <img src="{{ img.image.url }}" alt="{{ img.title }}">
+                <a class="elem trv-gallery-st1-btn" href="{{ img.image.url }}"
+                   title="{{ img.category }}" data-lcl-txt="" data-lcl-author=""
+                   data-lcl-thumb="{{ img.image.url }}">
+                    <i class="bi bi-arrows-fullscreen"></i>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
 
-                        <!-- COLUMNS 3 -->
-                        <div class="col-xl-4 col-lg-4 col-md-4">
-                            <div class="trv-gallery-st1-box">
-                                <div class="trv-media">
-                                    <img src="{% static 'assets/images/gallery/lady.png' %}" alt="Image">
-                                </div>
-                            </div> 
-                        </div>
-                        
-                        <!-- COLUMNS 4 -->
-                        <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12">
-                            <div class="trv-gallery-st1 l-pic">
-                                <div class="trv-gallery-st1-media">
-                                    <img src="{% static 'assets/images/gallery/l-pic3.jpg' %}" alt="image">
-                                    <a class="elem trv-gallery-st1-btn" href="{% static 'assets/images/gallery/l-pic3.jpg' %}" title="Brazil" data-lcl-txt="" data-lcl-author="" data-lcl-thumb="images/gallery/l-pic3.jpg"><i class="bi bi-arrows-fullscreen"></i>    
-                                    </a>
-                                </div>
-                            </div> 
-                        </div>
-                        
-                        <!-- COLUMNS 5 -->
-                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                            <div class="row">
-                                <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                    <div class="trv-gallery-st1 l-pic">
-                                        <div class="trv-gallery-st1-media">
-                                            <img src="{% static 'assets/images/gallery/p-pic2.jpg' %}" alt="image">
-                                            <a class="elem trv-gallery-st1-btn" href="{% static 'assets/images/gallery/p-pic2.jpg' %}" title="Indonesia" data-lcl-txt="" data-lcl-author="" data-lcl-thumb="images/gallery/p-pic2.jpg"><i class="bi bi-arrows-fullscreen"></i>    
-                                            </a>
-                                        </div>
-                                    </div> 
-                                </div>
-                                <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                    <div class="trv-gallery-st1 l-pic">
-                                        <div class="trv-gallery-st1-media">
-                                            <img src="{% static 'assets/images/gallery/p-pic3.jpg' %}" alt="image">
-                                            <a class="elem trv-gallery-st1-btn" href="{% static 'assets/images/gallery/p-pic3.jpg' %}" title="Maldivas" data-lcl-txt="" data-lcl-author="" data-lcl-thumb="images/gallery/p-pic3.jpg"><i class="bi bi-arrows-fullscreen"></i>    
-                                            </a>
-                                        </div>
-                                    </div> 
-                                </div>
-                            </div>
-                            
-                        </div>
-                        
-                            
+    <!-- COLUMNS 2 -->
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+        {% with img=all_images.2 %}
+        {% if img %}
+        <div class="trv-gallery-st1 p-pic">
+            <div class="trv-gallery-st1-media">
+                <img src="{{ img.image.url }}" alt="{{ img.title }}">
+                <a class="elem trv-gallery-st1-btn" href="{{ img.image.url }}"
+                   title="{{ img.category }}" data-lcl-txt="" data-lcl-author=""
+                   data-lcl-thumb="{{ img.image.url }}">
+                    <i class="bi bi-arrows-fullscreen"></i>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- COLUMNS 3 (decorative box — kept as-is) -->
+    <div class="col-xl-4 col-lg-4 col-md-4">
+        <div class="trv-gallery-st1-box">
+            <div class="trv-media">
+                <img src="{% static 'assets/images/gallery/lady.png' %}" alt="Image">
+            </div>
+        </div>
+    </div>
+
+    <!-- COLUMNS 4 -->
+    <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12">
+        {% with img=all_images.3 %}
+        {% if img %}
+        <div class="trv-gallery-st1 l-pic">
+            <div class="trv-gallery-st1-media">
+                <img src="{{ img.image.url }}" alt="{{ img.title }}">
+                <a class="elem trv-gallery-st1-btn" href="{{ img.image.url }}"
+                   title="{{ img.category }}" data-lcl-txt="" data-lcl-author=""
+                   data-lcl-thumb="{{ img.image.url }}">
+                    <i class="bi bi-arrows-fullscreen"></i>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- COLUMNS 5 -->
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                {% with img=all_images.4 %}
+                {% if img %}
+                <div class="trv-gallery-st1 l-pic">
+                    <div class="trv-gallery-st1-media">
+                        <img src="{{ img.image.url }}" alt="{{ img.title }}">
+                        <a class="elem trv-gallery-st1-btn" href="{{ img.image.url }}"
+                           title="{{ img.category }}" data-lcl-txt="" data-lcl-author=""
+                           data-lcl-thumb="{{ img.image.url }}">
+                            <i class="bi bi-arrows-fullscreen"></i>
+                        </a>
                     </div>
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                {% with img=all_images.5 %}
+                {% if img %}
+                <div class="trv-gallery-st1 l-pic">
+                    <div class="trv-gallery-st1-media">
+                        <img src="{{ img.image.url }}" alt="{{ img.title }}">
+                        <a class="elem trv-gallery-st1-btn" href="{{ img.image.url }}"
+                           title="{{ img.category }}" data-lcl-txt="" data-lcl-author=""
+                           data-lcl-thumb="{{ img.image.url }}">
+                            <i class="bi bi-arrows-fullscreen"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+
+</div>
 
                     
                     <div class="trv-btm-title2-section">
@@ -146,95 +316,85 @@
         <!-- CATEGORY SECTION -->
         <div class="section-full trv-rev-gallary-wrap p-b90">
             <div class="owl-carousel twm-category-carousal-slider2">
-                <!-- COLUMN 1 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic1.jpg' %}" alt="Image">
-                        </div>
-                    </div>
+    {% for destination in destinations|slice:":5" %}
+    <div class="item">
+        <div class="trv-gallery-rev-st1">
+           <a href="{% url 'destination_detail' slug=destination.slug %}" class="trv-gallery-rev-st1-link">
+               <div class="trv-gallery-rev-st1-media">
+                  <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
+                   <div class="trv-gallery-rev-st1-content">
+                      <h4 class="trv-gallery-rev-st1-title">{{ destination.name }}</h4>
+                   </div>
                 </div>
-                <!-- COLUMN 2 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic2.jpg' %}" alt="Image">
-                        </div>
-                    </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="owl-carousel twm-category-carousal-slider">
+    {% for destination in destinations|slice:"5:10" %}
+    <div class="item">
+        <div class="trv-gallery-rev-st1">
+            <a href="{% url 'destination_detail' slug=destination.slug %}" class="trv-gallery-rev-st1-link">
+               <div class="trv-gallery-rev-st1-media">
+                  <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
+                   <div class="trv-gallery-rev-st1-content">
+                      <h4 class="trv-gallery-rev-st1-title">{{ destination.name }}</h4>
+                   </div>
                 </div>
-                <!-- COLUMN 3 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic3.jpg' %}" alt="Image">
-                        </div>
-                    </div>
-                </div>
-                <!-- COLUMN 4 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic4.jpg' %}" alt="Image">
-                        </div>
-                    </div>
-                </div>
-                <!-- COLUMN 5 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic5.jpg' %}" alt="Image">
-                        </div>
-                    </div>
-                </div>
-                <!-- COLUMN 6 -->
-                
-            </div>
-            <div class="owl-carousel twm-category-carousal-slider">
-                <!-- COLUMN 1 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic6.jpg' %}" alt="Image">
-                        </div>
-                    </div>
-                </div>
-                <!-- COLUMN 2 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic7.jpg' %}" alt="Image">
-                        </div>
-                    </div>
-                </div>
-                <!-- COLUMN 3 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic8.jpg' %}" alt="Image">
-                        </div>
-                    </div>
-                </div>
-                <!-- COLUMN 4 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic9.jpg' %}" alt="Image">
-                        </div>
-                    </div>
-                </div>
-                <!-- COLUMN 5 -->
-                <div class="item">
-                <div class="trv-gallery-rev-st1">
-                        <div class="trv-gallery-rev-st1-media">
-                            <img src="{% static 'assets/images/gallery-2/pic10.jpg' %}" alt="Image">
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
         </div>
         <!-- CATEGORY END -->
 
     </div>
     <!-- CONTENT END -->
+{% endblock %}
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const dropdown     = document.getElementById('customDropdown');
+    const selected     = document.getElementById('dropdownSelected');
+    const list         = document.getElementById('dropdownList');
+    const hiddenInput  = document.getElementById('categoryInput');
+    const form         = document.getElementById('filterForm');
+
+    // Toggle open/close
+    selected.addEventListener('click', function (e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+    });
+
+    // Select an option
+    list.querySelectorAll('li').forEach(function (li) {
+        li.addEventListener('click', function () {
+            const value = this.dataset.value;
+            const text  = this.textContent.trim();
+
+            // Update display
+            selected.childNodes[0].textContent = text + ' ';
+
+            // Update hidden input
+            hiddenInput.value = value;
+
+            // Close dropdown
+            dropdown.classList.remove('open');
+
+            // Submit form
+            form.submit();
+        });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function () {
+        dropdown.classList.remove('open');
+    });
+
+});
+</script>
 {% endblock %}

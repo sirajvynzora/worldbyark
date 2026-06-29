@@ -33,6 +33,36 @@
     <link rel="stylesheet" href="{% static 'admin-static/assets/css/icofont.min.css' %}">
     <link rel="stylesheet" href="{% static 'admin-static/assets/css/style.css' %}">
 
+
+
+     <!-- FAVICONS ICON -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'assets/images/favicon/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'assets/images/favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'assets/images/favicon/favicon-16x16.png' %}"
+    />
+    <link
+      rel="manifest"
+      href="{% static 'assets/images/favicon/site.webmanifest' %}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{% static 'assets/images/favicon/favicon.ico' %}"
+    />
+
+
     <!-- Professional Dashboard CSS -->
     <style>
         /* CKEditor List Styles - Fix for bullets and numbers */
@@ -1163,6 +1193,11 @@
                                 <a href="{% url 'view_contacts' %}"
                                     class="{% if request.resolver_match.url_name == 'view_contacts' %}active{% endif %}">
                                     Contact Messages
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'admin_enquiry_list' %}" class="{% if request.resolver_match.url_name == 'admin_enquiry_list' %}active{% endif %}">
+                                   Booking Enquiries
                                 </a>
                             </li>
                         </ul>

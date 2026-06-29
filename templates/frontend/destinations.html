@@ -21,22 +21,13 @@
                 </div>
                 <!-- BREADCRUMB ROW END -->                        
             </div>
-            <div class="trv-inr-bnr-cloud">            
-                <div class="marquee">
-                    <img src="{% static 'assets/images/inr-banner-cloud.png' %}" alt="Image">
-                </div>
-            </div>
-            <div class="trv-inr-bnr-plane">
-                <div class="trv-inr-bnr-plane-bx"><img src="{% static 'assets/images/airplane.png' %}" alt="Image"></div>
-                
-            </div>
             <div class="trv-inr-bnr-bloon-1"><img src="{% static 'assets/images/hotballon-Left.png' %}" alt="Image"></div>
             <div class="trv-inr-bnr-bloon-2"><img src="{% static 'assets/images/hotballon-right.png' %}" alt="Image"></div>
         </div>
         <!-- INNER PAGE BANNER END -->
         
         <!--POPULAR DESTINATION SECTION START-->
-        <div class="section-full p-t120 p-b90 trv-popular-destination">
+        <div class="section-full p-t120 p-b50 trv-popular-destination">
             <div class="container">
 
                 <div class="section-content">
@@ -81,105 +72,9 @@
         </div>
         <!--POPULAR DESTINATION SECTION END-->
 
-        <!-- CLIENT LOGO SECTION START -->
-        <div class="section-full trv-client-section">
-            <div class="trv-client-row">
-                <div class="container">
-                    <div class="section-content">
-                        <div class="trv-client-carousel">
-                            <div class="row">
-                                <div class="col-xl-3 col-lg-12 col-md-12">
-                                    <div class="trv-client-titlesection">
-                                        <h2 class="trv-head-title"><span class="site-text-yellow">1K+ </span>Brands Trust Us</h2>
-                                    </div>
-                                </div>
-                                <div class="col-xl-9 col-lg-12 col-md-12">
-                                    <div class="owl-carousel home-client-carousel">
-                                    
-
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/1.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                        
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/2.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/3.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                        
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/4.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/5.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/1.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                        
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/2.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/3.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                        
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/4.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="item">
-                                                <div class="ow-client-logo">
-                                                    <div class="client-logo client-logo-media">
-                                                    <a href="{% url 'about' %}"><img src="{% static 'assets/images/client-logo/dark/5.png' %}" alt=""></a></div>
-                                                </div>
-                                            </div>
-                                            
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- CLIENT LOGO  SECTION End -->
 
         <!--EXPLORE POPULAR TOUR START-->
-        <div class="section-full trv-popular-tours2 p-t120">
+        <div class="section-full trv-popular-tours2 p-t50">
             <div class="container-fluid">
                 <!-- TITLE START-->
                 <div class="section-head trv-head-title-wrap center-position">
@@ -217,7 +112,7 @@
                                                 <span>{{ package.duration }}</span>
                                             </div>
                                             <div class="trv-tour-price">
-                                                <span class="price">{{ package.price_from }}</span>
+                                                <span class="price">₹{{ package.price_from }}</span>
                                             </div>
                                         </div>
                                         <div class="trv-content-bottom-section">
@@ -230,7 +125,10 @@
                                             </div>
                                             <div class="trv-content-bottom-column">
                                                 <div class="trv-book">
-                                                    <a href="{% url 'package_detail' package.slug %}" class="site-button outline white-txt">Book Now</a>
+                                                    <button class="site-button outline white-txt" onclick="openBookingModal('{{ package.name }}')"
+                                                             data-bs-toggle="modal" data-bs-target="#bookingModal">
+                                                              Enquire
+                                                    </button> 
                                                 </div>
                                             </div>
                                         </div>

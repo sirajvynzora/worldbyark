@@ -13,6 +13,7 @@ urlpatterns = [
     path('blogs/<slug:slug>/', views.blog_detail, name='blog_detail'),
     path('gallery/', views.gallery, name='gallery'),
     path('contact/', views.contact, name='contact'),
+    path('booking/enquiry/', views.save_booking_enquiry, name='save_booking_enquiry'),
 
     # Admin Auth
     path('admin-login/', views.admin_login, name='admin_login'),
@@ -59,4 +60,8 @@ urlpatterns = [
     # Admin - Contacts
     path('dashboard/contacts/', views.view_contacts, name='view_contacts'),
     path('dashboard/contacts/<int:pk>/delete/', views.delete_contact, name='delete_contact'),
+
+    # Admin - Booking Enquiries
+    path('dashboard/enquiries/', views.admin_enquiry_list, name='admin_enquiry_list'),
+    path('dashboard/enquiries/<int:pk>/delete/', views.admin_enquiry_delete, name='admin_enquiry_delete'),
 ]

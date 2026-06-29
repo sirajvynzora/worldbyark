@@ -1,6 +1,119 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
+{% block extra_css %}
+<style>
+
+     :root {
+        --toast-gold: #C9A84C;        /* light golden */
+        --toast-gold-light: rgba(201, 168, 76, 0.12);
+    }
+    .global-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        min-width: 300px;
+        max-width: 500px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        z-index: 9999;
+        transform: translateX(120%);
+        opacity: 0;
+        transition: all 0.4s ease;
+        border-left: 4px solid var(--toast-gold); 
+    }
+
+    .global-toast.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .global-toast.success,
+    .global-toast.error,
+    .global-toast.warning,
+    .global-toast.info {
+        border-left-color: var(--toast-gold);
+    }
+
+    .toast-content {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        gap: 12px;
+    }
+
+    .toast-icon { font-size: 20px; }
+    .global-toast.success .toast-icon,
+    .global-toast.error   .toast-icon,
+    .global-toast.warning .toast-icon,
+    .global-toast.info    .toast-icon {
+        color: var(--toast-gold);
+    }
+
+    .toast-message {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.4;
+    }
+
+    .toast-close {
+        background: none;
+        border: none;
+        font-size: 18px;
+        color: #999;
+        cursor: pointer;
+        margin-left: 12px;
+        line-height: 1;
+    }
+
+    .toast-close:hover { color: var(--toast-gold); }
+
+    .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        width: 100%;
+        border-radius: 0 0 8px 8px;
+        overflow: hidden;
+        background: rgba(0,0,0,0.08);
+    }
+
+    .toast-progress-bar {
+        height: 100%;
+        width: 100%;
+        animation: toastProgress 5s linear forwards;
+    }
+
+     .global-toast.success .toast-progress-bar,
+    .global-toast.error   .toast-progress-bar,
+    .global-toast.warning .toast-progress-bar,
+    .global-toast.info    .toast-progress-bar {
+        background: var(--toast-gold);
+    }
+
+    @keyframes toastProgress {
+        from { width: 100%; }
+        to   { width: 0%; }
+    }
+</style>
+{% endblock %}
 {% block content %}
+<!-- Toast Notification -->
+<div id="contact-toast" class="global-toast">
+    <div class="toast-content">
+        <i class="toast-icon fas fa-check-circle"></i>
+        <span class="toast-message"></span>
+    </div>
+    <button class="toast-close" onclick="document.getElementById('contact-toast').classList.remove('show')">×</button>
+    <div class="toast-progress">
+        <div class="toast-progress-bar"></div>
+    </div>
+</div>
+
 <div class="page-content">
 
         <!-- INNER PAGE BANNER -->
@@ -21,7 +134,7 @@
                 </div>
                 <!-- BREADCRUMB ROW END -->                        
             </div>
-            <div class="trv-inr-bnr-cloud">            
+            {% comment %} <div class="trv-inr-bnr-cloud">            
                 <div class="marquee">
                     <img src="{% static 'assets/images/inr-banner-cloud.png' %}" alt="Image">
                 </div>
@@ -29,7 +142,7 @@
             <div class="trv-inr-bnr-plane">
                 <div class="trv-inr-bnr-plane-bx"><img src="{% static 'assets/images/airplane.png' %}" alt="Image"></div>
                 
-            </div>
+            </div> {% endcomment %}
             <div class="trv-inr-bnr-bloon-1"><img src="{% static 'assets/images/hotballon-Left.png' %}" alt="Image"></div>
             <div class="trv-inr-bnr-bloon-2"><img src="{% static 'assets/images/hotballon-right.png' %}" alt="Image"></div>
         </div>
@@ -43,14 +156,14 @@
                     <div class="gmap-outline">
                         <div class="google-map">
                             <div style="width: 100%">
-                                <iframe height="600" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2969.272796714594!2d-87.64937353634511!3d41.90849403896016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd324fc400797%3A0x76a989827d7eb84e!2s853%20W%20Blackhawk%20St%2C%20Chicago%2C%20IL%2060642%2C%20USA!5e0!3m2!1sen!2sin!4v1745326667544!5m2!1sen!2sin"></iframe>
-                            </div>
+                                <iframe  height="600" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.5853979822327!2d76.3095667747932!3d9.96841069013541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0872d6af3f305d%3A0x4b38d1089f26d5b7!2sWorld%20By%20ARK!5e0!3m2!1sen!2sin!4v1782299096284!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xxl-6 col-xl-5 col-lg-5 col-md-12">
-                        <div class="trv-form">
+                        {% comment %} <div class="trv-form">
                             <!-- TITLE START-->
                             <div class="section-head trv-head-title-wrap left-position">
                                 <h2 class="trv-head-title"><span class="site-text-yellow">Reach</span> & Get in Touch With Us!</h2>
@@ -71,9 +184,61 @@
                                     <textarea  class="form-control"  name="message" placeholder="Message"></textarea>
                                 </div>
                                 <button type="submit" class="site-button butn-bg-shape">Send Message</button>
-                            </form>
+                            </form> 
                             
-                        </div>
+                            
+                        </div> {% endcomment %}
+                         <div class="trv-form">
+    <div class="section-head trv-head-title-wrap left-position">
+        <h2 class="trv-head-title"><span class="site-text-yellow">Reach</span> & Get in Touch With Us!</h2>
+        <div class="trv-head-discription">We'd love to hear from you. Our friendly team is always here to chat</div>
+    </div>
+
+    <form class="trv-cons-contact-form" method="post" action="{% url 'contact' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <input class="form-control" name="first_name" type="text" placeholder="First Name"
+                   value="{{ form.first_name.value|default:'' }}">
+            {% if form.first_name.errors %}
+                <small class="text-danger">{{ form.first_name.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" name="last_name" type="text" placeholder="Last Name"
+                   value="{{ form.last_name.value|default:'' }}">
+            {% if form.last_name.errors %}
+                <small class="text-danger">{{ form.last_name.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" name="phone" type="text" placeholder="Phone Number"
+                   value="{{ form.phone.value|default:'' }}">
+            {% if form.phone.errors %}
+                <small class="text-danger">{{ form.phone.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" name="email" type="email" placeholder="Email Address"
+                   value="{{ form.email.value|default:'' }}">
+            {% if form.email.errors %}
+                <small class="text-danger">{{ form.email.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <textarea class="form-control" name="message" placeholder="Message">{{ form.message.value|default:'' }}</textarea>
+            {% if form.message.errors %}
+                <small class="text-danger">{{ form.message.errors }}</small>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="site-button butn-bg-shape">Send Message</button>
+    </form>
+</div>
                     </div>
                     <div class="col-xxl-6 col-xl-7 col-lg-7 col-md-12">
                         <div class="trv-contact-us-detail-wrap">
@@ -144,4 +309,59 @@
 
     </div>
     <!-- CONTENT END -->
+{% endblock %}
+
+
+
+{% block extra_js %}
+<script>
+    jQuery(document).ready(function () {
+        jQuery('form.trv-cons-contact-form').off('submit');
+
+        // Toast function
+        function showContactToast(message, type) {
+            const toast = document.getElementById('contact-toast');
+            const toastMessage = toast.querySelector('.toast-message');
+            const toastIcon = toast.querySelector('.toast-icon');
+            const progressBar = toast.querySelector('.toast-progress-bar');
+
+            toastMessage.textContent = message;
+            toast.className = 'global-toast ' + type;
+
+            const icons = {
+                success: 'fas fa-check-circle',
+                error:   'fas fa-times-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info:    'fas fa-info-circle'
+            };
+            toastIcon.className = 'toast-icon ' + (icons[type] || icons.info);
+
+            // Reset progress bar animation
+            progressBar.style.animation = 'none';
+            progressBar.offsetHeight; // force reflow
+            progressBar.style.animation = '';
+
+            toast.classList.add('show');
+
+            setTimeout(() => toast.classList.remove('show'), 5000);
+        }
+
+        // Fire Django messages as toasts
+        {% if messages %}
+            {% for message in messages %}
+                showContactToast(
+                    "{{ message|escapejs }}",
+                    "{{ message.tags }}"
+                );
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+
+<script>
+    // Force remove ALL submit handlers and let Django handle it
+    jQuery(document).ready(function () {
+        jQuery('form.trv-cons-contact-form').off('submit');
+    });
+</script>
 {% endblock %}

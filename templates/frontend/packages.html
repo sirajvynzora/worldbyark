@@ -21,7 +21,7 @@
                 </div>
                 <!-- BREADCRUMB ROW END -->                        
             </div>
-            <div class="trv-inr-bnr-cloud">            
+            {% comment %} <div class="trv-inr-bnr-cloud">            
                 <div class="marquee">
                     <img src="{% static 'assets/images/inr-banner-cloud.png' %}" alt="Image">
                 </div>
@@ -29,7 +29,7 @@
             <div class="trv-inr-bnr-plane">
                 <div class="trv-inr-bnr-plane-bx"><img src="{% static 'assets/images/airplane.png' %}" alt="Image"></div>
                 
-            </div>
+            </div> {% endcomment %}
             <div class="trv-inr-bnr-bloon-1"><img src="{% static 'assets/images/hotballon-Left.png' %}" alt="Image"></div>
             <div class="trv-inr-bnr-bloon-2"><img src="{% static 'assets/images/hotballon-right.png' %}" alt="Image"></div>
         </div>
@@ -74,7 +74,7 @@
                                                 <span>{{ package.duration }}</span>
                                             </div>
                                             <div class="trv-tour-price">
-                                                <span class="price">{{ package.price_from }}</span>
+                                                <span class="price">₹{{ package.price_from }}</span>
                                             </div>
                                         </div>
                                         <div class="trv-content-bottom-section">
@@ -87,7 +87,7 @@
                                             </div>
                                             <div class="trv-content-bottom-column">
                                                 <div class="trv-book">
-                                                    <a href="{% url 'package_detail' package.slug %}" class="site-button outline white-txt">Book Now</a>
+                                                     <button type="button" class="site-button outline white-txt" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('{{ package.name }}')" >Enquire Now</button>
                                                 </div>
                                                 <div class="trv-tour-rating">
                                                     <div class="trv-review-rating">
@@ -100,8 +100,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                      </div>
+                                      
                                     </div>
-                                </div>
                             </div>
                             {% empty %}
                             <p class="text-muted">No packages yet.</p>
@@ -129,9 +130,28 @@
         <!--EXPLORE POPULAR TOUR END-->
 
         <!-- ADVENTURE SECTION START -->
-        <div class="trv-adventure-st1" style="background-image: url(images/background/adv-bg-2.jpg);">
+        <div class="trv-adventure-st1" style="position: relative; overflow: hidden;">
+    <!-- Background Video -->
+        <video autoplay muted loop playsinline
+           style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
+        <source src="{% static 'assets/images/video-2.mp4' %}" type="video/mp4">
+        </video>
+
+        <!-- Dark overlay -->
+         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); z-index: 1;"></div>
+
+        <!-- Content -->
+        <div style="position: relative; z-index: 2;">
+         <div class="circle-text2"></div>
+         <h2 class="adventure-title">Your Dreams</h2>
+         <p class="adventure-text">It's time to Travel</p>
+          <button type="button" class="site-button butn-bg-shape" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('{{ package.name }}')" >Enquire Now</button>
+         </div>
+
+        </div>
+        {% comment %} <div class="trv-adventure-st1" style="background-image: url('{% static 'assets/images/background/adv-bg-2.jpg' %}');">
             <div class="circle-text2">
-                <div class="emblem-wrap">
+                 <div class="emblem-wrap">
                     <div class="emblem">Want-to-see-our-top-destinations-</div>
                     <i><img src="{% static 'assets/images/advanture-st1.png' %}" alt="In Circle Pic"></i>
                 </div>
@@ -139,11 +159,11 @@
             <h2 class="adventure-title">Your Dreams</h2>
             <p class="adventure-text">It’s time to Travel </p>
             <a href="{% url 'contact' %}" class="site-button butn-bg-shape">Booking Now</a>
-        </div>
+        </div> {% endcomment %}
         <!-- ADVENTURE SECTION END -->
 
         <!-- CLIENT LOGO SECTION START -->
-        <div class="section-full trv-client-section">
+        {% comment %} <div class="section-full trv-client-section">
             <div class="trv-client-row">
                 <div class="container">
                     <div class="section-content">
@@ -236,7 +256,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
         <!-- CLIENT LOGO  SECTION End -->
 
 

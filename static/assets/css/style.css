@@ -2011,7 +2011,7 @@ ol li {
 /* Theme default button */
 .site-button {
   outline: none;
-  color: #000;
+  color: white;
   font-weight: 500;
   padding: 15px 30px;
   position: relative;
@@ -2661,6 +2661,18 @@ THEMEFOREST REQUIRED CLASSES
   display: flex;
   align-items: center;
 }
+
+/* make payment button */
+.header-style-1.extra-nav.make-payment {
+  background-color: yellow;
+  border-color: #F2637E;
+}
+.header-style-1.extra-nav.extra-cell.make-payment.make-payment-button:hover {
+  background-color: #fff;
+  color: #F2637E;
+}
+/* make payment style end here */
+
 .header-style-1 .extra-nav .extra-cell:first-child {
   padding-left: 0px;
 }
@@ -2774,13 +2786,28 @@ THEMEFOREST REQUIRED CLASSES
   z-index: 1;
 }
 .header-style-1 .logo-header .logo-header-inner img {
-  max-width: 160px;
+  max-width: 250px;
   max-height: 100%;
 }
+/* Tablet (768px - 991px) */
 @media (max-width: 991px) {
-  .header-style-1 .logo-header .logo-header-inner img {
-    max-width: 110px;
-  }
+    .logo-header-inner img {
+        max-width: 180px;
+    }
+}
+
+/* Mobile large (481px - 767px) */
+@media (max-width: 767px) {
+    .logo-header-inner img {
+        max-width: 160px;
+    }
+}
+
+/* Mobile small (320px - 480px) */
+@media (max-width: 480px) {
+    .logo-header-inner img {
+        max-width: 140px;
+    }
 }
 .header-style-1 .company-site-info {
   list-style: none;
@@ -2829,7 +2856,7 @@ THEMEFOREST REQUIRED CLASSES
 .header-style-1.site-header ul, .header-style-1.site-header ol {
   margin-bottom: 0px;
 }
-.header-style-1 .main-bar {
+/* .header-style-1 .main-bar {
   width: 100%;
   min-height: 120px;
   padding: 0px 55px 0px 35px;
@@ -2838,7 +2865,146 @@ THEMEFOREST REQUIRED CLASSES
   display: flex;
   align-items: center;
   justify-content: space-between;
+} */
+/* ── 1. DEFAULT TOP STATE (Background Completely Invisible) ── */
+.header-style-1,
+.header-style-1 .main-bar-wraper {
+  position: absolute !important;
+  top: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  z-index: 999;
+  /* Smooth 0.5s transition when returning back to the top state */
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
+
+.header-style-1 .main-bar {
+  width: 100%;
+  min-height: 120px;
+  padding: 0px 55px 0px 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0px !important;
+  /* Flatten edges at the top */
+
+  /* Stripping out all background effects to make it completely clear */
+  background: transparent !important;
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  /* Smooth fading out transitions */
+  transition: background-color 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out, min-height 0.5s ease-in-out !important;
+}
+
+
+/* ── 2. STICKY SCROLL DOWN STATE (Appears with Glassmorphism) ── */
+/* When you move down and '.is-fixed' triggers, your frosted glass look activates */
+.header-style-1.sticky-header.is-fixed {
+  position: fixed !important;
+  top: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  width: 100% !important;
+  margin-top: 0px !important;
+  background-color: transparent !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  z-index: 99999 !important;
+}
+
+.header-style-1.is-fixed .main-bar-wraper {
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.header-style-1.is-fixed .main-bar {
+  position: static !important;
+  min-height: 90px !important;
+  /* Slightly slimmer profile on scroll */
+  border-radius: 0px 0px 20px 20px !important;
+  /* Curves bottom corners on scroll */
+  padding: 0px 55px 0px 35px !important;
+
+  /* Frosted glass style reveals ONLY when moving down the page */
+  background-color: rgba(45, 30, 85, 0.75) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter: blur(18px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ══ MOBILE RESOLUTION FIX (max 991px) ════════════════ */
+@media (max-width: 991px) {
+
+  /* 1. Force absolute tracking on the base header container */
+  .header-style-1 {
+    position: absolute !important;
+    top: 0px !important;
+    left: 0px !important;
+    right: 0px !important;
+    width: 100% !important;
+    background-color: transparent !important;
+    padding: 0px !important;
+  }
+
+  /* 2. Lock layout coordinates and reverse the html order */
+  .header-style-1 .main-bar {
+    position: relative !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    /* ◄ FLIPS THE ORDER: Logo goes left, button goes right */
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    padding: 20px 24px !important;
+    /* Perfectly aligns with your mobile hero text paddings */
+    min-height: 80px !important;
+  }
+
+  /* 3. Reset the logo positions to align clean on the left side */
+  .header-style-1 .logo-header {
+    position: relative !important;
+    left: 0 !important;
+    transform: none !important;
+    float: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  .header-style-1 .logo-header .logo-header-inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+
+  /* 4. Reset the menu button to align clean on the right side */
+  .header-style-1 #mobile-side-drawer {
+    position: relative !important;
+    right: 0 !important;
+    top: 0 !important;
+    margin: 0 !important;
+    float: right !important;
+    background: transparent !important;
+  }
+}
+
+
+
+
+
 @media (max-width: 1199px) {
   .header-style-1 .main-bar {
     padding: 0px 25px 0px 25px;
@@ -3582,17 +3748,17 @@ THEMEFOREST REQUIRED CLASSES
   z-index: 1;
 }
 .header-style-2 .logo-header .logo-header-inner img {
-  max-width: 160px;
+  max-width: 180px;
   max-height: 100%;
 }
 @media (max-width: 991px) {
   .header-style-2 .logo-header .logo-header-inner img {
-    max-width: 120px;
+    max-width: 150px;
   }
 }
 @media (max-width: 360px) {
   .header-style-2 .logo-header .logo-header-inner img {
-    max-width: 110px;
+    max-width: 120px;
   }
 }
 .header-style-2 .company-site-info {
@@ -5676,9 +5842,11 @@ button.scroltop span {
   background-position: center center;
   width: 100%;
   background-color: #fff;
-  background-image: url(../images/background/inr-banner.jpg);
+  background-image: url(../images/background/hero-section-2.jpg);
   overflow: hidden;
   position: relative;
+   border-bottom-left-radius:80px;
+    border-bottom-right-radius:80px;
 }
 
 .wt-bnr-inr-entry {
@@ -5728,7 +5896,8 @@ button.scroltop span {
   font-weight: 700;
   margin-bottom: 0;
   position: relative;
-  color: #3C2D73;
+  color: white;
+
 }
 @media (max-width: 991px) {
   .wt-bnr-inr-entry .banner-title-outer .wt-title {
@@ -5759,10 +5928,10 @@ button.scroltop span {
   display: inline-block;
   font-size: 16px;
   font-weight: 600;
-  color: #3C2D73;
+  color:white;
 }
 .wt-breadcrumb li a {
-  color: #3C2D73;
+  color:white;
   transition: 0.5s all ease;
 }
 .wt-breadcrumb li a:hover {
@@ -5773,7 +5942,7 @@ button.scroltop span {
   position: absolute;
   right: 8px;
   top: -6px;
-  color: #3C2D73;
+  color: white;
   font-size: 26px;
   font-weight: 400;
 }
@@ -10239,6 +10408,7 @@ select {
   right: 0px;
   bottom: 70px;
   z-index: 1;
+   overflow: hidden;
 }
 @media (max-width: 1199px) {
   .trv-we-recommend2 .trv-we-rec3-media-main-wrap .trc-we-rec3-circle-bx1 {
@@ -10256,6 +10426,9 @@ select {
 .trv-we-recommend2 .trv-we-rec3-media-main-wrap .trc-we-rec3-circle-bx1 img {
   width: 100%;
   border-radius: 50%;
+  height: 100%;
+  object-fit: cover;   /* crops nicely */
+  object-position: center;
 }
 .trv-we-recommend2 .trv-we-rec3-media-main-wrap .trc-we-rec3-circle-bx2 {
   margin-top: 12px;
@@ -10290,6 +10463,7 @@ select {
 .trv-we-recommend2 .trv-we-rec3-media-main-wrap .trc-we-rec3-circle-bx2 img {
   width: 100%;
   border-radius: 50%;
+  height: 180px;
 }
 .trv-we-recommend2 .trv-we-rec3-media-main-wrap .trc-we-rec3-l-bx {
   max-width: 376px;
@@ -11333,6 +11507,7 @@ select {
 .trv-popular-tour-st1 .trv-content .trv-content-head-section {
   margin-bottom: 30px;
   display: flex;
+  gap: 20px;
 }
 @media (max-width: 1199px) {
   .trv-popular-tour-st1 .trv-content .trv-content-head-section {
@@ -11340,7 +11515,7 @@ select {
   }
 }
 .trv-popular-tour-st1 .trv-content .trv-content-head-section .trv-tour-price {
-  width: 90px;
+  width: 130px;
 }
 @media (max-width: 1199px) {
   .trv-popular-tour-st1 .trv-content .trv-content-head-section .trv-tour-price {
@@ -11386,9 +11561,11 @@ select {
   color: #F29979;
 }
 .trv-popular-tour-st1 .trv-content .trv-content-bottom-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    width: 100% !important;
 }
 
 .trv-review-rating i {
@@ -11664,6 +11841,10 @@ select {
 .trv-popular-tour-st3 .trv-content .trv-content-head-section .trv-tour-rating {
   display: flex;
   align-items: center;
+    justify-content: flex-end;
+    min-width: 70px;
+
+    
 }
 .trv-popular-tour-st3 .trv-content .trv-content-head-section .trv-tour-rating .trv-tour-review-count {
   margin-right: 10px;
@@ -11993,6 +12174,7 @@ select {
 .trv-blog-all-style {
   background-color: #DBEEEE;
 }
+
 @media (max-width: 1024px) {
   .trv-blog-all-style {
     padding-top: 50px;
@@ -12005,7 +12187,8 @@ select {
   display: flex;
   margin-bottom: 30px;
 }
-.trv-blog-st1 .trv-post-media {
+
+/* .trv-blog-st1 .trv-post-media {
   margin-right: 10px;
   position: relative;
   z-index: 1;
@@ -12014,7 +12197,19 @@ select {
   min-width: 100px;
   width: 100px;
   height: 131px;
+} */
+
+/* Column 1 - Small blog horizontal cards */
+.trv-blog-st1 .trv-post-media {
+    min-width: 100px;
+    width: 100px;
+    height: 131px;
+    border-radius: 15px;
+    overflow: hidden;
+    flex-shrink: 0;
 }
+
+
 @media (max-width: 400px) {
   .trv-blog-st1 .trv-post-media {
     min-width: 80px;
@@ -12022,10 +12217,20 @@ select {
     height: 104px;
   }
 }
-.trv-blog-st1 .trv-post-media img {
+/* .trv-blog-st1 .trv-post-media img {
   width: 100%;
   height: 100%;
+} */
+
+.trv-blog-st1 .trv-post-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
+
+
 .trv-blog-st1 .post-date {
   font-family: "Afacad", sans-serif;
   width: 40px;
@@ -12057,6 +12262,7 @@ select {
   padding: 25px 20px;
   border-radius: 15px;
 }
+
 .trv-blog-st1 .trv-post-info .post-category {
   font-size: 18px;
   font-weight: 500;
@@ -12092,14 +12298,24 @@ select {
   border-radius: 20px;
   overflow: hidden;
 }
-.trv-blog-st2 .trv-post-media img {
+/* .trv-blog-st2 .trv-post-media img {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
   height: 210px;
+} */
+/* Column 2 - Medium blog card */
+.trv-blog-st2 .trv-post-media img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
+
+
 @media (max-width: 768px) {
   .trv-blog-st2 .trv-post-media img {
     height: 340px;
@@ -12187,6 +12403,7 @@ select {
      object-position: center;
   height: 453px;
 }
+
 @media (max-width: 1199px) {
   .trv-blog-st3 .trv-post-media img {
     height: 390px;
@@ -13454,6 +13671,118 @@ select {
     margin: 0px auto;
   }
 }
+
+/* booking enquiry button style start*/
+
+/* Buttons parent */
+.trv-book {
+    /* display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    flex-wrap: nowrap !important;
+    gap: 8px;
+    flex: 1; */
+
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Book Now + Enquiry same size */
+.trv-book .site-button.outline,
+.trv-book .Booking-enquiry-btn {
+    width: 115px !important;
+    height: 40px !important;
+    min-width: 0 !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border-radius: 50px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+/* Enquiry glass blue */
+.trv-book .Booking-enquiry-btn {
+    background: linear-gradient(135deg, #F29979, #F2637E) !important;
+    color: #000 !important;
+    border: none !important;
+
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 4px 12px rgba(0,120,255,0.12) !important;
+
+    cursor: pointer !important;
+}
+
+/* Book Now button */
+.trv-book .site-button.outline {
+    background: linear-gradient(135deg, #F29979, #F2637E) !important;
+    border: none !important;
+    color: #000 !important;
+}
+
+/* Hover */
+.trv-book .Booking-enquiry-btn:hover {
+    color: #fff !important;
+}
+
+.trv-book .site-button.outline:hover {
+    color: #fff !important;
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+    .trv-book {
+        gap: 8px !important;
+    }
+
+    .trv-book .site-button.outline,
+    .trv-book .Booking-enquiry-btn {
+        width: 105px !important;
+        height: 38px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 575px) {
+    .trv-book {
+        gap: 6px !important;
+    }
+
+    .trv-book .site-button.outline,
+    .trv-book .Booking-enquiry-btn {
+        width: 96px !important;
+        height: 34px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* Very small mobile */
+@media (max-width: 400px) {
+    .trv-book .site-button.outline,
+    .trv-book .Booking-enquiry-btn {
+        width: 88px !important;
+        height: 32px !important;
+        font-size: 11px !important;
+    }
+}
+
+/* booking enquiry button style end */
+
+
 
 @keyframes text-fade-up {
   from {
@@ -15883,10 +16212,18 @@ select {
 }
 .trv-service-st1 .trv-service-back-bg .trv-service-bx1 .trv-media {
   margin-bottom: 20px;
+   height: 220px;
+    overflow: hidden;
+ 
 }
 .trv-service-st1 .trv-service-back-bg .trv-service-bx1 .trv-media img {
   border-radius: 20px;
-  width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+ 
+
 }
 .trv-service-st1 .trv-service-back-bg .trv-service-bx1 .trv-info .trv-title {
   font-family: "Afacad", sans-serif;
@@ -15894,6 +16231,7 @@ select {
   font-weight: 500;
   line-height: 1.2;
   margin-bottom: 0px;
+  height: 55px;
 }
 @media (max-width: 768px) {
   .trv-service-st1 .trv-service-back-bg .trv-service-bx1 .trv-info .trv-title {
@@ -17112,7 +17450,8 @@ blockquote .trv-bq-atr-name:before {
   font-size: 28px;
   font-weight: 500;
   line-height: 1.2;
-  margin-bottom: 20px;
+  height:40px;
+  margin-bottom: 5px;
 }
 .trv-blog-list-st .trv-info .trv-title a {
   color: #3C2D73;
@@ -17132,7 +17471,7 @@ blockquote .trv-bq-atr-name:before {
   font-weight: 400;
   color: #346065;
   line-height: 1.4;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 .trv-blog-list-st .blog-mp4-vide {
   -o-object-fit: cover;
@@ -21459,5 +21798,214 @@ blockquote .trv-bq-atr-name:before {
   overflow-y: auto;
 }
 
+
+/* ===================================
+   GOOGLE REVIEW CARD
+=================================== */
+.google-review-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background: #fff;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: fit-content; /* Adapts to content rather than forcing width */
+}
+
+.google-review-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+.google-icon img {
+    width: 50px;
+    height: 24px;
+    display: block;
+}
+
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1;
+}
+
+.rating-number {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+}
+
+.stars {
+    color: #ffb400; /* Standard Google star color */
+    font-size: 14px;
+    letter-spacing: -1px;
+}
+
+.google-review-info p {
+    margin: 2px 0 0;
+    font-size: 11px;
+    color: #777;
+    white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .google-review-card {
+        padding: 8px 14px;
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .google-icon img {
+        width: 40px;
+        height: 20px;
+    }
+
+    .rating-number { font-size: 13px; }
+    .stars { font-size: 11px; }
+    .google-review-info p { font-size: 10px; }
+}
+
+@media (min-width: 1100px) and (max-width: 1300px) {
+    .google-review-card {
+        padding: 8px 14px;
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .google-icon img {
+        width: 40px;
+        height: 20px;
+    }
+
+    .rating-number { font-size: 13px; }
+    .stars { font-size: 11px; }
+    .google-review-info p { font-size: 10px; }
+}
+
+@media (max-width: 1024px) {
+    .google-review-card {
+        padding: 8px 14px;
+        gap: 0px;
+        margin-top: 0px;
+    }
+
+    .google-icon img {
+        width: 40px;
+        height: 20px;
+    }
+
+    .rating-number { font-size: 13px; }
+    .stars { font-size: 11px; }
+    .google-review-info p { font-size: 10px; }
+}
+
+
+/* Glass CTA Buttons */
+
+.hero-glass-btn{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 180px;
+    height: 56px;
+
+    padding: 0 34px;
+
+    border-radius: 50px;
+
+    background: rgba(255,255,255,.12);
+    border: 1.5px solid rgba(255,255,255,.28);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    color: #fff !important;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.20);
+
+    transition: .35s ease;
+
+    overflow: hidden;
+}
+
+/* remove template gradient */
+.hero-glass-btn::before{
+    content:'';
+    position:absolute;
+    inset:0;
+
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.22),
+        rgba(255,255,255,.03)
+    );
+
+    opacity:.8;
+    transition:.35s;
+}
+
+.hero-glass-btn span,
+.hero-glass-btn{
+    position:relative;
+    z-index:2;
+}
+
+.hero-glass-btn:hover{
+
+    transform:translateY(-4px);
+
+    color:#fff;
+
+    border-color:rgba(255,255,255,.55);
+
+    background:rgba(255,255,255,.20);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+.hero-glass-btn:hover::before{
+    opacity:1;
+}
+
+.hero-glass-btn:focus{
+    color:#fff;
+}
+
+.hero-glass-btn:active{
+    transform:translateY(-1px);
+}
+
+
+@media(max-width:768px){
+
+.hero-glass-btn{
+
+    min-width:150px;
+
+    height:48px;
+
+    font-size:14px;
+
+    padding:0 24px;
+}
+
+}
 
 /*# sourceMappingURL=style.css.map */

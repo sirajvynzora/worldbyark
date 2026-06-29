@@ -1,5 +1,28 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
+
+{% block extra_css %}
+<style>
+    .trv_d-slider-media img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    .trv-detail-slider .trv_d-slider {
+        width: 100%;
+    }
+
+    .trv-detail-slider .trv_d-slider-media {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 30px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="page-content">
 
@@ -21,7 +44,7 @@
                 </div>
                 <!-- BREADCRUMB ROW END -->                        
             </div>
-            <div class="trv-inr-bnr-cloud">            
+            {% comment %} <div class="trv-inr-bnr-cloud">            
                 <div class="marquee">
                     <img src="{% static 'assets/images/inr-banner-cloud.png' %}" alt="Image">
                 </div>
@@ -29,7 +52,7 @@
             <div class="trv-inr-bnr-plane">
                 <div class="trv-inr-bnr-plane-bx"><img src="{% static 'assets/images/airplane.png' %}" alt="Image"></div>
                 
-            </div>
+            </div> {% endcomment %}
             <div class="trv-inr-bnr-bloon-1"><img src="{% static 'assets/images/hotballon-Left.png' %}" alt="Image"></div>
             <div class="trv-inr-bnr-bloon-2"><img src="{% static 'assets/images/hotballon-right.png' %}" alt="Image"></div>
         </div>
@@ -93,13 +116,13 @@
                                         <section id="overview">
 
                                             <h3 class="trv-inner-title-sm">Package Overview</h3>
-                                            {{ package.description|linebreaks }}
+                                            {{ package.description|striptags|linebreaks }}
 
                                             {% if package.highlights_list %}
                                             <h3 class="trv-inner-title-sm">Highlights</h3>
                                             <ul class="trv-checklist-st1">
                                                 {% for highlight in package.highlights_list %}
-                                                <li><i class="bi bi-check-circle-fill"></i>{{ highlight }}</li>
+                                                <li><i class="bi bi-check-circle-fill"></i>{{ highlight|safe }}</li>
                                                 {% endfor %}
                                             </ul>
                                             {% endif %}
@@ -124,7 +147,7 @@
                                                                 <span class="day">DAY</span>
                                                             </div>
                                                             <div class="info">
-                                                                <h4 class="trv-title">{{ item }}</h4>
+                                                                <h4 class="trv-title">{{ item|safe }}</h4>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -147,7 +170,7 @@
                                                             {% for item in package.inclusions_list %}
                                                             <li>
                                                                 <i class="bi bi-check-circle-fill"></i>
-                                                                {{ item }}
+                                                                {{ item|safe }}
                                                             </li>
                                                             {% empty %}
                                                             <li><i class="bi bi-check-circle-fill"></i>Accommodation included</li>
@@ -269,10 +292,9 @@
                                     <div class="trv-emi_text">
                                         <i class="bi bi-wallet"></i>No Cost EMI Starts from
                                         <span class="trvng-binding"> $<span class="trvng-binding">49</span></span> 
-                                        <a class="chsemi" href="javascript:;">See option</a>
                                         
                                     </div>
-                                    <button type="button" class="site-button butn-bg-shape" data-bs-toggle="modal" data-bs-target="#exampleModal" >Enquire Now</button>
+                                    <button type="button" class="site-button butn-bg-shape" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('{{ package.name }}')" >Enquire Now</button>
                                 </div>
 
                                 <div class="trv-tour-single-r-info">

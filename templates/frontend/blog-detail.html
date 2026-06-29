@@ -21,7 +21,7 @@
                 </div>
                 <!-- BREADCRUMB ROW END -->                        
             </div>
-            <div class="trv-inr-bnr-cloud">            
+            {% comment %} <div class="trv-inr-bnr-cloud">            
                 <div class="marquee">
                     <img src="{% static 'assets/images/inr-banner-cloud.png' %}" alt="Image">
                 </div>
@@ -29,7 +29,7 @@
             <div class="trv-inr-bnr-plane">
                 <div class="trv-inr-bnr-plane-bx"><img src="{% static 'assets/images/airplane.png' %}" alt="Image"></div>
                 
-            </div>
+            </div> {% endcomment %}
             <div class="trv-inr-bnr-bloon-1"><img src="{% static 'assets/images/hotballon-Left.png' %}" alt="Image"></div>
             <div class="trv-inr-bnr-bloon-2"><img src="{% static 'assets/images/hotballon-right.png' %}" alt="Image"></div>
         </div>
@@ -52,32 +52,32 @@
                                 <!--Info Image-->
                                 <div class="trv-detail-bx-wrap">
                                     <ul class="trv-post-meta">
-                                        <li class="post-comment">{{ blog.created_at|date:"d M Y" }}</li>
-                                    </ul>
-                                    <h3 class="trv-inner-title-lg">{{ blog.title }}</h3>
-                                    <div class="trv-inr-para">
-                                        {{ blog.description|linebreaks }}
-                                    </div>
+    <li class="post-comment">{{ blog.created_at|date:"d M Y" }}</li>
+</ul>
 
-                                    <h4 class="trv-inner-title-sm">What precautions should we take while travelling?</h4>
-                                    <ul class="trv-checklist-st1">
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            Stay aware of local laws and customs
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            Keep copies of important documents
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            Stay hydrated and eat wisely
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            Download offline maps and translation apps
-                                        </li>
-                                    </ul>
+<!-- Normal text content -->
+<div class="trv-inr-para">
+{% if plain_paragraphs %}
+<h3 class="trv-inner-title-lg">{{ blog.title }}</h3>
+<div class="trv-inr-para">
+    {% for paragraph in plain_paragraphs %}
+        <p>{{ paragraph }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Only show if blog has bullet/numbered lists -->
+{% if has_real_lists and list_items %}
+<h4 class="trv-inner-title-sm">{%if plain_paragraphs %}Key Highlights:{% else %}{{ blog.title }}{% endif %}</h4>
+<ul class="trv-checklist-st1">
+    {% for item in list_items %}
+    <li>
+        <i class="bi bi-check-circle-fill"></i>
+        {{ item }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
 
                                     <div class="s-post-tag-share">
 
@@ -94,20 +94,24 @@
                                     <div class="post-navigation">
                                         <div class="post-nav-links">
                                             <div class="post-nav-item nav-post-prev">
-                                                <div class="nav-post-meta"> 
-                                                    <a href="blog-list.html">
-                                                        <p>Destination can be exciting but also a bit over whelming with so many amazing places out.</p>
-                                                        <b><i class="bi bi-chevron-left"></i> Previous Post</b>
-                                                    </a>
-                                                </div>
+                                                {% if prev_blog %}
+            <div class="nav-post-meta">
+                <a href="{% url 'blog_detail' slug=prev_blog.slug %}">
+                    <p>{{ prev_blog.title }}</p>
+                    <b><i class="bi bi-chevron-left"></i> Previous Post</b>
+                </a>
+            </div>
+            {% endif %}
                                             </div>
                                             <div class="post-nav-item nav-post-next">
-                                                <div class="nav-post-meta"> 
-                                                    <a href="blog-list.html">
-                                                        <p>Destination can be exciting but also a bit over whelming with so many amazing places out.</p>
-                                                        <b>Next Post <i class="bi bi-chevron-right"></i></b> 
-                                                    </a>
-                                                </div>
+                                                {% if next_blog %}
+            <div class="nav-post-meta">
+                <a href="{% url 'blog_detail' slug=next_blog.slug %}">
+                    <p>{{ next_blog.title }}</p>
+                    <b>Next Post <i class="bi bi-chevron-right"></i></b>
+                </a>
+            </div>
+            {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +123,7 @@
                         </div> 
                         
                         <!-- SIDE BAR START -->
-                        <div class="col-xl-4 col-lg-4 col-md-12 rightSidebar  m-b30">
+                        {% comment %} <div class="col-xl-4 col-lg-4 col-md-12 rightSidebar  m-b30">
                         
                             <aside  class="side-bar">
 
@@ -171,7 +175,7 @@
 
                             </aside>
 
-                        </div>
+                        </div> {% endcomment %}
                         <!-- SIDE BAR END -->                          
                                                     
                     </div>

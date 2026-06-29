@@ -1,19 +1,184 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
 {% block header_class %}header-style-1{% endblock %}
-{% block logo_img %}<img src="{% static 'assets/images/logo-dark.png' %}" alt="">{% endblock %}
-{% block extra_nav %}
+{% block logo_img %}
+<img src="{% static 'assets/images/logo-dark.png' %}" alt="Logo">
+{% endblock %}
+{% comment %} {% block extra_nav %}
 <!-- Header Right Section-->
                 <div class="extra-nav header-1-nav d-none d-lg-flex">
+                    <div class="extra-cell">
+                        <a href="{% url 'contact' %}" class="site-button butn-bg-shape" style=transpa>Make Payment</a>
+                    </div>
                     <div class="extra-cell">
                         <a href="{% url 'contact' %}" class="site-button butn-bg-shape">Contact</a>
                     </div>
                 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}
 
 {% block extra_css %}
 <style>
+
+   
+/* ── Hero Wrapper ── */
+.hero-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ── Video fills the container ── */
+.hero-video-wrapper video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* ── Dark gradient scrim — stronger at bottom-left ── */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+}
+
+/* ── Bottom-left anchor block ── */
+.hero-bottom-left {
+  position: absolute;
+  bottom: 80px;
+  left: 5%;
+  z-index: 5;
+  max-width: 620px;
+  width: 90%;
+}
+
+/* ── Slide wrapper — fixed height so buttons don't jump ── */
+.hero-slides-wrapper {
+  position: relative;
+  min-height: 200px;
+  margin-bottom: 28px;
+}
+
+/* ── Each slide ── */
+.hero-overlay-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  pointer-events: none;
+  color: #fff;
+}
+
+.hero-overlay-content.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ── Eyebrow label ── */
+.hero-eyebrow {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #F29979;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ── Heading ── */
+.hero-overlay-content h1 {
+  font-family: "Afacad", sans-serif;
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 16px 0;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.8);
+}
+
+/* ── Button group ── */
+.hero-btn-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ── Progress bar at bottom ── */
+.hero-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(135deg, #F29979, #F2637E);
+  z-index: 6;
+  transition: width 4000ms linear;
+  display: none;
+}
+
+/* ── Mobile ── */
+@media (max-width: 575px) {
+  .hero-bottom-left {
+    bottom: 60px;
+    left: 5%;
+    width: 90%;
+  }
+  .hero-overlay-content h1 {
+    font-size: 1.9rem;
+  }
+  .hero-btn-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hero-glass-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-slides-wrapper {
+    min-height: 220px;   /* more room for bigger relative font size */
+  }
+}
+
     /* ── CINEMATIC HERO ── */
+
+  /* ── Wrapper ─────────────────────────────────────── */
+
+
+
+
+@keyframes showContent{
+    from{
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to{
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+    #ark-hero-sticky{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
     #ark-hero-scroll {
         height: 1200vh;
         position: relative;
@@ -24,7 +189,7 @@
         width: 100%;
         height: 100vh;
         overflow: hidden;
-    }
+    } 
     #ark-hero-canvas {
         position: absolute;
         top: 0; left: 0;
@@ -170,47 +335,65 @@
 <div class="page-content">
 
             <!-- CINEMATIC HERO SECTION START -->
-            <div id="ark-hero-scroll">
-                <div id="ark-hero-sticky">
-                    <canvas id="ark-hero-canvas"></canvas>
+            <div class="hero-video-wrapper">
 
-                    <!-- Block 1: Opening — 0% to 18% -->
-                    <div class="ark-text-block ark-visible" id="ark-block-1">
-                        <span class="ark-eyebrow">World By ARK</span>
-                        <div class="ark-heading">The World Awaits</div>
-                    </div>
+  <video autoplay muted loop playsinline 
+         preload="auto" 
+         id="ark-hero-video" 
+         poster="{% static 'assets/images/background/vid-bg2.jpg' %}"
+         onloadstart="this.volume=0; this.play();">
+    <source src="{% static 'assets/videos/world_by_arc.mp4' %}" type="video/mp4">
+  </video>
 
-                    <!-- Block 2: Bottom-left stat — 22% to 38% -->
-                    <div class="ark-text-block" id="ark-block-2">
-                        <span class="ark-eyebrow">Every journey starts with a single step</span>
-                        <div class="ark-heading">50+ Destinations.<br>One Agency.</div>
-                    </div>
+  <div class="hero-scrim"></div>
 
-                    <!-- Block 3: Right side, mid — 42% to 56% -->
-                    <div class="ark-text-block" id="ark-block-3">
-                        <span class="ark-eyebrow">Crafted For You</span>
-                        <div class="ark-heading">Experiences Beyond<br>the Ordinary</div>
-                    </div>
+  <!-- All slides + buttons anchored bottom-left -->
+  <div class="hero-bottom-left">
 
-                    <!-- Block 4: Bottom-center, arrival — 60% to 74% -->
-                    <div class="ark-text-block" id="ark-block-4">
-                        <span class="ark-eyebrow">Kerala &amp; Beyond</span>
-                        <div class="ark-heading">Nature. Culture. Wonder.</div>
-                    </div>
+    <div class="hero-slides-wrapper">
+      <div class="hero-overlay-content active" id="slide-1">
+        <span class="hero-eyebrow">World By ARK</span>
+        <h1>The World Awaits</h1>
+      </div>
+      <div class="hero-overlay-content" id="slide-2">
+        <span class="hero-eyebrow">Every journey starts with a single step</span>
+        <h1>50+ Destinations.<br>One Agency.</h1>
+      </div>
+      <div class="hero-overlay-content" id="slide-3">
+        <span class="hero-eyebrow">Crafted For You</span>
+        <h1>Experiences Beyond<br>the Ordinary</h1>
+      </div>
+      <div class="hero-overlay-content" id="slide-4">
+        <span class="hero-eyebrow">Kerala &amp; Beyond</span>
+        <h1>Nature. Culture. Wonder.</h1>
+      </div>
+      <div class="hero-overlay-content" id="slide-5">
+        <span class="hero-eyebrow">Luxury Travel Redefined</span>
+        <h1>Your Journey<br>Begins Here</h1>
+      </div>
+    </div>
 
-                    <!-- Block 5: Final CTA — 78% to 100% -->
-                    <div class="ark-text-block" id="ark-block-5">
-                        <span class="ark-eyebrow">Luxury Travel Redefined</span>
-                        <div class="ark-heading">Your Journey<br>Begins Here</div>
-                        <p class="ark-subline">Curated experiences. Seamless journeys. Unforgettable destinations.</p>
-                        <div class="ark-cta-group">
-                            <a href="{% url 'packages' %}" class="site-button butn-bg-shape">Explore Packages</a>
-                        </div>
-                    </div>
+    <!-- Buttons always visible below the text -->
+    <div class="hero-btn-group">
+      <a href="{% url 'destinations' %}" class="site-button hero-glass-btn">
+        Discover More
+      </a>
+      <button type="button"
+              class="site-button hero-glass-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#bookingModal"
+              onclick="openBookingModal('')">
+        Enquire Now
+      </button>
+    </div>
 
-                </div>
-            </div>
-            <!-- CINEMATIC HERO SECTION END -->
+  </div>
+
+  <div class="hero-progress" id="heroProgress"></div>
+
+</div>
+
+            <!-- CINEMATIC HERO video SECTION END -->
 
            
 
@@ -220,7 +403,7 @@
 
             <!--POPULAR DESTINATION SECTION START-->
             <div class="section-full p-t120 p-b90 trv-popular-destination tvr-hot-ballon-wrap"
-                style="background-image: url('{% static "assets/images/background/Cloud-bg.png" %}')">
+                style="background-image: url('{% static 'assets/images/background/Cloud-bg.png' %}')">
                 <div class="container">
                     <!-- TITLE START-->
                     
@@ -238,126 +421,31 @@
                         <div
                             class="swiper trv-popular-destination-row trv-pop-des-st1-carousal swiper-nav-center-bottom">
                             <div class="swiper-wrapper">
+                                {% for destination in destinations %}
                                 <div class="swiper-slide">
-                                    <div class="trv-destination-bx1">
+                                   <div class="trv-destination-bx1">
                                         <div class="trv-media">
-                                            <a href="destination-detail.html"><img
-                                                    src="{% static 'assets/images/destinations/style1/pic1.jpg' %}" alt="Image"></a>
+                                            <a href="{% url 'destination_detail' destination.slug %}">
+                                                <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
+                                             </a>
                                         </div>
-                                        <div class="trv-content">
-                                            <h3 class="trv-title"><a href="destination-detail.html">Paris</a></h3>
-                                        </div>
-                                        <div class="trv-on-hover">
-                                            <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="swiper-slide">
-                                    <div class="trv-destination-bx1">
-                                        <div class="trv-media">
-                                            <a href="destination-detail.html"><img
-                                                    src="{% static 'assets/images/destinations/style1/pic2.jpg' %}" alt="Image"></a>
-                                        </div>
                                         <div class="trv-content">
-                                            <h3 class="trv-title"><a href="destination-detail.html">Maldives</a></h3>
-                                        </div>
-                                        <div class="trv-on-hover">
-                                            <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                        </div>
-                                    </div>
-                                </div>
+                                          <h3 class="trv-title">
+                                           <a href="{% url 'destination_detail' destination.slug %}">
+                                          {{ destination.name }}
+                                          </a>
+                                          </h3>
+                                       </div>
 
-                                <div class="swiper-slide">
-                                    <div class="trv-destination-bx1">
-                                        <div class="trv-media">
-                                            <a href="destination-detail.html"><img
-                                                    src="{% static 'assets/images/destinations/style1/pic3.jpg' %}" alt="Image"></a>
+                                       <div class="trv-on-hover">
+                                         <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
                                         </div>
-                                        <div class="trv-content">
-                                            <h3 class="trv-title"><a href="destination-detail.html">Hong Kong</a></h3>
-                                        </div>
-                                        <div class="trv-on-hover">
-                                            <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                        </div>
-                                    </div>
-                                </div>
+                                     </div>
+                                 </div>
+                                 {% endfor %}
 
-                                <div class="swiper-slide">
-                                    <div class="trv-destination-bx1">
-                                        <div class="trv-media">
-                                            <a href="destination-detail.html"><img
-                                                    src="{% static 'assets/images/destinations/style1/pic4.jpg' %}" alt="Image"></a>
-                                        </div>
-                                        <div class="trv-content">
-                                            <h3 class="trv-title"><a href="destination-detail.html">Thailand</a></h3>
-                                        </div>
-                                        <div class="trv-on-hover">
-                                            <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-destination-bx1">
-                                        <div class="trv-media">
-                                            <a href="destination-detail.html"><img
-                                                    src="{% static 'assets/images/destinations/style1/pic5.jpg' %}" alt="Image"></a>
-                                        </div>
-                                        <div class="trv-content">
-                                            <h3 class="trv-title"><a href="destination-detail.html">Bangkok</a></h3>
-                                        </div>
-                                        <div class="trv-on-hover">
-                                            <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-destination-bx1">
-                                        <div class="trv-media">
-                                            <a href="destination-detail.html"><img
-                                                    src="{% static 'assets/images/destinations/style1/pic6.jpg' %}" alt="Image"></a>
-                                        </div>
-                                        <div class="trv-content">
-                                            <h3 class="trv-title"><a href="destination-detail.html">Tokyo</a></h3>
-                                        </div>
-                                        <div class="trv-on-hover">
-                                            <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-destination-bx1">
-                                        <div class="trv-media">
-                                            <a href="destination-detail.html"><img
-                                                    src="{% static 'assets/images/destinations/style1/pic7.jpg' %}" alt="Image"></a>
-                                        </div>
-                                        <div class="trv-content">
-                                            <h3 class="trv-title"><a href="destination-detail.html">Spain</a></h3>
-                                        </div>
-                                        <div class="trv-on-hover">
-                                            <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-destination-bx1">
-                                        <div class="trv-media">
-                                            <a href="destination-detail.html"><img
-                                                    src="{% static 'assets/images/destinations/style1/pic8.jpg' %}" alt="Image"></a>
-                                        </div>
-                                        <div class="trv-content">
-                                            <h3 class="trv-title"><a href="destination-detail.html">California</a></h3>
-                                        </div>
-                                        <div class="trv-on-hover">
-                                            <img src="{% static 'assets/images/destinations/hotballon-right.png' %}" alt="image">
-                                        </div>
-                                    </div>
-                                </div>
-
+                               
                             </div>
                             <div class="swiper-button-next"></div>
                             <div class="swiper-button-prev"></div>
@@ -428,10 +516,10 @@
 
                                         <div class="trv-we-rec-bottom-section">
                                             <div class="trv-we-rec-btn">
-                                                <a href="destination-3-grid.html"
+                                                <a href="{% url 'destinations' %}"
                                                     class="site-button butn-bg-shape">Discover More</a>
                                             </div>
-                                            <div class="trv-hpy-cus">
+                                            {% comment %} <div class="trv-hpy-cus">
                                                 <div class="trv-cus-pic-box">
                                                     <span class="trv-cus-pic-box-pic first-bx">
                                                         <img src="{% static 'assets/images/hpy-cus/pic1.jpg' %}" alt="">
@@ -447,8 +535,20 @@
                                                     <span>3.5k</span>
                                                     <p>Happy Customer</p>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </div> {% endcomment %}
+  <a href="https://www.google.com/maps/place/World+By+ARK/@9.9684107,76.3095668,17z/data=!4m8!3m7!1s0x3b0872d6af3f305d:0x4b38d1089f26d5b7!8m2!3d9.9684107!4d76.3121417!9m1!1b1!16s%2Fg%2F11c1q4lhf0?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="google-review-card">
+
+      <div class="google-icon">
+          <img src="{% static 'assets/images/google-icon.png' %}" alt="Google">
+      </div>
+
+      <div class="google-review-info">
+          <span class="rating">4.8 <span class="stars">★★★★★</span></span>
+          <p>900+ Verified Reviews</p>
+      </div>
+
+  </a>
+  </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-7 col-lg-5 col-md-12 trv-we-rec-media-main-wrap">
@@ -466,7 +566,7 @@
                                         <img src="{% static 'assets/images/we-rec-pic2.jpg' %}" alt="image">
                                     </div>
                                     <div class="trv-we-rec-media-main">
-                                        <img src="{% static 'assets/images/we-rec-pic.png' %}" alt="Image">
+                                        <img src="{% static 'assets/images/tourist-2.png' %}" alt="Image">
                                     </div>
                                 </div>
                             </div>
@@ -505,9 +605,8 @@
                             </div>
 
                             </div>
-                           <div class="trv-vid-st2 parallax-image"
-     style="background-image: url('{% static 'assets/images/background/vid-bg2.jpg' %}');">
-</div>
+                           <div class="trv-vid-st2 parallax-image" style="background-image: url('{% static 'assets/images/background/vid-bg2.jpg' %}');">
+                           </div>
                             <div class="trv-vid-st2-counter">
                                 <div class="row">
 
@@ -571,68 +670,29 @@
 
             <!--TOUR CATEGORY SECTION START-->
             <div class="section-full p-t120 p-b0 trv-tour-category-section"
-                style="background-image: url('{% static "assets/images/background/tour-bg.jpg" %}');">
+                style="background-image: url('{% static "assets/images/background/scenic-winding-mountain-road-passing-through-lush.png" %}');">
 
                 <div id="module">
                     <div class="trv-feature">
-                        <h2>$nbsp</h2>
-                        <p></p>
-                        <a href="tour-detail.html" class="site-button butn-bg-shape">View More</a>
+                        <a href="{% url 'destinations' %}" class="site-button butn-bg-shape">View More</a>
                     </div>
                     <div class="swiper trv-tr-cat-carousal">
                         <div class="swiper-wrapper">
-                            <!--Block 1-->
-                            <div class="trv-cat-sld swiper-slide" data-title="Wildlife Tourism"
-                                data-description="Observing animals in their natural habitats like tiger safaris in Ranthambore or birdwatching in Keoladeo Ghana Bird Sanctuary has become a popular and educational form of travel.">
-                                <div class="trv-tr-cat-carousal-media">
-                                    <img src="{% static 'assets/images/tour-cat/style1/pic1.jpg' %}" alt="Image">
-                                    <h3 class="trv-bx-title"><a href="tour-detail.html">Wildlife</a></h3>
+                            
+                            {% for image in category_images %}
+                              <div class="trv-cat-sld swiper-slide" data-title="{{ image.title }}" data-description="{{ image.category.name }}">
+                                 <div class="trv-tr-cat-carousal-media">
+                                    <img src="{{ image.image.url }}" alt="{{ image.category.name }}">
+                                    <h3 class="trv-bx-title">
+                                    <a href="{% url 'destinations' %}">{{ image.category.name }}</a>
+                                    </h3>
                                 </div>
+                              </div>
 
-                            </div>
-                            <!--Block 2-->
-                            <div class="trv-cat-sld swiper-slide" data-title="Hiking"
-                                data-description="Here are the people who we believe most changed the stories that defined the past year.">
-                                <div class="trv-tr-cat-carousal-media">
-                                    <img src="{% static 'assets/images/tour-cat/style1/pic2.jpg' %}" alt="Image">
-                                    <h3 class="trv-bx-title"><a href="tour-detail.html">Hiking</a></h3>
-                                </div>
-                            </div>
-                            <!--Block 3-->
-                            <div class="trv-cat-sld swiper-slide" data-title="Adventure Tours"
-                                data-description="Prime Minister Anthony Albanese has plenty of reasons to ban social media for under-16s.">
-                                <div class="trv-tr-cat-carousal-media">
-                                    <img src="{% static 'assets/images/tour-cat/style1/pic3.jpg' %}" alt="Image">
-                                    <h3 class="trv-bx-title"><a href="tour-detail.html">Adventure Tours</a></h3>
-                                </div>
-                            </div>
-                            <!--Block 4-->
-                            <div class="trv-cat-sld swiper-slide" data-title="Cultural Tours"
-                                data-description="The seven-time Formula One world champion moves to the iconic brand after more than a decade with Mercedes">
-                                <div class="trv-tr-cat-carousal-media">
-                                    <img src="{% static 'assets/images/tour-cat/style1/pic4.jpg' %}" alt="Image">
-                                    <h3 class="trv-bx-title"><a href="tour-detail.html">Cultural Tours</a></h3>
-                                </div>
-                            </div>
-                            <!--Block 5-->
-                            <div class="trv-cat-sld swiper-slide" data-title="Cruise Tours"
-                                data-description="TIME solicited nominations of places including hotels, cruises, restaurants, attractions, museums, parks, and more from around the world.">
-                                <div class="trv-tr-cat-carousal-media">
-                                    <img src="{% static 'assets/images/tour-cat/style1/pic5.jpg' %}" alt="Image">
-                                    <h3 class="trv-bx-title"><a href="tour-detail.html">Cruise Tours</a></h3>
-                                </div>
-                            </div>
-                            <!--Block 6-->
-                            <div class="trv-cat-sld swiper-slide" data-title="Dark Tourism"
-                                data-description="After inauguration day, it is on Trump and America to ensure that the oath to defend the U.S. Constitution is kept.">
-                                <div class="trv-tr-cat-carousal-media">
-                                    <img src="{% static 'assets/images/tour-cat/style1/pic6.jpg' %}" alt="Image">
-                                    <h3 class="trv-bx-title"><a href="tour-detail.html">Dark Tourism</a></h3>
-                                </div>
-                            </div>
+                            {% endfor %} 
                             <!--Last Content-->
                             <div class="trv-cat-sld swiper-slide swiper-slide-last" data-title="" data-description="">
-                                <a href="tour-detail.html" class="site-button butn-bg-shape">View All</a>
+                                <a href="{% url 'destinations' %}" class="site-button butn-bg-shape">View All</a>
                             </div>
                         </div>
                         <div class="swiper-button-next"></div>
@@ -792,20 +852,20 @@
 
                         <div class="swiper trv-popular-tours-row trv-tours-st1-carousal swiper-nav-center-bottom">
                             <div class="swiper-wrapper">
+                                {%for package in packages%}
                                 <div class="swiper-slide">
                                     <div class="trv-popular-tour-st1">
                                         <div class="trv-media">
-                                            <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic1.jpg' %}"
-                                                    alt="Image"></a>
+                                            <a href="{% url 'package_detail' package.slug %}"><img src="{{ package.main_image.url }}" alt="{{ package.name }}"></a>
                                             <div class="trv-tour-duration">
                                                 <i class="bi bi-calendar2-week"></i>
-                                                <span>8 days , 3 Nights</span>
+                                                <span>{{ package.duration }}</span>
                                             </div>
                                             <div class="trv-tour-title">
                                                 <h3 class="trv-title">
-                                                    <a href="package-detail.html">
+                                                    <a href="{% url 'package_detail' package.slug %}">
                                                         <i class="bi bi-geo-alt"></i>
-                                                        Bali, Indonesia
+                                                    {{ package.name }}
                                                     </a>
                                                 </h3>
                                             </div>
@@ -813,21 +873,24 @@
                                         <div class="trv-content">
                                             <div class="trv-content-head-section">
                                                 <div class="trv-tour-price">
-                                                    <span class="price">$59</span>
-                                                    <span class="price-duration">Per Day</span>
+                                                    <span class="price">₹{{ package.price_from }}</span>
                                                 </div>
-                                                <div class="trv-tour-info">
-                                                    <a href="package-detail.html">Nusa Penida is a stunning island
-                                                        located just southeast of Bali</a>
+                                                 <div class="trv-tour-info" style="height: 10px;">
+                                                    <a href="{% url 'package_detail' package.slug %}">{{ package.description|safe|truncatewords:30 }}</a>
                                                 </div>
                                             </div>
                                             <div class="trv-content-bottom-section">
                                                 <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline">Book
-                                                        Now</a>
+                                                    <a href="{% url 'package_detail' package.slug %}" class="site-button outline">
+                                                        Read More
+                                                    </a>
+                                                    <button class="Booking-enquiry-btn" onclick="openBookingModal('{{ package.name }}')"
+                                                             data-bs-toggle="modal" data-bs-target="#bookingModal">
+                                                              Enquire
+                                                    </button> 
                                                 </div>
                                                 <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
+                                                
                                                     <div class="trv-review-rating">
                                                         <i class="bi bi-star-fill"></i>
                                                         <i class="bi bi-star-fill"></i>
@@ -842,261 +905,7 @@
 
                                     </div>
                                 </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-popular-tour-st1">
-                                        <div class="trv-media">
-                                            <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic2.jpg' %}"
-                                                    alt="Image"></a>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 days , 2 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-title">
-                                                <h3 class="trv-title">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        South Korea
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content">
-                                            <div class="trv-content-head-section">
-                                                <div class="trv-tour-price">
-                                                    <span class="price">$75</span>
-                                                    <span class="price-duration">Per Day</span>
-                                                </div>
-                                                <div class="trv-tour-info">
-                                                    <a href="package-detail.html">Deogyusan mountain. Its highest peak
-                                                        is 1,614 m. above sea level</a>
-                                                </div>
-                                            </div>
-                                            <div class="trv-content-bottom-section">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline">Book
-                                                        Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-popular-tour-st1">
-                                        <div class="trv-media">
-                                            <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic3.jpg' %}"
-                                                    alt="Image"></a>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>6 days , 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-title">
-                                                <h3 class="trv-title">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Tokyo City Japan
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content">
-                                            <div class="trv-content-head-section">
-                                                <div class="trv-tour-price">
-                                                    <span class="price">$99</span>
-                                                    <span class="price-duration">Per Day</span>
-                                                </div>
-                                                <div class="trv-tour-info">
-                                                    <a href="package-detail.html">The bridge offers panoramic views of
-                                                        Tokyo Tower, the skyline.</a>
-                                                </div>
-                                            </div>
-                                            <div class="trv-content-bottom-section">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline">Book
-                                                        Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-popular-tour-st1">
-                                        <div class="trv-media">
-                                            <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic4.jpg' %}"
-                                                    alt="Image"></a>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>8 days , 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-title">
-                                                <h3 class="trv-title">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Plateau in Slovenia
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content">
-                                            <div class="trv-content-head-section">
-                                                <div class="trv-tour-price">
-                                                    <span class="price">$149</span>
-                                                    <span class="price-duration">Per Day</span>
-                                                </div>
-                                                <div class="trv-tour-info">
-                                                    <a href="package-detail.html">Nusa Penida is a stunning island
-                                                        located just southeast of Bali</a>
-                                                </div>
-                                            </div>
-                                            <div class="trv-content-bottom-section">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline">Book
-                                                        Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-popular-tour-st1">
-                                        <div class="trv-media">
-                                            <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic5.jpg' %}"
-                                                    alt="Image"></a>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>4 days , 2 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-title">
-                                                <h3 class="trv-title">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Switzerland Tour Package
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content">
-                                            <div class="trv-content-head-section">
-                                                <div class="trv-tour-price">
-                                                    <span class="price">$129</span>
-                                                    <span class="price-duration">Per Day</span>
-                                                </div>
-                                                <div class="trv-tour-info">
-                                                    <a href="package-detail.html">Deogyusan mountain. Its highest peak
-                                                        is 1,614 m. above sea level</a>
-                                                </div>
-                                            </div>
-                                            <div class="trv-content-bottom-section">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline">Book
-                                                        Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <div class="trv-popular-tour-st1">
-                                        <div class="trv-media">
-                                            <a href="package-detail.html"><img src="{% static 'assets/images/tour/style1/pic6.jpg' %}"
-                                                    alt="Image"></a>
-                                            <div class="trv-tour-duration">
-                                                <i class="bi bi-calendar2-week"></i>
-                                                <span>6 days , 3 Nights</span>
-                                            </div>
-                                            <div class="trv-tour-title">
-                                                <h3 class="trv-title">
-                                                    <a href="package-detail.html">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        Tokyo City Japan
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="trv-content">
-                                            <div class="trv-content-head-section">
-                                                <div class="trv-tour-price">
-                                                    <span class="price">$79</span>
-                                                    <span class="price-duration">Per Day</span>
-                                                </div>
-                                                <div class="trv-tour-info">
-                                                    <a href="package-detail.html">The bridge offers panoramic views of
-                                                        Tokyo Tower, the skyline.</a>
-                                                </div>
-                                            </div>
-                                            <div class="trv-content-bottom-section">
-                                                <div class="trv-book">
-                                                    <a href="package-detail.html" class="site-button outline">Book
-                                                        Now</a>
-                                                </div>
-                                                <div class="trv-tour-rating">
-                                                    <span class="trv-tour-review-count">(4.8 Review)</span>
-                                                    <div class="trv-review-rating">
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                        <i class="bi bi-star-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
+                                {% endfor %}
 
                             </div>
                             <div class="swiper-button-next"></div>
@@ -1108,6 +917,122 @@
                 </div>
             </div>
             <!--EXPLORE POPULAR TOUR END-->
+
+             <!-- tv service style 1 start -->
+            <div class="trv-service-st1" id="services">
+                <div class="container">
+                    <!-- TITLE START-->
+                    <div class="section-head trv-head-title-wrap center-position with-bg-dark">
+                        <h2 class="trv-head-title"><span class="site-text-yellow">Our Amazing</span> Services</h2>
+                        <div class="trv-head-discription">Destinations worth exploring! Here are a few popular spots
+                        </div>
+                        <div class="trv-head-title-image">
+                            <img src="{% static 'assets/images/background/TitleSeparator2.png' %}" alt="Image">
+                        </div>
+                    </div>
+                    <!-- TITLE END-->
+                </div>
+                <div class="trv-service-back-bg">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+    <div class="trv-service-bx1" 
+         data-bs-toggle="modal" 
+         data-bs-target="#bookingModal" 
+         onclick="openBookingModal('Hotel Bookings')"
+         style="cursor: pointer;">
+        <div class="trv-media">
+            <img src="{% static 'assets/images/trv-services/hotel-booking.jpeg' %}" alt="image">
+        </div>
+        <div class="trv-info">
+            <h4 class="trv-title"><a href="javascript:void(0);" style="cursor: pointer;">Hotel Bookings</a></h4>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+    <div class="trv-service-bx1" 
+         data-bs-toggle="modal" 
+         data-bs-target="#bookingModal" 
+         onclick="openBookingModal('Flight Bookings')"
+         style="cursor: pointer;">
+        <div class="trv-media">
+            <img src="{% static 'assets/images/trv-services/flight-booking.jpeg' %}" alt="image">
+        </div>
+        <div class="trv-info">
+            <h4 class="trv-title"><a href="javascript:void(0);" style="cursor: pointer;">Flight Bookings</a></h4>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+    <div class="trv-service-bx1" 
+         data-bs-toggle="modal" 
+         data-bs-target="#bookingModal" 
+         onclick="openBookingModal('Holiday Packages')"
+         style="cursor: pointer;">
+        <div class="trv-media">
+            <img src="{% static 'assets/images/trv-services/holiday-packages.png' %}" alt="image">
+        </div>
+        <div class="trv-info">
+            <h4 class="trv-title"><a href="javascript:void(0);" style="cursor: pointer;">Holiday Packages</a></h4>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+    <div class="trv-service-bx1" 
+         data-bs-toggle="modal" 
+         data-bs-target="#bookingModal" 
+         onclick="openBookingModal('Cabs and Local Transfers')"
+         style="cursor: pointer;">
+        <div class="trv-media">
+            <img src="{% static 'assets/images/trv-services/localcabs.jpeg' %}" alt="image">
+        </div>
+        <div class="trv-info">
+            <h4 class="trv-title"><a href="javascript:void(0);" style="cursor: pointer;">Cabs and Local Transfers</a></h4>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+    <div class="trv-service-bx1" 
+         data-bs-toggle="modal" 
+         data-bs-target="#bookingModal" 
+         onclick="openBookingModal('Activities and Experiences')"
+         style="cursor: pointer;">
+        <div class="trv-media">
+            <img src="{% static 'assets/images/trv-services/Activities-and-experience.jpg' %}" alt="image">
+        </div>
+        <div class="trv-info">
+            <h4 class="trv-title"><a href="javascript:void(0);" style="cursor: pointer;">Activities and Experiences</a></h4>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+    <div class="trv-service-bx1" 
+         data-bs-toggle="modal" 
+         data-bs-target="#bookingModal" 
+         onclick="openBookingModal('Train and Bus Rentals')"
+         style="cursor: pointer;">
+        <div class="trv-media">
+            <img src="{% static 'assets/images/trv-services/bus-rental.jpeg' %}" alt="image">
+        </div>
+        <div class="trv-info">
+            <h4 class="trv-title"><a href="javascript:void(0);" style="cursor: pointer;">Train and Bus Rentals</a></h4>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="trv-btm-title-section">
+                        <span>Wornderful Services For You</span>
+                        <h2 class="trv-btm-title-large">Services We Offer</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- tv service style 1 end-->
 
 
             <!--STEPS SECTION START-->
@@ -1126,7 +1051,8 @@
                         </div>
                         <div class="col-xl-8 col-lg-6 col-md-12">
                             <div class="trv-column-style-head-btn">
-                                <a href="about-1.html" class="site-button butn-bg-shape">View More</a>
+                                <button type="button" class="site-button butn-bg-shape" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('{{ package.name }}')" >Enquire Now</button>
+                                
                             </div>
                         </div>
                     </div>
@@ -1221,7 +1147,7 @@
                                 <li><i class="feather feather-check"></i><span>Completed Certification</span></li>
                             </ul>
                         </div>
-                        <a href="service-detail.html" class="site-button butn-bg-shape">Discover More</a>
+                        <a href="{% url 'about' %}" class="site-button butn-bg-shape">Discover More</a>
                     </div>
                     <div class="w-choo-right">
                         <div class="media">
@@ -1246,10 +1172,9 @@
                 </div>
             </div>
             <!--STEPS SECTION END-->
-            
 
 
-            <!--TESTIMONIAL SECTION START-->
+       <!--TESTIMONIAL SECTION START-->
             <div class="section-full trv-testimonial-st2-wrap tvr-hot-ballon-wrap">
                 <div class="container">
                     <!-- TITLE START-->
@@ -1273,15 +1198,16 @@
                             <div class="swiper testimonial-content-sld">
                                 <div class="swiper-wrapper">
                                     <!--1-->
+                                    {% for testimonial in testimonials %}
                                     <div class="swiper-slide">
                                         <div class="trv-testimo-bx2">
                                             <div class="media">
-                                                <img src="{% static 'assets/images/trv-testimonial2/pic1.jpg' %}" alt="Image">
+                                                <img src="{{ testimonial.image.url }}" alt="Image">
                                             </div>
                                             <div class="info">
                                                 <div class="trv-testimo-head">
                                                     <div class="left-part">
-                                                        <h4 class="trv-testimonial-name">Jomy (Alleppey)</h4>
+                                                        <h4 class="trv-testimonial-name">{{ testimonial.name }}</h4>
                                                         <span class="trv-testimonial-position">Tourist</span>
                                                     </div>
                                                     <div class="right-part">
@@ -1289,9 +1215,7 @@
                                                     </div>
                                                 </div>
                                                 <p>
-                                                    "I'm very happy to deal with World BY ARK Team. The services offered
-                                                    by them are awesome. I strongly recommend World By ARK if you want a
-                                                    hassle-free journey."
+                                                    {{ testimonial.review|safe }}
                                                 </p>
                                                 <div class="rating">
                                                     <i class="bi bi-star-fill"></i>
@@ -1303,225 +1227,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--2-->
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2">
-                                            <div class="media">
-                                                <img src="{% static 'assets/images/trv-testimonial2/pic2.jpg' %}" alt="Image">
-                                            </div>
-                                            <div class="info">
-                                                <div class="trv-testimo-head">
-                                                    <div class="left-part">
-                                                        <h4 class="trv-testimonial-name">Antony and Udhayan (Merchant
-                                                            Navy)</h4>
-                                                        <span class="trv-testimonial-position">Travler</span>
-                                                    </div>
-                                                    <div class="right-part">
-                                                        <img src="{% static 'assets/images/trv-icon/Quote.png' %}" alt="image">
-                                                    </div>
-                                                </div>
-                                                <p>
-                                                    "Family trip at all-inclusive budget package! The coordination was
-                                                    excellent and the customized itinerary perfectly matched our
-                                                    preferences."
-                                                </p>
-                                                <div class="rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--3-->
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2">
-                                            <div class="media">
-                                                <img src="{% static 'assets/images/trv-testimonial2/pic3.jpg' %}" alt="Image">
-                                            </div>
-                                            <div class="info">
-                                                <div class="trv-testimo-head">
-                                                    <div class="left-part">
-                                                        <h4 class="trv-testimonial-name">Antonio</h4>
-                                                        <span class="trv-testimonial-position">Tourist</span>
-                                                    </div>
-                                                    <div class="right-part">
-                                                        <img src="{% static 'assets/images/trv-icon/Quote.png' %}" alt="image">
-                                                    </div>
-                                                </div>
-                                                <p>
-                                                    Travel bug bites, there is no known antidote, and I know that I
-                                                    shall be happily infected until the end of my life. A journey is
-                                                    best measured in friends.
-                                                </p>
-                                                <div class="rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--4-->
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2">
-                                            <div class="media">
-                                                <img src="{% static 'assets/images/trv-testimonial2/pic4.jpg' %}" alt="Image">
-                                            </div>
-                                            <div class="info">
-                                                <div class="trv-testimo-head">
-                                                    <div class="left-part">
-                                                        <h4 class="trv-testimonial-name">Zeynep</h4>
-                                                        <span class="trv-testimonial-position">Tourist</span>
-                                                    </div>
-                                                    <div class="right-part">
-                                                        <img src="{% static 'assets/images/trv-icon/Quote.png' %}" alt="image">
-                                                    </div>
-                                                </div>
-                                                <p>
-                                                    There is no known antidote, and I know that I shall be happily
-                                                    infected until the end of my life. A journey is best measured in
-                                                    friends.
-                                                </p>
-                                                <div class="rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--1-->
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2">
-                                            <div class="media">
-                                                <img src="{% static 'assets/images/trv-testimonial2/pic1.jpg' %}" alt="Image">
-                                            </div>
-                                            <div class="info">
-                                                <div class="trv-testimo-head">
-                                                    <div class="left-part">
-                                                        <h4 class="trv-testimonial-name">Jomy (Alleppey)</h4>
-                                                        <span class="trv-testimonial-position">Tourist</span>
-                                                    </div>
-                                                    <div class="right-part">
-                                                        <img src="{% static 'assets/images/trv-icon/Quote.png' %}" alt="image">
-                                                    </div>
-                                                </div>
-                                                <p>
-                                                    "I'm very happy to deal with World BY ARK Team. The services offered
-                                                    by them are awesome. I strongly recommend World By ARK if you want a
-                                                    hassle-free journey."
-                                                </p>
-                                                <div class="rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--2-->
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2">
-                                            <div class="media">
-                                                <img src="{% static 'assets/images/trv-testimonial2/pic2.jpg' %}" alt="Image">
-                                            </div>
-                                            <div class="info">
-                                                <div class="trv-testimo-head">
-                                                    <div class="left-part">
-                                                        <h4 class="trv-testimonial-name">Antony and Udhayan (Merchant
-                                                            Navy)</h4>
-                                                        <span class="trv-testimonial-position">Travler</span>
-                                                    </div>
-                                                    <div class="right-part">
-                                                        <img src="{% static 'assets/images/trv-icon/Quote.png' %}" alt="image">
-                                                    </div>
-                                                </div>
-                                                <p>
-                                                    "Family trip at all-inclusive budget package! The coordination was
-                                                    excellent and the customized itinerary perfectly matched our
-                                                    preferences."
-                                                </p>
-                                                <div class="rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--3-->
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2">
-                                            <div class="media">
-                                                <img src="{% static 'assets/images/trv-testimonial2/pic3.jpg' %}" alt="Image">
-                                            </div>
-                                            <div class="info">
-                                                <div class="trv-testimo-head">
-                                                    <div class="left-part">
-                                                        <h4 class="trv-testimonial-name">Antonio</h4>
-                                                        <span class="trv-testimonial-position">Tourist</span>
-                                                    </div>
-                                                    <div class="right-part">
-                                                        <img src="{% static 'assets/images/trv-icon/Quote.png' %}" alt="image">
-                                                    </div>
-                                                </div>
-                                                <p>
-                                                    Travel bug bites, there is no known antidote, and I know that I
-                                                    shall be happily infected until the end of my life. A journey is
-                                                    best measured in friends.
-                                                </p>
-                                                <div class="rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--4-->
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2">
-                                            <div class="media">
-                                                <img src="{% static 'assets/images/trv-testimonial2/pic4.jpg' %}" alt="Image">
-                                            </div>
-                                            <div class="info">
-                                                <div class="trv-testimo-head">
-                                                    <div class="left-part">
-                                                        <h4 class="trv-testimonial-name">Zeynep</h4>
-                                                        <span class="trv-testimonial-position">Tourist</span>
-                                                    </div>
-                                                    <div class="right-part">
-                                                        <img src="{% static 'assets/images/trv-icon/Quote.png' %}" alt="image">
-                                                    </div>
-                                                </div>
-                                                <p>
-                                                    There is no known antidote, and I know that I shall be happily
-                                                    infected until the end of my life. A journey is best measured in
-                                                    friends.
-                                                </p>
-                                                <div class="rating">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
+
                                 </div>
                                 <div class="testimonial-content-sld-control">
                                     <div class="swiper-button-next"></div>
@@ -1533,47 +1240,14 @@
                             <div class="swiper testimonial-thum-sld">
                                 <div class="swiper-wrapper">
 
+                                    {% for testimonial in testimonials %}
                                     <div class="swiper-slide">
                                         <div class="trv-testimo-bx2-thumb">
-                                            <img src="{% static 'assets/images/trv-testimonial2/pic1.jpg' %}" alt="Image">
+                                            <img src="{{ testimonial.image.url }}" alt="Image">
                                         </div>
                                     </div>
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2-thumb">
-                                            <img src="{% static 'assets/images/trv-testimonial2/pic2.jpg' %}" alt="Image">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2-thumb">
-                                            <img src="{% static 'assets/images/trv-testimonial2/pic3.jpg' %}" alt="Image">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2-thumb">
-                                            <img src="{% static 'assets/images/trv-testimonial2/pic4.jpg' %}" alt="Image">
-                                        </div>
-                                    </div>
-
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2-thumb">
-                                            <img src="{% static 'assets/images/trv-testimonial2/pic1.jpg' %}" alt="Image">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2-thumb">
-                                            <img src="{% static 'assets/images/trv-testimonial2/pic2.jpg' %}" alt="Image">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2-thumb">
-                                            <img src="{% static 'assets/images/trv-testimonial2/pic3.jpg' %}" alt="Image">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="trv-testimo-bx2-thumb">
-                                            <img src="{% static 'assets/images/trv-testimonial2/pic4.jpg' %}" alt="Image">
-                                        </div>
-                                    </div>
+                                    {% endfor %}
+                                   
 
                                 </div>
                             </div>
@@ -1588,7 +1262,7 @@
             <div class="container mb-5 mt-4">
                 <div class="trv-adventure-video-section position-relative overflow-hidden"
                     style="height: 75vh; min-height: 550px; border-radius: 20px;">
-                    <video src="{% static 'assets/images/video-1.mp4' %}" autoplay muted loop playsinline
+                    <video src="{% static 'assets/images/video-2.mp4' %}" autoplay muted loop playsinline
                         class="position-absolute w-100 h-100"
                         style="top: 0; left: 0; object-fit: cover; z-index: -1;"></video>
 
@@ -1607,7 +1281,7 @@
                         </h2>
 
                         <div>
-                            <a href="{% url 'contact' %}" class="site-button butn-bg-shape m-0">Explore More</a>
+                            <a href="{% url 'gallery' %}" class="site-button butn-bg-shape m-0">Explore More</a>
                         </div>
                     </div>
                 </div>
@@ -1630,127 +1304,109 @@
                         </div>
                         <div class="col-xl-8 col-lg-6 col-md-12">
                             <div class="trv-column-style-head-btn">
-                                <a href="blog-grid.html" class="site-button butn-bg-shape">See More Articles</a>
+                                <a href="{% url 'blogs' %}" class="site-button butn-bg-shape">See More Articles</a>
                             </div>
                         </div>
                     </div>
                     <!-- TITLE END-->
 
                     <div class="section-content">
+    <div class="row d-flex justify-content-center">
 
-                        <div class="row d-flex justify-content-center">
-
-                            <div class="col-xl-4 col-lg-6 col-md-6">
-                                <div class="trv-blog-st1">
-                                    <div class="trv-post-media">
-                                        <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-sm/pic1.jpg' %}"
-                                                alt="Image"></a>
-                                    </div>
-
-                                    <div class="post-date"><span>14</span>June</div>
-                                    <div class="trv-post-info">
-                                        <div class="post-category">Aidan Butler</div>
-                                        <div class="trv-post-title ">
-                                            <h5 class="post-title"><a href="{% url 'blogs' %}">Resources for your first
-                                                    trip to overseas vacation</a></h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="trv-blog-st1">
-                                    <div class="trv-post-media">
-                                        <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-sm/pic2.jpg' %}"
-                                                alt="Image"></a>
-                                    </div>
-
-                                    <div class="post-date"><span>26</span>June</div>
-                                    <div class="trv-post-info">
-                                        <div class="post-category">Ricardo Bell</div>
-                                        <div class="trv-post-title ">
-                                            <h5 class="post-title"><a href="{% url 'blogs' %}">How to get acquainted with
-                                                    natives in a strange land</a></h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="trv-blog-st1">
-                                    <div class="trv-post-media">
-                                        <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-sm/pic3.jpg' %}"
-                                                alt="Image"></a>
-                                    </div>
-
-                                    <div class="post-date"><span>20</span>June</div>
-                                    <div class="trv-post-info">
-                                        <div class="post-category">Martin Hicks</div>
-                                        <div class="trv-post-title ">
-                                            <h5 class="post-title"><a href="{% url 'blogs' %}">Resources for your first
-                                                    trip to overseas vacation</a></h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-xl-4 col-lg-6 col-md-6">
-                                <div class="trv-blog-st1">
-                                    <div class="trv-post-media">
-                                        <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-sm/pic4.jpg' %}"
-                                                alt="Image"></a>
-                                    </div>
-
-                                    <div class="post-date"><span>28</span>June</div>
-                                    <div class="trv-post-info">
-                                        <div class="post-category">Poul Ward</div>
-                                        <div class="trv-post-title ">
-                                            <h5 class="post-title"><a href="{% url 'blogs' %}">Step by step guide to
-                                                    planning your ideal holiday</a></h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="trv-blog-st2">
-                                    <div class="trv-post-media">
-                                        <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-md/pic1.jpg' %}"
-                                                alt="Image"></a>
-                                    </div>
-
-                                    <div class="post-date"><span>28</span>June</div>
-                                    <div class="trv-post-info">
-                                        <div class="post-category">Poul Ward</div>
-                                        <div class="trv-post-title ">
-                                            <h5 class="post-title"><a href="{% url 'blogs' %}">Step by step guide to
-                                                    planning your ideal holiday</a></h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                            <div class="col-xl-4 col-lg-6 col-md-6">
-
-                                <div class="trv-blog-st3">
-                                    <div class="trv-post-media">
-                                        <a href="{% url 'blogs' %}"><img src="{% static 'assets/images/trv-blog/blog-lg/pic1.jpg' %}"
-                                                alt="Image"></a>
-                                    </div>
-
-                                    <div class="post-date"><span>08</span>June</div>
-                                    <div class="trv-post-info">
-                                        <div class="post-category">By Joey Peterson</div>
-                                        <div class="trv-post-title ">
-                                            <h3 class="post-title"><a href="{% url 'blogs' %}">The Top Travel
-                                                    Destinations for Photography Enthusiasts</a></h3>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
+        {# Column 1 — 3 small blogs (index 0, 1, 2) #}
+        <div class="col-xl-4 col-lg-6 col-md-6">
+            {% for blog in latest_blogs|slice:":3" %}
+            <div class="trv-blog-st1">
+                <div class="trv-post-media">
+                    <a href="{% url 'blogs' %}">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    </a>
+                </div>
+                <div class="post-date">
+                    <span>{{ blog.created_at|date:"d" }}</span>{{ blog.created_at|date:"F" }}
+                </div>
+                <div class="trv-post-info">
+                    <div class="post-category">{{ blog.title }}</div>
+                    <div class="trv-post-title">
+                        <h5 class="post-title">
+                            <a href="{% url 'blogs' %}">{{ blog.description|striptags|truncatechars:50}}</a>
+                        </h5>
                     </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {# Column 2 — 1 small + 1 medium blog (index 3, 4) #}
+        <div class="col-xl-4 col-lg-6 col-md-6">
+            {% with blog=latest_blogs.3 %}
+            <div class="trv-blog-st1">
+                <div class="trv-post-media">
+                    <a href="{% url 'blogs' %}">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    </a>
+                </div>
+                <div class="post-date">
+                    <span>{{ blog.created_at|date:"d" }}</span>{{ blog.created_at|date:"F" }}
+                </div>
+                <div class="trv-post-info">
+                    <div class="post-category">{{ blog.title }}</div>
+                    <div class="trv-post-title">
+                        <h5 class="post-title">
+                            <a href="{% url 'blogs' %}">{{ blog.description|striptags|truncatechars:50 }}</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% with blog=latest_blogs.4 %}
+            <div class="trv-blog-st2">
+                <div class="trv-post-media">
+                    <a href="{% url 'blogs' %}">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    </a>
+                </div>
+                <div class="post-date">
+                    <span>{{ blog.created_at|date:"d" }}</span>{{ blog.created_at|date:"F" }}
+                </div>
+                <div class="trv-post-info">
+                    <div class="post-category">{{ blog.title }}</div>
+                    <div class="trv-post-title">
+                        <h5 class="post-title">
+                            <a href="{% url 'blogs' %}">{{ blog.description|striptags|truncatechars:50 }}</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+        </div>
+
+        {# Column 3 — 1 large blog (index 5) #}
+        <div class="col-xl-4 col-lg-6 col-md-6">
+            {% with blog=latest_blogs.5 %}
+            <div class="trv-blog-st3">
+                <div class="trv-post-media">
+                    <a href="{% url 'blogs' %}">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    </a>
+                </div>
+                <div class="post-date">
+                    <span>{{ blog.created_at|date:"d" }}</span>{{ blog.created_at|date:"F" }}
+                </div>
+                <div class="trv-post-info">
+                    <div class="post-category">By {{ blog.title }}</div>
+                    <div class="trv-post-title">
+                        <h3 class="post-title">
+                            <a href="{% url 'blogs' %}">{{ blog.description|striptags|truncatechars:120 }}</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+        </div>
+
+    </div>
+</div>
 
                 </div>
             </div>
@@ -1759,138 +1415,142 @@
 
         </div>
         <!-- CONTENT END -->
-
-
-
-
-
 {% endblock %}
 
 {% block pre_footer %}{% endblock %}
 
 {% block extra_js %}
 <script>
-        (function () {
-            const canvas = document.getElementById('ark-hero-canvas');
-            const ctx = canvas.getContext('2d');
+    // ── Canvas animation (only if canvas exists) ──
+    (function () {
+        const canvas = document.getElementById('ark-hero-canvas');
+        if (!canvas) return;
 
+        const ctx = canvas.getContext('2d');
+        const folder1 = "{% static 'assets/frames/' %}";
+        const folder2 = "{% static 'assets/frames2/' %}";
+        const framesInFolder1 = 240;
+        const framesInFolder2 = 201;
+        const totalFrames = framesInFolder1 + framesInFolder2;
+        const images = [];
+        let loadedCount = 0;
 
-            const folder1 = "{% static 'assets/frames/' %}";
-            const folder2 = "{% static 'assets/frames2/' %}";
-            const framesInFolder1 = 240;
-            const framesInFolder2 = 201;
-            const totalFrames = framesInFolder1 + framesInFolder2;
-            const images = [];
-            let loadedCount = 0;
+        function padded(n) { return n.toString().padStart(3, '0'); }
 
-            function padded(n) {
-                return n.toString().padStart(3, '0');
+        function preload() {
+            for (let i = 1; i <= framesInFolder1; i++) {
+                const img = new Image();
+                img.src = folder1 + 'ezgif-frame-' + padded(i) + '.png';
+                img.onload = img.onerror = function () {
+                    loadedCount++;
+                    if (loadedCount === totalFrames) drawFrame(0);
+                };
+                images.push(img);
             }
-
-            function preload() {
-                for (let i = 1; i <= framesInFolder1; i++) {
-                    const img = new Image();
-                    img.src = folder1 + 'ezgif-frame-' + padded(i) + '.png';
-                    img.onload = img.onerror = function () {
-                        loadedCount++;
-                        if (loadedCount === totalFrames) drawFrame(0);
-                    };
-                    images.push(img);
-                }
-                for (let i = 1; i <= framesInFolder2; i++) {
-                    const img = new Image();
-                    img.src = folder2 + 'ezgif-frame-' + padded(i) + '.png';
-                    img.onload = img.onerror = function () {
-                        loadedCount++;
-                        if (loadedCount === totalFrames) drawFrame(0);
-                    };
-                    images.push(img);
-                }
+            for (let i = 1; i <= framesInFolder2; i++) {
+                const img = new Image();
+                img.src = folder2 + 'ezgif-frame-' + padded(i) + '.png';
+                img.onload = img.onerror = function () {
+                    loadedCount++;
+                    if (loadedCount === totalFrames) drawFrame(0);
+                };
+                images.push(img);
             }
+        }
 
-            function drawFrame(index) {
-                const img = images[index];
-                if (!img || !img.complete || !img.naturalWidth) return;
-                const cw = canvas.width;
-                const ch = canvas.height;
-                const iw = img.naturalWidth;
-                const ih = img.naturalHeight;
-                const canvasRatio = cw / ch;
-                const imgRatio = iw / ih;
-                let dw, dh, dx, dy;
-                if (canvasRatio > imgRatio) {
-                    dw = cw;
-                    dh = cw / imgRatio;
-                    dx = 0;
-                    dy = -(dh - ch) / 2;
-                } else {
-                    dh = ch;
-                    dw = ch * imgRatio;
-                    dx = -(dw - cw) / 2;
-                    dy = 0;
-                }
-                ctx.clearRect(0, 0, cw, ch);
-                ctx.drawImage(img, dx, dy, dw, dh);
+        function drawFrame(index) {
+            const img = images[index];
+            if (!img || !img.complete || !img.naturalWidth) return;
+            const cw = canvas.width, ch = canvas.height;
+            const iw = img.naturalWidth, ih = img.naturalHeight;
+            const canvasRatio = cw / ch, imgRatio = iw / ih;
+            let dw, dh, dx, dy;
+            if (canvasRatio > imgRatio) {
+                dw = cw; dh = cw / imgRatio; dx = 0; dy = -(dh - ch) / 2;
+            } else {
+                dh = ch; dw = ch * imgRatio; dx = -(dw - cw) / 2; dy = 0;
             }
+            ctx.clearRect(0, 0, cw, ch);
+            ctx.drawImage(img, dx, dy, dw, dh);
+        }
 
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                const progress = getProgress();
-                drawFrame(Math.round(progress * (totalFrames - 1)));
-            }
+        function getProgress() {
+            const section = document.getElementById('ark-hero-scroll');
+            if (!section) return 0;
+            const scrollTop = window.pageYOffset;
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight - window.innerHeight;
+            return Math.max(0, Math.min(1, (scrollTop - sectionTop) / sectionHeight));
+        }
 
-
-            function getProgress() {
-                const section = document.getElementById('ark-hero-scroll');
-                const scrollTop = window.pageYOffset;
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight - window.innerHeight;
-                return Math.max(0, Math.min(1, (scrollTop - sectionTop) / sectionHeight));
-            }
-
-            var cachedHeroSection = document.getElementById('ark-hero-scroll');
-            var cachedHeader = document.querySelector('.sticky-header');
-            var cachedHeroBottom = cachedHeroSection ? cachedHeroSection.offsetTop + cachedHeroSection.offsetHeight : 0;
-
-            window.addEventListener('resize', function () {
-                cachedHeroBottom = cachedHeroSection ? cachedHeroSection.offsetTop + cachedHeroSection.offsetHeight : 0;
-                resize();
-            });
-
-            window.addEventListener('scroll', function () {
-                const progress = getProgress();
-                const frameIndex = Math.round(progress * (totalFrames - 1));
-                requestAnimationFrame(function () { drawFrame(frameIndex); });
-
-                if (!cachedHeroSection || !cachedHeader) return;
-                if (window.pageYOffset >= cachedHeroBottom) {
-                    cachedHeader.classList.add('ark-nav-active');
-                } else {
-                    cachedHeader.classList.remove('ark-nav-active');
-                }
-
-                const block1 = document.getElementById('ark-block-1');
-                const block2 = document.getElementById('ark-block-2');
-                const block3 = document.getElementById('ark-block-3');
-                const block4 = document.getElementById('ark-block-4');
-                const block5 = document.getElementById('ark-block-5');
-
-                block1.classList.toggle('ark-visible', progress >= 0    && progress <= 0.18);
-                block2.classList.toggle('ark-visible', progress >= 0.22 && progress <= 0.38);
-                block3.classList.toggle('ark-visible', progress >= 0.42 && progress <= 0.56);
-                block4.classList.toggle('ark-visible', progress >= 0.60 && progress <= 0.74);
-                block5.classList.toggle('ark-visible', progress >= 0.78);
-            });
-
-            window.addEventListener('resize', resize);
-
+        function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            preload();
-        })();
-    </script>
-    <script src="{% static 'assets/js/moment.min.js' %}"></script>
+            drawFrame(Math.round(getProgress() * (totalFrames - 1)));
+        }
 
-    <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script><!-- BOOTSTRAP DATEPICKER -->
-{% endblock %}
+        window.addEventListener('scroll', function () {
+            const progress = getProgress();
+            requestAnimationFrame(function () {
+                drawFrame(Math.round(progress * (totalFrames - 1)));
+            });
+
+            // ── Only toggle block classes if elements actually exist ──
+            const block1 = document.getElementById('ark-block-1');
+            const block2 = document.getElementById('ark-block-2');
+            const block3 = document.getElementById('ark-block-3');
+            const block4 = document.getElementById('ark-block-4');
+            const block5 = document.getElementById('ark-block-5');
+
+            if (block1) block1.classList.toggle('ark-visible', progress >= 0    && progress <= 0.18);
+            if (block2) block2.classList.toggle('ark-visible', progress >= 0.22 && progress <= 0.38);
+            if (block3) block3.classList.toggle('ark-visible', progress >= 0.42 && progress <= 0.56);
+            if (block4) block4.classList.toggle('ark-visible', progress >= 0.60 && progress <= 0.74);
+            if (block5) block5.classList.toggle('ark-visible', progress >= 0.78);
+        });
+
+        window.addEventListener('resize', resize);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        preload();
+    })();
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+  const slides   = document.querySelectorAll('.hero-overlay-content');
+  const progress = document.getElementById('heroProgress');
+  if (!slides.length) return;
+
+  const DURATION = 4000;
+  let current = 0;
+
+  // First slide already has .active in HTML
+  if (progress) animateProgress();
+
+  const timer = setInterval(showNext, DURATION);
+
+  function showNext() {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+    if (progress) animateProgress();
+  }
+
+  function animateProgress() {
+    progress.style.transition = 'none';
+    progress.style.width = '0%';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        progress.style.transition = 'width ' + DURATION + 'ms linear';
+        progress.style.width = '100%';
+      });
+    });
+  }
+});
+</script>
+{% endblock %} 
+
+
+
+
