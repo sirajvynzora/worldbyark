@@ -121,4 +121,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "sirajvynzora@gmail.com"
 EMAIL_HOST_PASSWORD = "lrvx lzeh qyde xklu"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-ADMIN_EMAIL = 'sirajvynzora@gmail.com'
+ADMIN_EMAIL = 'siraj123@gmail.com'
