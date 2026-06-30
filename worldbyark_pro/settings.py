@@ -119,6 +119,6 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "siraj123@gmail.com"
-EMAIL_HOST_PASSWORD = "lrvx lzeh qyde xklu"
+EMAIL_HOST_PASSWORD = "xklu"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 ADMIN_EMAIL = 'siraj123@gmail.com'
