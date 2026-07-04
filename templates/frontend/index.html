@@ -28,6 +28,13 @@
   min-height: 560px;
   overflow: hidden;
   isolation: isolate;
+   border-radius: 0 0 40px 40px;
+}
+
+@media (max-width: 575px) {
+  .hero-video-wrapper {
+    border-radius: 0 0 20px 20px;
+  }
 }
 
 /* ── Video fills the container ── */
@@ -132,7 +139,7 @@
 }
 
 /* ── Mobile ── */
-@media (max-width: 575px) {
+{% comment %} @media (max-width: 575px) {
   .hero-bottom-left {
     bottom: 60px;
     left: 5%;
@@ -151,6 +158,33 @@
   }
   .hero-slides-wrapper {
     min-height: 220px;   /* more room for bigger relative font size */
+  }
+} {% endcomment %}
+
+@media (max-width: 575px) {
+  .hero-bottom-left {
+    bottom: 60px;
+    left: 5%;
+    width: 90%;
+  }
+  .hero-overlay-content h1 {
+    font-size: 1.9rem;
+  }
+  .hero-btn-group {
+    flex-direction: row;      /* side-by-side instead of stacked */
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .hero-glass-btn {
+    width: auto;               /* no longer full width */
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 10px 18px !important;   /* smaller than desktop padding */
+    font-size: 0.85rem !important;
+    min-width: 0;
+  }
+  .hero-slides-wrapper {
+    min-height: 220px;
   }
 }
 
@@ -337,13 +371,13 @@
             <!-- CINEMATIC HERO SECTION START -->
             <div class="hero-video-wrapper">
 
-  <video autoplay muted loop playsinline 
-         preload="auto" 
-         id="ark-hero-video" 
-         poster="{% static 'assets/images/background/vid-bg2.jpg' %}"
-         onloadstart="this.volume=0; this.play();">
-    <source src="{% static 'assets/videos/world_by_arc.mp4' %}" type="video/mp4">
-  </video>
+              <video autoplay muted loop playsinline 
+                 preload="auto" 
+                 id="ark-hero-video" 
+                 poster="{% static 'assets/images/background/vid-bg2.jpg' %}"
+                 onloadstart="this.volume=0; this.play();">
+                <source src="{% static 'assets/videos/hero-section-1.mp4' %}" type="video/mp4">
+              </video>
 
   <div class="hero-scrim"></div>
 
@@ -605,7 +639,7 @@
                             </div>
 
                             </div>
-                           <div class="trv-vid-st2 parallax-image" style="background-image: url('{% static 'assets/images/background/vid-bg2.jpg' %}');">
+                           <div class="trv-vid-st2 parallax-image" style="background-image: url('{% static 'assets/images/background/sea-shore.png' %}');">
                            </div>
                             <div class="trv-vid-st2-counter">
                                 <div class="row">
@@ -917,6 +951,8 @@
                 </div>
             </div>
             <!--EXPLORE POPULAR TOUR END-->
+
+            
 
              <!-- tv service style 1 start -->
             <div class="trv-service-st1" id="services">
@@ -1262,7 +1298,7 @@
             <div class="container mb-5 mt-4">
                 <div class="trv-adventure-video-section position-relative overflow-hidden"
                     style="height: 75vh; min-height: 550px; border-radius: 20px;">
-                    <video src="{% static 'assets/images/video-2.mp4' %}" autoplay muted loop playsinline
+                    <video src="{% static 'assets/videos/water-fall.mp4' %}" autoplay muted loop playsinline
                         class="position-absolute w-100 h-100"
                         style="top: 0; left: 0; object-fit: cover; z-index: -1;"></video>
 
