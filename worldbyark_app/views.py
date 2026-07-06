@@ -31,21 +31,31 @@ def home(request):
     destinations = Destination.objects.all().order_by("-created_at")[:8]
     latest_blogs = list(Blog.objects.all().order_by("-created_at")[:6])
     latest_blogs.reverse()
+
     category_images = []
     categories = Category.objects.all()
+
     for category in categories:
-        image = GalleryImage.objects.filter(category=category).order_by("-uploaded_at").first()
+        image = GalleryImage.objects.filter(
+            category=category
+        ).order_by("-uploaded_at").first()
+
         if image:
             category_images.append(image)
-    
-    return render(request, 'frontend/index.html', {
+
+    # -----------------------------
+    # Payment Result
+    # -----------------------------
+    payment_result = request.session.pop("payment_result", None)
+
+    return render(request, "frontend/index.html", {
         "packages": packages,
         "testimonials": testimonials,
         "destinations": destinations,
         "latest_blogs": latest_blogs,
         "category_images": category_images,
+        "payment_result": payment_result,
     })
-
 
 def about(request):
     testimonials = Testimonial.objects.all()

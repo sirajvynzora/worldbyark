@@ -13,6 +13,8 @@
       content="World By ARK introduces world-class luxury travel packages and services. Customize your travel plan as per your interest and preferences across global destinations."
     />
 
+    <!-- payment result -->
+    <link rel="stylesheet" href="{% static 'assets/css/payment-result.css' %}">
     <!-- FAVICONS ICON -->
     <link
       rel="apple-touch-icon"
@@ -94,6 +96,28 @@
       href="{% static 'assets/css/bootstrap-slider.min.css' %}"
     />
     <!-- Price Range Slider -->
+     <script src="https://www.paynimo.com/paynimocheckout/client/lib/jquery.min.js"></script>
+    <script src="https://www.paynimo.com/Paynimocheckout/server/lib/checkout.js"></script>
+    <script src="{% static 'online_transaction.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            if ($("#siDetailsAtMerchantEndCond").val() == "true") {
+
+                $("#amountType").val("{{ config_data.amountType }}");
+                $("#frequency").val("{{ config_data.frequency }}");
+                $("#debitStartDate").val("{{ start_date }}");
+                $("#debitEndDate").val("{{ end_date }}");
+
+                $("#amount").change(function () {
+                    $("#maxAmount").val($(this).val() * 2);
+                });
+
+            }
+
+        });
+    </script>
 
     <style>
 
@@ -774,35 +798,35 @@ select.booking-input {
                             <label class="booking-label">Full Name <span class="text-danger">*</span></label>
                             <div class="booking-input-wrap">
                                 <div class="booking-input-icon"><i class="bi bi-person"></i></div>
-                                <input type="text" class="booking-input" name="name" placeholder="Your name" required>
+                                <input type="text" class="booking-input" id="customerName" name="name" placeholder="Your name" required>
                             </div>
                         </div>
                         <div class="col-6">
                             <label class="booking-label">Phone <span class="text-danger">*</span></label>
                             <div class="booking-input-wrap">
                                 <div class="booking-input-icon"><i class="bi bi-telephone"></i></div>
-                                <input type="tel" class="booking-input" name="phone" placeholder="Phone number" required>
+                                <input type="tel" class="booking-input" id="mobNo" name="phone" placeholder="Phone number" required>
                             </div>
                         </div>
                         <div class="col-6">
                             <label class="booking-label">Email <span class="text-danger">*</span></label>
                             <div class="booking-input-wrap">
                                 <div class="booking-input-icon"><i class="bi bi-envelope"></i></div>
-                                <input type="email" class="booking-input" name="email" placeholder="your@email.com" required>
+                                <input type="email" class="booking-input" name="email" id="email" placeholder="your@email.com" required>
                             </div>
                         </div>
                         <div class="col-6">
                             <label class="booking-label">Amount (₹) <span class="text-danger">*</span></label>
                             <div class="booking-input-wrap">
                                 <div class="booking-input-icon"><i class="bi bi-currency-rupee"></i></div>
-                                <input type="number" class="booking-input" name="amount" placeholder="Enter amount" min="1" required>
+                                <input type="number" class="booking-input" name="amount" id="amount" placeholder="Enter amount" min="1" required>
                             </div>
                         </div>
                         <div class="col-12">
                             <label class="booking-label">Package / Purpose</label>
                             <div class="booking-input-wrap">
                                 <div class="booking-input-icon"><i class="bi bi-briefcase"></i></div>
-                                <input type="text" class="booking-input" name="package" placeholder="e.g. Maldives honeymoon package">
+                                <input type="text" class="booking-input" name="package" id="package" placeholder="e.g. Maldives honeymoon package">
                             </div>
                         </div>
                     </div>
@@ -814,7 +838,7 @@ select.booking-input {
                 <button type="button" class="booking-btn-cancel" data-bs-dismiss="modal">
                     Cancel
                 </button>
-                <button type="button" class="booking-btn-whatsapp" id="proceedPaymentBtn">
+                <button type="button" class="booking-btn-whatsapp" id="submit">
                     <i class="bi bi-credit-card"></i> Proceed to Pay
                 </button>
             </div>
@@ -823,6 +847,112 @@ select.booking-input {
     </div>
 </div>
 <!-- PAYMENT MODAL END -->
+
+
+<script>
+  $(document).ready(function () {
+
+    function handleResponse(res) {
+
+        if (
+            res &&
+            res.paymentMethod &&
+            res.paymentMethod.paymentTransaction
+        ) {
+
+            var status = res.paymentMethod.paymentTransaction.statusCode;
+
+            if (status === "0300") {
+                console.log("Payment Successful");
+            } else if (status === "0398") {
+                console.log("Payment Initiated");
+            } else {
+                console.log("Payment Failed");
+            }
+        }
+    }
+
+    $("#submit").click(function (e) {
+
+        e.preventDefault();
+
+        var customerName = $("#customerName").val().trim();
+        var mobNo = $("#mobNo").val().trim();
+        var email = $("#email").val().trim();
+        var amount = $("#amount").val().trim();
+        var packageName = $("#package").val().trim();
+
+        if (customerName == "") {
+            alert("Please enter your name");
+            return;
+        }
+
+        if (mobNo == "") {
+            alert("Please enter your mobile number");
+            return;
+        }
+
+        if (email == "") {
+            alert("Please enter your email");
+            return;
+        }
+
+        if (amount == "") {
+            alert("Please enter amount");
+            return;
+        }
+
+        $.ajax({
+
+            url: "/payment/",
+            type: "POST",
+
+            headers: {
+                "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val()
+            },
+
+            data: {
+
+                customerName: customerName,
+                mobNo: mobNo,
+                email: email,
+                amount: amount,
+                package: packageName
+
+            },
+
+            success: function (response) {
+
+                console.log(response);
+
+                response.consumerData.responseHandler = handleResponse;
+
+                $.pnCheckout(response);
+
+                if (response.features.enableNewWindowFlow) {
+                    pnCheckoutShared.openNewWindow();
+                }
+
+            },
+
+            error: function (xhr, status, error) {
+
+                console.log("Status:", xhr.status);
+                console.log("Error:", error);
+                console.log("Response:", xhr.responseText);
+
+                alert(xhr.responseText);
+
+            }
+
+        });
+
+    });
+
+});
+</script>
+
+
 
 
 
@@ -1243,7 +1373,7 @@ document.getElementById('proceedPaymentBtn').addEventListener('click', async fun
             // Redirect to Razorpay / payment gateway URL returned from backend
             if (result.payment_url) {
                 window.location.href = result.payment_url;
-            } else {
+-            } else {
                 showGlobalToast('Payment initiated! We will contact you shortly.', 'success');
                 bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
                 form.reset();
@@ -1328,5 +1458,396 @@ document.getElementById('global-toast').addEventListener('click', function () {
     <!-- BOOTSTRAP DATEPICKER -->
 
     {% block extra_js %}{% endblock %}
+
+{% load static %}
+
+<!-- ==========================================
+        PAYMENT RESULT MODAL
+=========================================== -->
+
+  <div class="modal fade"
+      id="paymentResultModal"
+      tabindex="-1"
+      aria-hidden="true">
+
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+
+          <div class="modal-content payment-result-modal">
+
+              <!-- Close Button -->
+              <button type="button"
+                      class="payment-close-btn"
+                      data-bs-dismiss="modal">
+
+                  <i class="bi bi-x-lg"></i>
+
+              </button>
+                <div id="receiptContent">
+
+              <div class="row g-0">
+
+                  <!-- ======================================
+                          LEFT RECEIPT PANEL
+                  ======================================= -->
+
+                  <div class="col-lg-3">
+
+                      <div class="receipt-panel">
+
+                          <div class="text-center">
+
+                              <img src="{% static 'assets/images/logo-light.png' %}"
+                                  class="receipt-logo"
+                                  alt="World By Ark">
+
+                          </div>
+
+                          <hr>
+
+                          <h4 class="receipt-title">
+                              PAYMENT RECEIPT
+                          </h4>
+
+                          <p class="receipt-text">
+                              Thank you for your payment.
+                          </p>
+
+                          <div class="receipt-price">
+
+                              ₹ {{ payment_result.amount }}
+
+                          </div>
+
+                          <div class="receipt-status">
+
+                              <i class="bi bi-check-circle-fill"></i>
+
+                              Completed
+
+                          </div>
+
+                          <hr>
+
+                          <div class="receipt-info">
+
+                              <div>
+
+                                  <i class="bi bi-calendar-event"></i>
+
+                                  {{ payment_result.date }}
+
+                              </div>
+
+                              <div>
+
+                                  <i class="bi bi-receipt"></i>
+
+                                  Ref :
+                                  {{ payment_result.txn_ref }}
+
+                              </div>
+
+                          </div>
+
+                      </div>
+
+                  </div>
+
+                  <!-- ======================================
+                          RIGHT SIDE
+                  ======================================= -->
+
+                  <div class="col-lg-9">
+
+                      <div class="payment-content">
+
+                          <!-- Success -->
+
+                          <div class="text-center mb-4">
+
+                              <div class="success-icon">
+
+                                  <i class="bi bi-check-lg"></i>
+
+                              </div>
+
+                              <h2 class="success-title">
+
+                                  Payment Completed
+
+                              </h2>
+
+                              <p class="success-subtitle">
+
+                                  Your payment has been processed successfully.
+
+                                  A confirmation has been generated for your transaction.
+
+                              </p>
+
+                          </div>
+
+                          <!-- Transaction -->
+
+                          <div class="payment-card">
+
+                              <h5 class="section-title">
+
+                                  <i class="bi bi-credit-card"></i>
+
+                                  Transaction Details
+
+                              </h5>
+
+                              <div class="row">
+
+                                  <div class="col-md-6">
+
+                                      <div class="detail-row">
+
+                                          <span>Status</span>
+
+                                          <strong>Completed</strong>
+
+                                      </div>
+
+                                      <div class="detail-row">
+
+                                          <span>Transaction ID</span>
+
+                                          <strong>{{ payment_result.txn_id }}</strong>
+
+                                      </div>
+
+                                      <div class="detail-row">
+
+                                          <span>Amount</span>
+
+                                          <strong>
+
+                                              ₹ {{ payment_result.amount }}
+
+                                          </strong>
+
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-md-6">
+
+                                      <div class="detail-row">
+
+                                          <span>Reference No</span>
+
+                                          <strong>{{ payment_result.txn_ref }}</strong>
+
+                                      </div>
+
+                                      <div class="detail-row">
+
+                                          <span>Bank Code</span>
+
+                                          <strong>{{ payment_result.bank_code }}</strong>
+
+                                      </div>
+
+                                      <div class="detail-row">
+
+                                          <span>Date</span>
+
+                                          <strong>{{ payment_result.date }}</strong>
+
+                                      </div>
+
+                                  </div>
+
+                              </div>
+
+                          </div>
+
+                          <!-- Customer -->
+
+                          <div class="payment-card mt-4">
+
+                              <h5 class="section-title">
+
+                                  <i class="bi bi-person-circle"></i>
+
+                                  Customer Details
+
+                              </h5>
+
+                              <div class="row">
+
+                                  <div class="col-md-4">
+
+                                      <div class="customer-box">
+
+                                          <i class="bi bi-person-fill"></i>
+
+                                          <h6>Name</h6>
+
+                                          <p>{{ payment_result.name }}</p>
+
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-md-4">
+
+                                      <div class="customer-box">
+
+                                          <i class="bi bi-envelope-fill"></i>
+
+                                          <h6>Email</h6>
+
+                                          <p>{{ payment_result.email }}</p>
+
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-md-4">
+
+                                      <div class="customer-box">
+
+                                          <i class="bi bi-telephone-fill"></i>
+
+                                          <h6>Phone</h6>
+
+                                          <p>{{ payment_result.phone }}</p>
+
+                                      </div>
+
+                                  </div>
+
+                              </div>
+
+                          </div>
+
+                          <!-- Message -->
+
+                          <div class="payment-card mt-4">
+
+                              <h5 class="section-title">
+
+                                  <i class="bi bi-chat-left-text-fill"></i>
+
+                                  Message
+
+                              </h5>
+
+                              <div class="payment-message">
+
+                                  Thank you for your payment.
+
+                                  Your transaction has been completed successfully.
+
+                                  Please keep this receipt for future reference.
+
+                              </div>
+
+                          </div>
+
+                          <!-- Buttons -->
+
+                          <div class="payment-footer">
+
+                              <button class="btn btn-outline-success btn-lg"
+                                      data-bs-dismiss="modal">
+
+                                  <i class="bi bi-x-circle"></i>
+
+                                  Close
+
+                              </button>
+
+                              <button class="btn btn-success btn-lg"
+                                      id="downloadReceipt">
+
+                                  <i class="bi bi-download"></i>
+
+                                  Download Receipt
+
+                              </button>
+
+                    
+                          </div>
+
+
+                          <div class="receipt-note">
+
+                              <i class="bi bi-shield-check"></i>
+
+                              This is a system generated receipt and does not require a signature.
+
+                          </div>
+
+                      </div>
+
+                          </div>
+
+                  </div>
+
+              </div>
+
+          </div>
+
+      </div>
+
+  </div>
+<script>
+  document.getElementById("downloadReceipt").addEventListener("click", function () {
+
+    const receipt = document.getElementById("receiptContent");
+
+    const options = {
+
+        margin: 0.4,
+
+        filename: "WorldByArk-Payment-Receipt.pdf",
+
+        image: {
+            type: "jpeg",
+            quality: 1
+        },
+
+        html2canvas: {
+            scale: 2,
+            useCORS: true
+        },
+
+        jsPDF: {
+            unit: "in",
+            format: "a4",
+            orientation: "portrait"
+        }
+
+    };
+
+    html2pdf().set(options).from(receipt).save();
+
+});
+</script>
+{% if payment_result %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    var modal = new bootstrap.Modal(
+        document.getElementById("paymentResultModal")
+    );
+
+    modal.show();
+
+});
+
+</script>
+
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   </body>
 </html>

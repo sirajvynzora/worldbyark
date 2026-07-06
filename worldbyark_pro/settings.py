@@ -3,6 +3,7 @@ Django settings for worldbyark_pro project.
 """
 
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'worldbyark_app',
+    'payment',
 ]
 
 # MIDDLEWARE
@@ -106,11 +108,28 @@ GOOGLE_REVIEW_RATING = 4.7
 GOOGLE_REVIEW_COUNT = 900
 GOOGLE_REVIEW_URL = "https://www.google.com/travel/search?q=worldbyark_pro%20camping%20reviews"
 
+
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+]
+
 # RECAPTCHA - REPLACE WITH YOUR KEYS
 RECAPTCHA_SITE_KEY = "your-recaptcha-site-key"
 RECAPTCHA_SECRET_KEY = "your-recaptcha-secret-key"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+WORLDLINE_API_URL = 'https://www.paynimo.com/api/paynimoV2.req'
+
+WORLDLINE_CONFIG_FILE = os.path.join(
+    BASE_DIR,
+    "payment",
+    "worldline_configuration.json"
+)
+
 
 
 # EMAIL SETTINGS 
