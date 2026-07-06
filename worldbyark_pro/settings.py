@@ -4,13 +4,14 @@ Django settings for worldbyark_pro project.
 
 from pathlib import Path
 import os
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 # WARNING: Keep secret key, passwords, and API keys secret in production!
 SECRET_KEY = 'your-secret-key-here-change-in-production'
-DEBUG = True  # Changed to False for production safety
+DEBUG = False  # Changed to False for production safety
 ALLOWED_HOSTS = ['your-domain.com', 'www.your-domain.com', 'localhost', '127.0.0.1']
 
 # APPS
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
 # MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,6 +62,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'worldbyark_pro.wsgi.application'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # DATABASE
 DATABASES = {

@@ -1,0 +1,1 @@
+web: gunicorn worldbyark_pro.wsgi
