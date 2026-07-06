@@ -19,7 +19,7 @@
 {% block extra_css %}
 <style>
 
-   
+{% comment %}    
 /* ── Hero Wrapper ── */
 .hero-video-wrapper {
   position: relative;
@@ -139,28 +139,6 @@
 }
 
 /* ── Mobile ── */
-{% comment %} @media (max-width: 575px) {
-  .hero-bottom-left {
-    bottom: 60px;
-    left: 5%;
-    width: 90%;
-  }
-  .hero-overlay-content h1 {
-    font-size: 1.9rem;
-  }
-  .hero-btn-group {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .hero-glass-btn {
-    width: 100%;
-    justify-content: center;
-  }
-  .hero-slides-wrapper {
-    min-height: 220px;   /* more room for bigger relative font size */
-  }
-} {% endcomment %}
-
 @media (max-width: 575px) {
   .hero-bottom-left {
     bottom: 60px;
@@ -185,6 +163,244 @@
   }
   .hero-slides-wrapper {
     min-height: 220px;
+  }
+}  {% endcomment %}
+
+
+
+
+
+/* ── Hero Wrapper ── */
+.hero-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 0 0 40px 40px;
+}
+
+@media (max-width: 575px) {
+  .hero-video-wrapper {
+    border-radius: 0 0 20px 20px;
+  }
+}
+
+/* ── Video fills the container ── */
+.hero-video-wrapper video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* ── Dark gradient scrim ── */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+}
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(6px);
+  border-radius: 50px;
+  padding: 8px 8px 8px 26px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero-cta-btn:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.hero-cta-btn .arrow-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #F29979;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.hero-glass-btn-primary:hover {
+  background: #F2637E;
+  border-color: #F2637E;
+  color: #fff;
+}
+
+/* ── Center-left content anchor ── */
+.hero-bottom-left {
+  position: absolute;
+  top: 65%;
+  left: 5%;
+  transform: translateY(-50%);
+  z-index: 5;
+  max-width: 620px;
+  width: 90%;
+}
+
+/* ── Slide wrapper — fixed height so layout doesn't jump ── */
+.hero-slides-wrapper {
+  position: relative;
+  min-height: 300px;
+}
+
+/* ── Each slide — stacked, only .active one shows ── */
+.hero-overlay-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  pointer-events: none;
+  color: #fff;
+}
+
+.hero-overlay-content.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ── Badge/pill eyebrow ── */
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  padding: 8px 20px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 50px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  margin-bottom: 22px;
+  text-shadow: none;
+}
+
+/* ── Heading ── */
+.hero-overlay-content h1 {
+  font-family: "Afacad", sans-serif;
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 20px 0;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.8);
+}
+
+.hero-overlay-content h1 .accent {
+  color: #F29979;
+}
+
+/* ── Description paragraph ── */
+.hero-desc {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.9);
+  max-width: 480px;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* ── Button group ── */
+.hero-btn-group {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── Single CTA button with circular arrow ── */
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(6px);
+  border-radius: 50px;
+  padding: 8px 8px 8px 26px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.hero-cta-btn:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.hero-cta-btn .arrow-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #F29979;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* ── Progress bar at bottom ── */
+.hero-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(135deg, #F29979, #F2637E);
+  z-index: 6;
+  transition: width 4000ms linear;
+  display: none;
+}
+
+/* ── Mobile ── */
+@media (max-width: 575px) {
+  .hero-bottom-left {
+    top: 65%;
+    left: 5%;
+    transform: translateY(-50%);
+    width: 90%;
+  }
+  .hero-slides-wrapper {
+    min-height: 250px;
+  }
+  .hero-btn-group {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .hero-cta-btn {
+    padding: 6px 6px 6px 18px;
+    font-size: 0.85rem;
+    gap: 10px;
+  }
+  .hero-cta-btn .arrow-circle {
+    width: 34px;
+    height: 34px;
   }
 }
 
@@ -362,6 +578,338 @@
         text-shadow: 0 2px 10px rgba(0,0,0,0.6);
     }
     .ark-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    {% comment %} service style 1 start {% endcomment %}
+{% comment %} 
+.amazing-services {
+  position: relative;
+  height: 100vh;
+  background: #3C2D73;
+  overflow: hidden;
+  color: #fff;
+}
+
+.amazing-services::before {
+  content: "SERVICES";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(80px, 18vw, 260px);
+  font-weight: 800;
+  letter-spacing: 10px;
+  color: rgba(255,255,255,0.04);
+  z-index: 1;
+}
+
+.service-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(242,153,121,.22), transparent 32%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,.12), transparent 30%),
+    #3C2D73;
+  z-index: 0;
+}
+
+.service-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  padding: 0 20px;
+}
+
+.service-title h2 {
+  font-size: clamp(46px, 9vw, 130px);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-align: center;
+  line-height: .95;
+  margin: 0;
+}
+
+.service-title h2 span {
+  color: #F29979;
+}
+
+.service-slider {
+  position: relative;
+  z-index: 4;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-card {
+  position: absolute;
+  width: min(660px, 88vw);
+  height: min(460px, 65vh);
+  border-radius: 34px;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(.82) translateY(100px);
+  background: #fff;
+  box-shadow: 0 45px 120px rgba(0,0,0,.35);
+}
+
+.service-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(60,45,115,.9),
+    rgba(60,45,115,.25),
+    rgba(60,45,115,.05)
+  );
+}
+
+.service-card h3 {
+  position: absolute;
+  left: 38px;
+  bottom: 34px;
+  z-index: 2;
+  font-size: clamp(30px, 4vw, 58px);
+  color: #fff;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.service-card h3::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #F29979;
+  margin-top: 14px;
+  border-radius: 20px;
+}
+
+@media (max-width: 575px) {
+  .service-card {
+    height: 430px;
+    border-radius: 24px;
+  }
+
+  .service-card h3 {
+    left: 24px;
+    bottom: 28px;
+  }
+}
+ {% endcomment %}
+ {% comment %} service style 1 end {% endcomment %}
+
+ {% comment %} service style 2 start {% endcomment %}
+.ark-service-scroll{
+  position:relative;
+  height:100vh;
+  min-height:720px;
+  background:#3C2D73;
+  overflow:hidden;
+  color:#fff;
+}
+
+.ark-service-bg-text{
+  position:absolute;
+  left:50%;
+  bottom:2%;
+  transform:translateX(-50%);
+  font-size:clamp(90px,18vw,260px);
+  font-weight:900;
+  color:rgba(255,255,255,.04);
+  pointer-events:none;
+}
+
+.ark-service-inner{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:grid;
+  grid-template-columns:42% 58%;
+  gap:50px;
+  padding:105px 7% 55px;
+  align-items:flex-start;
+}
+
+.ark-service-small{
+  color:#F29979;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  font-weight:800;
+}
+
+.ark-service-left h2{
+  color:#fff !important;
+  font-size:clamp(44px,5vw,78px);
+  line-height:.95;
+  margin:18px 0 38px;
+}
+
+.ark-service-left h2 span{
+  color:#F29979;
+}
+
+.ark-service-text-wrap{
+  position:relative;
+  min-height:200px;
+}
+
+.ark-service-item{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transform:translateY(35px);
+  pointer-events:none;
+}
+
+.ark-service-item.active{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.ark-service-num{
+  display:block;
+  font-size:64px;
+  font-weight:900;
+  color:rgba(242,153,121,.3);
+  margin-bottom:8px;
+}
+
+.ark-service-item h3{
+  color:#fff !important;
+  font-size:clamp(32px,3.5vw,52px);
+  margin-bottom:14px;
+}
+
+.ark-service-item p{
+  color:rgba(255,255,255,.78);
+  font-size:17px;
+  line-height:1.55;
+  max-width:450px;
+}
+
+.ark-service-btn{
+  margin-top:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:18px;
+  width:max-content;
+  padding:8px 8px 8px 28px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.45);
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  font-size:17px;
+  font-weight:700;
+  z-index:50;
+  position:relative;
+}
+
+.ark-service-btn span{
+  color:#fff;
+}
+
+.ark-service-btn i{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#F29979;
+  color:#3C2D73;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.ark-service-right{
+  position:relative;
+  width:100%;
+  height:440px;
+  margin-top:20px;
+  border-radius:34px;
+  overflow:hidden;
+  box-shadow:0 45px 120px rgba(0,0,0,.35);
+}
+
+.ark-service-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transform:scale(1.08);
+}
+
+.ark-service-img.active{
+  opacity:1;
+  transform:scale(1);
+}
+
+@media(max-width:991px){
+  .ark-service-scroll{
+    min-height:700px;
+  }
+
+  .ark-service-inner{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    padding:95px 18px 24px;
+  }
+
+  .ark-service-left h2{
+    font-size:31px;
+    margin:12px 0 20px;
+  }
+
+  .ark-service-text-wrap{
+    min-height:215px;
+  }
+
+  .ark-service-num{
+    font-size:44px;
+  }
+
+  .ark-service-item h3{
+    font-size:23px;
+  }
+
+  .ark-service-item p{
+    font-size:14px;
+    line-height:1.45;
+  }
+
+  .ark-service-btn{
+    margin-top:6px;
+    font-size:14px;
+    padding:6px 6px 6px 20px;
+  }
+
+  .ark-service-btn i{
+    width:42px;
+    height:42px;
+  }
+
+  .ark-service-right{
+    height:180px;
+    margin-top:10px;
+    border-radius:22px;
+  }
+}
+{% comment %} service 2 style end {% endcomment %}
+
 </style>
 {% endblock %}
 
@@ -382,7 +930,7 @@
   <div class="hero-scrim"></div>
 
   <!-- All slides + buttons anchored bottom-left -->
-  <div class="hero-bottom-left">
+  {% comment %} <div class="hero-bottom-left">
 
     <div class="hero-slides-wrapper">
       <div class="hero-overlay-content active" id="slide-1">
@@ -421,7 +969,62 @@
       </button>
     </div>
 
+  </div> {% endcomment %}
+
+  <div class="hero-bottom-left">
+
+  <div class="hero-slides-wrapper">
+
+    <div class="hero-overlay-content active" id="slide-1">
+      <span class="hero-eyebrow">Explore Beyond Boundaries</span>
+      <h1>Your Next Great<br><span class="accent">Adventure</span> Starts Here</h1>
+      <p class="hero-desc">Handpicked journeys across 50+ destinations, crafted around your pace, your people, and your idea of a perfect trip.</p>
+    </div>
+
+    <div class="hero-overlay-content" id="slide-2">
+      <span class="hero-eyebrow">Curated Destinations</span>
+      <h1>Travel Far.<br>Experience <span class="accent">More.</span></h1>
+      <p class="hero-desc">From misty hill stations to sunlit coastlines, every destination is chosen for the story it lets you tell.</p>
+    </div>
+
+    <div class="hero-overlay-content" id="slide-3">
+      <span class="hero-eyebrow">Crafted Just For You</span>
+      <h1>Journeys That<br>Inspire Every <span class="accent">Moment</span></h1>
+      <p class="hero-desc">No two travelers are the same, so no two itineraries should be either. We design each trip around you.</p>
+    </div>
+
+    <div class="hero-overlay-content" id="slide-4">
+      <span class="hero-eyebrow">Luxury • Comfort • Discovery</span>
+      <h1>See the World<br><span class="accent">Like Never Before</span></h1>
+      <p class="hero-desc">Comfort meets discovery in every stay, every transfer, every experience we put together for you.</p>
+    </div>
+
+    <div class="hero-overlay-content" id="slide-5">
+      <span class="hero-eyebrow">World By ARK</span>
+      <h1>Turning Dreams<br>Into <span class="accent">Destinations</span></h1>
+      <p class="hero-desc">Ten years of helping travelers turn a wishlist into a passport full of memories.</p>
+    </div>
+
   </div>
+
+  <!-- Single primary CTA -->
+ <!-- Single primary CTA -->
+<div class="hero-btn-group">
+  <a href="{% url 'destinations' %}" class="hero-cta-btn">
+    <span>Discover More</span>
+    <span class="arrow-circle"><i class="bi bi-arrow-right"></i></span>
+  </a>
+  <button type="button"
+          class="hero-cta-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#bookingModal"
+          onclick="openBookingModal('')">
+    <span>Enquire Now</span>
+    <span class="arrow-circle"><i class="bi bi-arrow-right"></i></span>
+  </button>
+</div>
+
+</div>
 
   <div class="hero-progress" id="heroProgress"></div>
 
@@ -952,9 +1555,236 @@
             </div>
             <!--EXPLORE POPULAR TOUR END-->
 
-            
 
-             <!-- tv service style 1 start -->
+{% comment %} service style 2 start {% endcomment %}
+            {% comment %} <section class="ark-service-scroll" id="services">
+  <div class="ark-service-bg-text">SERVICES</div>
+
+  <div class="ark-service-inner">
+    <div class="ark-service-left">
+      <span class="ark-service-small">What We Offer</span>
+      <h2>Our Amazing <span>Services</span></h2>
+
+      <div class="ark-service-content">
+        <div class="ark-service-item active">
+          <span>01</span>
+          <h3>Hotel Bookings</h3>
+          <p>Choose comfortable hotels and stays that match your budget and journey.</p>
+          <button type="button"
+        class="ark-service-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#bookingModal"
+        onclick="openBookingModal('Holiday Packages')">
+  <span>Enquire Now</span>
+  <i class="bi bi-arrow-right"></i>
+</button>
+        </div>
+
+        <div class="ark-service-item">
+          <span>02</span>
+          <h3>Flight Bookings</h3>
+          <p>Book domestic and international flights with smooth travel support.</p>
+          <button type="button"
+        class="ark-service-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#bookingModal"
+        onclick="openBookingModal('Flight Bookings')">
+  <span>Enquire Now</span>
+  <i class="bi bi-arrow-right"></i>
+</button>
+        </div>
+
+        <div class="ark-service-item">
+          <span>03</span>
+          <h3>Holiday Packages</h3>
+          <p>Explore curated packages for family trips, couples, and solo travelers.</p>
+          <button type="button"
+        class="ark-service-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#bookingModal"
+        onclick="openBookingModal('Flight Bookings')">
+  <span>Enquire Now</span>
+  <i class="bi bi-arrow-right"></i>
+</button>
+        </div>
+
+        <div class="ark-service-item">
+          <span>04</span>
+          <h3>Cabs & Transfers</h3>
+          <p>Reliable local transfers and cab services for a hassle-free journey.</p>
+          <button type="button"
+        class="ark-service-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#bookingModal"
+        onclick="openBookingModal('Flight Bookings')">
+  <span>Enquire Now</span>
+  <i class="bi bi-arrow-right"></i>
+</button>
+        </div>
+
+        <div class="ark-service-item">
+          <span>05</span>
+          <h3>Experiences</h3>
+          <p>Enjoy activities, adventures, and unforgettable destination experiences.</p>
+          <button type="button"
+        class="ark-service-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#bookingModal"
+        onclick="openBookingModal('Flight Bookings')">
+  <span>Enquire Now</span>
+  <i class="bi bi-arrow-right"></i>
+</button>
+        </div>
+
+        <div class="ark-service-item">
+          <span>06</span>
+          <h3>Train & Bus Rentals</h3>
+          <p>Easy train, bus, and group travel solutions for every trip.</p>
+          <button type="button"
+        class="ark-service-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#bookingModal"
+        onclick="openBookingModal('Flight Bookings')">
+  <span>Enquire Now</span>
+  <i class="bi bi-arrow-right"></i>
+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ark-service-right">
+      <img class="ark-service-img active" src="{% static 'assets/images/trv-services/hotel-booking.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/flight-booking.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/holiday-packages.png' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/localcabs.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/Activities-and-experience.jpg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/bus-rental.jpeg' %}" alt="">
+    </div>
+  </div>
+</section> {% endcomment %}
+
+<section class="ark-service-scroll" id="services">
+  <div class="ark-service-bg-text">SERVICES</div>
+
+  <div class="ark-service-inner">
+
+    <div class="ark-service-left">
+      <span class="ark-service-small">What We Offer</span>
+      <h2>Our Amazing <span>Services</span></h2>
+
+      <div class="ark-service-text-wrap">
+
+        <div class="ark-service-item active">
+          <span class="ark-service-num">01</span>
+          <h3>Hotel Bookings</h3>
+          <p>Choose comfortable hotels and stays that match your budget and journey.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">02</span>
+          <h3>Flight Bookings</h3>
+          <p>Book domestic and international flights with smooth travel support.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">03</span>
+          <h3>Holiday Packages</h3>
+          <p>Explore curated packages for family trips, couples, and solo travelers.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">04</span>
+          <h3>Cabs & Transfers</h3>
+          <p>Reliable local transfers and cab services for a hassle-free journey.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">05</span>
+          <h3>Experiences</h3>
+          <p>Enjoy activities, adventures, and unforgettable destination experiences.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">06</span>
+          <h3>Train & Bus Rentals</h3>
+          <p>Easy train, bus, and group travel solutions for every trip.</p>
+        </div>
+
+      </div>
+
+      <button type="button"
+              class="ark-service-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#bookingModal"
+              onclick="openBookingModal(document.querySelector('.ark-service-item.active h3').innerText)">
+        <span>Enquire Now</span>
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+
+    <div class="ark-service-right">
+      <img class="ark-service-img active" src="{% static 'assets/images/trv-services/hotel-booking.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/flight-booking.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/holiday-packages.png' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/localcabs.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/Activities-and-experience.jpg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/bus-rental.jpeg' %}" alt="">
+    </div>
+
+  </div>
+</section>
+{% comment %} service style 2 end {% endcomment %}
+
+
+
+
+{% comment %} serive style 1 start {% endcomment %}
+            {% comment %} <section class="amazing-services" id="services">
+  <div class="service-bg"></div>
+
+  <div class="service-title">
+    <h2>Our Amazing <span>Services</span></h2>
+  </div>
+
+  <div class="service-slider">
+
+    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Hotel Bookings')">
+      <img src="{% static 'assets/images/trv-services/hotel-booking.jpeg' %}" alt="Hotel Bookings">
+      <h3>Hotel Bookings</h3>
+    </div>
+
+    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Flight Bookings')">
+      <img src="{% static 'assets/images/trv-services/flight-booking.jpeg' %}" alt="Flight Bookings">
+      <h3>Flight Bookings</h3>
+    </div>
+
+    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Holiday Packages')">
+      <img src="{% static 'assets/images/trv-services/holiday-packages.png' %}" alt="Holiday Packages">
+      <h3>Holiday Packages</h3>
+    </div>
+
+    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Cabs and Local Transfers')">
+      <img src="{% static 'assets/images/trv-services/localcabs.jpeg' %}" alt="Cabs and Local Transfers">
+      <h3>Cabs & Transfers</h3>
+    </div>
+
+    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Activities and Experiences')">
+      <img src="{% static 'assets/images/trv-services/Activities-and-experience.jpg' %}" alt="Activities and Experiences">
+      <h3>Experiences</h3>
+    </div>
+
+    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Train and Bus Rentals')">
+      <img src="{% static 'assets/images/trv-services/bus-rental.jpeg' %}" alt="Train and Bus Rentals">
+      <h3>Train & Bus Rentals</h3>
+    </div>
+
+  </div>
+</section> {% endcomment %}
+{% comment %} service style 1 end {% endcomment %}
+
+
+
+             {% comment %} <!-- tv service style 1 start -->
             <div class="trv-service-st1" id="services">
                 <div class="container">
                     <!-- TITLE START-->
@@ -1068,7 +1898,7 @@
                     </div>
                 </div>
             </div>
-            <!-- tv service style 1 end-->
+            <!-- tv service style 1 end--> {% endcomment %}
 
 
             <!--STEPS SECTION START-->
@@ -1451,6 +2281,10 @@
 
         </div>
         <!-- CONTENT END -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
 {% endblock %}
 
 {% block pre_footer %}{% endblock %}
@@ -1585,6 +2419,162 @@
   }
 });
 </script>
+
+{% comment %} service 2 js start {% endcomment %}
+<<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.querySelector(".ark-service-scroll");
+  if (!section) return;
+
+  const items = gsap.utils.toArray(".ark-service-item");
+  const images = gsap.utils.toArray(".ark-service-img");
+
+  gsap.set(items, { opacity: 0, y: 35 });
+  gsap.set(images, { opacity: 0, scale: 1.08 });
+
+  gsap.set(items[0], { opacity: 1, y: 0 });
+  gsap.set(images[0], { opacity: 1, scale: 1 });
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top 100px",
+      end: "+=550%",
+      scrub: 1.4,
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  });
+
+  items.forEach((item, index) => {
+    if (index === 0) return;
+
+    tl.to(items[index - 1], {
+      opacity: 0,
+      y: -35,
+      duration: 1,
+      onStart: () => items[index - 1].classList.remove("active"),
+      onReverseComplete: () => items[index - 1].classList.add("active")
+    });
+
+    tl.to(images[index - 1], {
+      opacity: 0,
+      scale: 0.96,
+      duration: 1
+    }, "<");
+
+    tl.to(item, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      onStart: () => item.classList.add("active"),
+      onReverseComplete: () => item.classList.remove("active")
+    }, "<0.2");
+
+    tl.to(images[index], {
+      opacity: 1,
+      scale: 1,
+      duration: 1.2
+    }, "<");
+  });
+
+  window.addEventListener("load", function () {
+    ScrollTrigger.refresh();
+  });
+});
+</script>
+{% comment %} js for service 2 end {% endcomment %}
+
+{% comment %} js for service 1 start {% endcomment %}
+{% comment %} <script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const serviceSection = document.querySelector(".amazing-services");
+  if (!serviceSection) return;
+
+  const cards = gsap.utils.toArray(".amazing-services .service-card");
+
+  gsap.set(".amazing-services .service-title h2", {
+    opacity: 0,
+    scale: 1.5,
+    y: 80
+  });
+
+  gsap.set(cards, {
+    opacity: 0,
+    scale: 0.82,
+    y: 100,
+    filter: "blur(0px)"
+  });
+
+  const serviceTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: serviceSection,
+      start: "top 80px",
+      end: "+=600%",
+      scrub: 1,
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  });
+
+  serviceTl.to(".amazing-services .service-title h2", {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    duration: 1
+  });
+
+  serviceTl.to(".amazing-services .service-title h2", {
+    opacity: 0,
+    scale: 0.8,
+    y: -80,
+    duration: 1
+  });
+
+  cards.forEach((card, index) => {
+    serviceTl.to(card, {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      filter: "blur(0px)",
+      duration: 1
+    });
+
+    serviceTl.to(card, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.7
+    });
+
+    if (index !== cards.length - 1) {
+      serviceTl.to(card, {
+        opacity: 0,
+        scale: 1.15,
+        y: -130,
+        filter: "blur(8px)",
+        duration: 1
+      });
+    }
+  });
+
+  window.addEventListener("load", function () {
+    ScrollTrigger.refresh();
+  });
+});
+</script> {% endcomment %}
+{% comment %} service 1 js end {% endcomment %}
 {% endblock %} 
 
 
