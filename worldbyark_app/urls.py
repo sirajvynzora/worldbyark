@@ -64,4 +64,8 @@ urlpatterns = [
     # Admin - Booking Enquiries
     path('dashboard/enquiries/', views.admin_enquiry_list, name='admin_enquiry_list'),
     path('dashboard/enquiries/<int:pk>/delete/', views.admin_enquiry_delete, name='admin_enquiry_delete'),
+
+    path("admin/transactions/", views.admin_transaction_list, name="admin_transaction_list"),
+    path("admin/transactions/<int:pk>/", views.transaction_detail, name="transaction_detail"),
+    path("admin/transactions/<int:pk>/delete/", views.transaction_delete, name="transaction_delete"),
 ]

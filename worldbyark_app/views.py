@@ -19,6 +19,9 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 import json
 
+from django.db.models import Q
+from payment.models import PaymentTransaction
+
 # ==========================================
 # FRONTEND VIEWS
 # ==========================================
@@ -31,21 +34,31 @@ def home(request):
     destinations = Destination.objects.all().order_by("-created_at")[:8]
     latest_blogs = list(Blog.objects.all().order_by("-created_at")[:6])
     latest_blogs.reverse()
+
     category_images = []
     categories = Category.objects.all()
+
     for category in categories:
-        image = GalleryImage.objects.filter(category=category).order_by("-uploaded_at").first()
+        image = GalleryImage.objects.filter(
+            category=category
+        ).order_by("-uploaded_at").first()
+
         if image:
             category_images.append(image)
-    
-    return render(request, 'frontend/index.html', {
+
+    # -----------------------------
+    # Payment Result
+    # -----------------------------
+    payment_result = request.session.pop("payment_result", None)
+
+    return render(request, "frontend/index.html", {
         "packages": packages,
         "testimonials": testimonials,
         "destinations": destinations,
         "latest_blogs": latest_blogs,
         "category_images": category_images,
+        "payment_result": payment_result,
     })
-
 
 def about(request):
     testimonials = Testimonial.objects.all()
@@ -514,6 +527,50 @@ def destination_delete(request, pk):
     return redirect("admin_destination_list")
 
 
+# ==========================================
+# transaction (ADMIN)
+# ==========================================
+
+@login_required(login_url="admin_login")
+def admin_transaction_list(request):
+    transactions_qs = PaymentTransaction.objects.all().order_by("-created_at")
+
+    search_query = request.GET.get("q", "").strip()
+    if search_query:
+        transactions_qs = transactions_qs.filter(
+            Q(name__icontains=search_query) |
+            Q(email__icontains=search_query) |
+            Q(phone__icontains=search_query) |
+            Q(package__icontains=search_query) |
+            Q(merchant_txn_id__icontains=search_query) |
+            Q(gateway_txn_id__icontains=search_query)
+        )
+
+    status_filter = request.GET.get("status", "").strip()
+    if status_filter:
+        transactions_qs = transactions_qs.filter(status__iexact=status_filter)
+
+    transactions = Paginator(transactions_qs, 10).get_page(request.GET.get("page"))
+    return render(request, "admin_pages/transaction_list.html", {
+        "transactions": transactions,
+        "search_query": search_query,
+        "status_filter": status_filter,
+    })
+
+
+@login_required(login_url="admin_login")
+def transaction_detail(request, pk):
+    transaction = get_object_or_404(PaymentTransaction, pk=pk)
+    return render(request, "admin_pages/transaction_detail.html", {"transaction": transaction})
+
+
+@login_required(login_url="admin_login")
+def transaction_delete(request, pk):
+    transaction = get_object_or_404(PaymentTransaction, pk=pk)
+    if request.method == "POST":
+        transaction.delete()
+        messages.success(request, "Transaction deleted successfully!")
+    return redirect("admin_transaction_list")
 # ==========================================
 # GALLERY (ADMIN)
 # ==========================================

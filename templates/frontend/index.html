@@ -579,137 +579,6 @@
     }
     .ark-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-    {% comment %} service style 1 start {% endcomment %}
-{% comment %} 
-.amazing-services {
-  position: relative;
-  height: 100vh;
-  background: #3C2D73;
-  overflow: hidden;
-  color: #fff;
-}
-
-.amazing-services::before {
-  content: "SERVICES";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: clamp(80px, 18vw, 260px);
-  font-weight: 800;
-  letter-spacing: 10px;
-  color: rgba(255,255,255,0.04);
-  z-index: 1;
-}
-
-.service-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(242,153,121,.22), transparent 32%),
-    radial-gradient(circle at 80% 70%, rgba(255,255,255,.12), transparent 30%),
-    #3C2D73;
-  z-index: 0;
-}
-
-.service-title {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  padding: 0 20px;
-}
-
-.service-title h2 {
-  font-size: clamp(46px, 9vw, 130px);
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  text-align: center;
-  line-height: .95;
-  margin: 0;
-}
-
-.service-title h2 span {
-  color: #F29979;
-}
-
-.service-slider {
-  position: relative;
-  z-index: 4;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.service-card {
-  position: absolute;
-  width: min(660px, 88vw);
-  height: min(460px, 65vh);
-  border-radius: 34px;
-  overflow: hidden;
-  opacity: 0;
-  transform: scale(.82) translateY(100px);
-  background: #fff;
-  box-shadow: 0 45px 120px rgba(0,0,0,.35);
-}
-
-.service-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.service-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(60,45,115,.9),
-    rgba(60,45,115,.25),
-    rgba(60,45,115,.05)
-  );
-}
-
-.service-card h3 {
-  position: absolute;
-  left: 38px;
-  bottom: 34px;
-  z-index: 2;
-  font-size: clamp(30px, 4vw, 58px);
-  color: #fff;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.service-card h3::after {
-  content: "";
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: #F29979;
-  margin-top: 14px;
-  border-radius: 20px;
-}
-
-@media (max-width: 575px) {
-  .service-card {
-    height: 430px;
-    border-radius: 24px;
-  }
-
-  .service-card h3 {
-    left: 24px;
-    bottom: 28px;
-  }
-}
- {% endcomment %}
- {% comment %} service style 1 end {% endcomment %}
-
  {% comment %} service style 2 start {% endcomment %}
 .ark-service-scroll{
   position:relative;
@@ -739,7 +608,7 @@
   grid-template-columns:42% 58%;
   gap:50px;
   padding:105px 7% 55px;
-  align-items:flex-start;
+  align-items:start;              /* was: align-items:flex-start (harmless typo-fix, keep) */
 }
 
 .ark-service-small{
@@ -749,11 +618,16 @@
   font-weight:800;
 }
 
+.ark-service-left{
+  display:flex;
+  flex-direction:column;
+}
+
 .ark-service-left h2{
   color:#fff !important;
   font-size:clamp(44px,5vw,78px);
   line-height:.95;
-  margin:18px 0 38px;
+  margin:12px 0 24px;             /* was 18px 0 38px — tighter gap under heading */
 }
 
 .ark-service-left h2 span{
@@ -762,7 +636,7 @@
 
 .ark-service-text-wrap{
   position:relative;
-  min-height:200px;
+  min-height:170px;            /* was 250px */
 }
 
 .ark-service-item{
@@ -771,6 +645,10 @@
   opacity:0;
   transform:translateY(35px);
   pointer-events:none;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  column-gap:20px;
+  align-items:center;         /* vertically centers num against h3 */
 }
 
 .ark-service-item.active{
@@ -780,20 +658,27 @@
 }
 
 .ark-service-num{
-  display:block;
-  font-size:64px;
+  grid-column:1;
+  grid-row:1;
+  font-size:56px;
   font-weight:900;
   color:rgba(242,153,121,.3);
-  margin-bottom:8px;
+  line-height:1;
+  margin-bottom:0;             /* was 8px — no longer needed, sits inline now */
 }
 
 .ark-service-item h3{
+  grid-column:2;
+  grid-row:1;
   color:#fff !important;
   font-size:clamp(32px,3.5vw,52px);
-  margin-bottom:14px;
+  margin-bottom:0;             /* was 14px — handled by paragraph's margin-top instead */
 }
 
 .ark-service-item p{
+  grid-column:1 / -1;          /* spans both columns, full width */
+  grid-row:2;
+  margin-top:16px;
   color:rgba(255,255,255,.78);
   font-size:17px;
   line-height:1.55;
@@ -801,7 +686,8 @@
 }
 
 .ark-service-btn{
-  margin-top:12px;
+  margin-top:28px;                /* fixed, predictable space above the button */
+  align-self:flex-start;          /* keeps button left-aligned, not stretched */
   display:inline-flex;
   align-items:center;
   gap:18px;
@@ -857,16 +743,18 @@
   transform:scale(1);
 }
 
+
 @media(max-width:991px){
   .ark-service-scroll{
-    min-height:700px;
+    min-height:auto;           /* was 700px — let content dictate real height */
+    padding-bottom:40px;       /* small breathing room instead of a fixed min-height */
   }
 
   .ark-service-inner{
     display:flex;
     flex-direction:column;
     gap:14px;
-    padding:95px 18px 24px;
+    padding:95px 18px 0;       /* removed bottom padding, let right image close the section */
   }
 
   .ark-service-left h2{
@@ -874,12 +762,12 @@
     margin:12px 0 20px;
   }
 
-  .ark-service-text-wrap{
-    min-height:215px;
+ .ark-service-text-wrap{
+    min-height:150px;          /* was 250px */
   }
 
-  .ark-service-num{
-    font-size:44px;
+   .ark-service-num{
+    font-size:38px;
   }
 
   .ark-service-item h3{
@@ -903,8 +791,11 @@
   }
 
   .ark-service-right{
-    height:180px;
+    height:45vh;                /* was 180px — scales with viewport instead of a tiny fixed box */
+    min-height:280px;
+    max-height:380px;
     margin-top:10px;
+    margin-bottom:0;
     border-radius:22px;
   }
 }
@@ -1736,54 +1627,6 @@
 {% comment %} service style 2 end {% endcomment %}
 
 
-
-
-{% comment %} serive style 1 start {% endcomment %}
-            {% comment %} <section class="amazing-services" id="services">
-  <div class="service-bg"></div>
-
-  <div class="service-title">
-    <h2>Our Amazing <span>Services</span></h2>
-  </div>
-
-  <div class="service-slider">
-
-    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Hotel Bookings')">
-      <img src="{% static 'assets/images/trv-services/hotel-booking.jpeg' %}" alt="Hotel Bookings">
-      <h3>Hotel Bookings</h3>
-    </div>
-
-    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Flight Bookings')">
-      <img src="{% static 'assets/images/trv-services/flight-booking.jpeg' %}" alt="Flight Bookings">
-      <h3>Flight Bookings</h3>
-    </div>
-
-    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Holiday Packages')">
-      <img src="{% static 'assets/images/trv-services/holiday-packages.png' %}" alt="Holiday Packages">
-      <h3>Holiday Packages</h3>
-    </div>
-
-    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Cabs and Local Transfers')">
-      <img src="{% static 'assets/images/trv-services/localcabs.jpeg' %}" alt="Cabs and Local Transfers">
-      <h3>Cabs & Transfers</h3>
-    </div>
-
-    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Activities and Experiences')">
-      <img src="{% static 'assets/images/trv-services/Activities-and-experience.jpg' %}" alt="Activities and Experiences">
-      <h3>Experiences</h3>
-    </div>
-
-    <div class="service-card" data-bs-toggle="modal" data-bs-target="#bookingModal" onclick="openBookingModal('Train and Bus Rentals')">
-      <img src="{% static 'assets/images/trv-services/bus-rental.jpeg' %}" alt="Train and Bus Rentals">
-      <h3>Train & Bus Rentals</h3>
-    </div>
-
-  </div>
-</section> {% endcomment %}
-{% comment %} service style 1 end {% endcomment %}
-
-
-
              {% comment %} <!-- tv service style 1 start -->
             <div class="trv-service-st1" id="services">
                 <div class="container">
@@ -2490,91 +2333,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 {% comment %} js for service 2 end {% endcomment %}
-
-{% comment %} js for service 1 start {% endcomment %}
-{% comment %} <script>
-document.addEventListener("DOMContentLoaded", function () {
-  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const serviceSection = document.querySelector(".amazing-services");
-  if (!serviceSection) return;
-
-  const cards = gsap.utils.toArray(".amazing-services .service-card");
-
-  gsap.set(".amazing-services .service-title h2", {
-    opacity: 0,
-    scale: 1.5,
-    y: 80
-  });
-
-  gsap.set(cards, {
-    opacity: 0,
-    scale: 0.82,
-    y: 100,
-    filter: "blur(0px)"
-  });
-
-  const serviceTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: serviceSection,
-      start: "top 80px",
-      end: "+=600%",
-      scrub: 1,
-      pin: true,
-      pinSpacing: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true
-    }
-  });
-
-  serviceTl.to(".amazing-services .service-title h2", {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    duration: 1
-  });
-
-  serviceTl.to(".amazing-services .service-title h2", {
-    opacity: 0,
-    scale: 0.8,
-    y: -80,
-    duration: 1
-  });
-
-  cards.forEach((card, index) => {
-    serviceTl.to(card, {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      filter: "blur(0px)",
-      duration: 1
-    });
-
-    serviceTl.to(card, {
-      opacity: 1,
-      scale: 1,
-      duration: 0.7
-    });
-
-    if (index !== cards.length - 1) {
-      serviceTl.to(card, {
-        opacity: 0,
-        scale: 1.15,
-        y: -130,
-        filter: "blur(8px)",
-        duration: 1
-      });
-    }
-  });
-
-  window.addEventListener("load", function () {
-    ScrollTrigger.refresh();
-  });
-});
-</script> {% endcomment %}
-{% comment %} service 1 js end {% endcomment %}
 {% endblock %} 
 
 

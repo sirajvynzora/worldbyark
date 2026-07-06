@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Online Transaction Page</title>
+
+    <meta name="viewport"
+          content="user-scalable=no, width=device-width, initial-scale=1" />
+
+    <script src="https://www.paynimo.com/paynimocheckout/client/lib/jquery.min.js"></script>
+    <script src="https://www.paynimo.com/Paynimocheckout/server/lib/checkout.js"></script>
+    <script src="{% static 'online_transaction.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            if ($("#siDetailsAtMerchantEndCond").val() == "true") {
+
+                $("#amountType").val("{{ config_data.amountType }}");
+                $("#frequency").val("{{ config_data.frequency }}");
+                $("#debitStartDate").val("{{ start_date }}");
+                $("#debitEndDate").val("{{ end_date }}");
+
+                $("#amount").change(function () {
+                    $("#maxAmount").val($(this).val() * 2);
+                });
+
+            }
+
+        });
+    </script>
+
+</head>
+
+<body>
+
+<h1>Online Transaction</h1>
+
+<form method="POST" id="form">
+    {% csrf_token %}
+
+    <table id="worldline_merchant_table" border="1">
+
+        <tr>
+            <td>Merchant Code</td>
+            <td>
+                <input type="text"
+       name="merchantCode"
+       id="merchantCode"
+       value="{{ config_data.merchantCode }}"
+       readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Transaction ID</td>
+            <td>
+                <input type="text"
+                       name="txn_id"
+                       id="txn_id"
+                       value="{{ txn_id }}"
+                       readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Amount</td>
+            <td>
+                <input type="text"
+                       name="amount"
+                       id="amount">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Scheme</td>
+            <td>
+                <input type="text"
+                       name="merchantSchemeCode"
+                       id="merchantSchemeCode"
+                       value="{{ config_data.merchantSchemeCode }}"
+                       readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Customer ID</td>
+            <td>
+                <input type="text"
+                       name="custID"
+                       id="custID">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Mobile</td>
+            <td>
+                <input type="text"
+                       name="mobNo"
+                       id="mobNo">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Email</td>
+            <td>
+                <input type="email"
+                       name="email"
+                       id="email">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Customer Name</td>
+            <td>
+                <input type="text"
+                       name="customerName"
+                       id="customerName">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Currency</td>
+            <td>
+                <input type="text"
+                       name="currency"
+                       id="currency"
+                       value="{{ config_data.currency }}"
+                       readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td>SALT</td>
+            <td>
+                <input type="text"
+                       name="SALT"
+                       id="SALT"
+                       value="{{ config_data.SALT }}"
+                       readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Return URL</td>
+            <td>
+                <input type="text"
+                       name="returnUrl"
+                       id="returnUrl"
+                       value="{{ returnUrl }}"
+                       readonly>
+            </td>
+        </tr>
+
+    </table>
+
+    <!-- Hidden Fields -->
+    <input type="hidden" name="cardNumber" id="cardNumber">
+    <input type="hidden" name="expMonth" id="expMonth">
+    <input type="hidden" name="expYear" id="expYear">
+    <input type="hidden" name="cvvCode" id="cvvCode">
+    <input type="hidden" name="siDetailsAtMerchantEndCond"
+           id="siDetailsAtMerchantEndCond"
+           value="{{ siDetailsAtMerchantEndCond }}">
+
+    <button id="submit" type="submit">Submit</button>
+
+    <div id="worldline_embeded_popup"></div>
+
+</form>
+</body>
+</html>

@@ -1172,6 +1172,14 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{% url 'admin_transaction_list' %}"
+                             class="{% if request.resolver_match.url_name == 'admin_transaction_list' or request.resolver_match.url_name == 'transaction_detail' %}active{% endif %}">
+                             <i class="icofont-money"></i>
+                              Transactions
+                         </a>
+                    </li>
+
 
                     <!-- Enquiries Dropdown -->
                     <li class="has-dropdown">

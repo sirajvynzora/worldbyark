@@ -46,6 +46,8 @@ def robots_txt(request):
 
 urlpatterns = [
     path('', include('worldbyark_app.urls')),
+     # Worldline Payment
+    path('', include('payment.urls')),
     path("robots.txt", robots_txt),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
 ]

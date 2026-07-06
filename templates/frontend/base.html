@@ -13,6 +13,11 @@
       content="World By ARK introduces world-class luxury travel packages and services. Customize your travel plan as per your interest and preferences across global destinations."
     />
 
+    <!-- payment result -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/payment-result.css' %}"
+    />
     <!-- FAVICONS ICON -->
     <link
       rel="apple-touch-icon"
@@ -94,416 +99,431 @@
       href="{% static 'assets/css/bootstrap-slider.min.css' %}"
     />
     <!-- Price Range Slider -->
+    <script src="https://www.paynimo.com/paynimocheckout/client/lib/jquery.min.js"></script>
+    <script src="https://www.paynimo.com/Paynimocheckout/server/lib/checkout.js"></script>
+    <script src="{% static 'online_transaction.js' %}"></script>
+
+    <script>
+      $(document).ready(function () {
+        if ($("#siDetailsAtMerchantEndCond").val() == "true") {
+          $("#amountType").val("{{ config_data.amountType }}");
+          $("#frequency").val("{{ config_data.frequency }}");
+          $("#debitStartDate").val("{{ start_date }}");
+          $("#debitEndDate").val("{{ end_date }}");
+
+          $("#amount").change(function () {
+            $("#maxAmount").val($(this).val() * 2);
+          });
+        }
+      });
+    </script>
 
     <style>
 
 
 
+            /* Modal Content */
+      /* ===== QUICK BOOKING MODAL ===== */
+
+      /* Modal backdrop */
+      #bookingModal .modal-dialog {
+          max-width: 560px;        /* smaller width */
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+      }
+      #bookingModal {
+          padding-top: 80px !important;  /* navbar height offset */
+          padding-bottom: 20px !important;
+      }
+
+      body.modal-open {
+          overflow: auto !important;
+          padding-right: 0 !important;
+      }
+
+      #bookingEnquiryForm .row {
+          --bs-gutter-y: 0.5rem;
+      }
+
       /* Modal Content */
-/* ===== QUICK BOOKING MODAL ===== */
-
-/* Modal backdrop */
-#bookingModal .modal-dialog {
-    max-width: 560px;        /* smaller width */
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-}
-#bookingModal {
-    padding-top: 80px !important;  /* navbar height offset */
-    padding-bottom: 20px !important;
-}
-
-body.modal-open {
-    overflow: auto !important;
-    padding-right: 0 !important;
-}
-
-#bookingEnquiryForm .row {
-    --bs-gutter-y: 0.5rem;
-}
-
-/* Modal Content */
-.booking-modal-content {
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
-}
-
-/* Header */
-.booking-modal-header {
-    background: linear-gradient(135deg, #2d1e64 0%, #3b2a7a 100%) !important;
-    padding: 18px 24px 16px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Decorative plane + dashed path + pin (pure CSS/emoji alternative) */
-.booking-modal-header::before {
-    content: '✈';
-    position: absolute;
-    right: 60px;
-    top: 18px;
-    font-size: 22px;
-    opacity: 0.5;
-    color: #fff;
-    transform: rotate(-30deg);
-}
-
-.booking-modal-header::after {
-    content: '📍';
-    position: absolute;
-    right: 30px;
-    top: 36px;
-    font-size: 16px;
-    opacity: 0.45;
-}
-
-.booking-modal-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.booking-modal-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.booking-modal-icon i {
-    color: #fff;
-    font-size: 18px;
-}
-
-.booking-modal-title {
-    color: #fff;
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0 0 4px;
-    line-height: 1.2;
-}
-
-.booking-modal-subtitle {
-    color: rgba(255,255,255,0.65);
-    font-size: 13px;
-    margin: 0;
-}
-
-.booking-modal-close {
-    background: rgba(255,255,255,0.15);
-    border: none;
-    color: #fff;
-    font-size: 15px;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.9;
-    transition: background 0.2s, opacity 0.2s;
-    flex-shrink: 0;
-}
-
-.booking-modal-close:hover {
-    background: rgba(255,255,255,0.28);
-    opacity: 1;
-}
-
-/* Body */
-.booking-modal-body {
-    padding: 18px 24px 12px;
-    background: #fff;
-}
-
-.booking-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #1a1a2e;
-    margin-bottom: 5px;
-    display: block;
-}
-
-/* Input wrapper with icon */
-.booking-input-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.booking-input-icon {
-    position: absolute;
-    left: 12px;
-    color: #6c63ff;
-    font-size: 16px;
-    pointer-events: none;
-    background: #ebe9ff;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.booking-input {
-    width: 100%;
-    padding: 9px 14px 9px 48px;
-    border: 1.5px solid #e8e6f0;
-    border-radius: 12px;
-    font-size: 13px;
-    color: #333;
-    background: #f7f6ff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-.booking-input:focus {
-    outline: none;
-    border-color: #6c63ff;
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
-}
-
-/* Select arrow */
-select.booking-input {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236c63ff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 36px;
-    cursor: pointer;
-}
-
-/* Footer */
-.booking-modal-footer {
-    padding: 12px 24px 18px;
-    background: #fff;
-    display: flex;
-    justify-content: flex-end;
-    gap: 14px;
-    border-top: none;
-    position: relative;
-}
-
-/* Hot air balloon decoration */
-.booking-modal-footer::before {
-    content: '🎈';
-    position: absolute;
-    left: 20px;
-    bottom: 18px;
-    font-size: 34px;
-    opacity: 0.55;
-}
-
-.booking-btn-cancel {
-    padding: 12px 28px;
-    border-radius: 10px;
-    border: 1.5px solid #6c63ff;
-    background: transparent;
-    color: #6c63ff;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    transition: background 0.2s, color 0.2s;
-}
-
-.booking-btn-cancel:hover {
-    background: #f0eeff;
-}
-
-.booking-btn-whatsapp {
-    padding: 12px 28px;
-    border-radius: 10px;
-    border: none;
-    background: linear-gradient(135deg, #f26388, #f07040);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    transition: opacity 0.2s, transform 0.2s;
-    box-shadow: 0 4px 14px rgba(242, 99, 126, 0.4);
-}
-
-.booking-btn-whatsapp:hover {
-    opacity: 0.92;
-    transform: translateY(-1px);
-}
-
-.booking-btn-whatsapp .bi-whatsapp {
-    font-size: 18px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    padding: 3px;
-}
-
-   /* Modal style  Content end */
-
-      .loading-area {
-        display: none !important;
-      }
-      #ark-preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-        transition:
-          opacity 0.7s ease,
-          visibility 0.7s ease;
-      }
-      #ark-preloader.ark-hide {
-        opacity: 0;
-        visibility: hidden;
-      }
-      #ark-preloader-gif {
-        width: 280px;
-        max-width: 60vw;
+      .booking-modal-content {
+          border: none;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 24px 80px rgba(0,0,0,0.25);
       }
 
-    /* Default state - reduce size */
-    .payment-btn-wrapper {
-    display: flex;
-    align-items: center;
-}
-/* Align the payment button li vertically with other nav items */
-.nav.navbar-nav li:has(.payment-btn) {
-    display: flex;
-    align-items: center;
-}
-.payment-btn {
-    background-image: linear-gradient(135deg, rgb(242, 153, 121), rgb(242, 99, 126));
-    border:none;
-    color: white;
-    padding: 18px 24px !important;
-    border-radius: 50px !important;
-    transition: 0.3s ease;
-    font-weight: 600 !important;
-    font-size: 18px !important;
-    line-height: 1.2 !important;
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    transition: all 0.3s ease !important;
-}
+      /* Header */
+      .booking-modal-header {
+          background: linear-gradient(135deg, #2d1e64 0%, #3b2a7a 100%) !important;
+          padding: 18px 24px 16px;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          position: relative;
+          overflow: hidden;
+      }
 
-.payment-btn:hover {
+      /* Decorative plane + dashed path + pin (pure CSS/emoji alternative) */
+      .booking-modal-header::before {
+          content: '✈';
+          position: absolute;
+          right: 60px;
+          top: 18px;
+          font-size: 22px;
+          opacity: 0.5;
+          color: #fff;
+          transform: rotate(-30deg);
+      }
 
-  transform: translateY(-3px);
-  color: #fff;
-  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
+      .booking-modal-header::after {
+          content: '📍';
+          position: absolute;
+          right: 30px;
+          top: 36px;
+          font-size: 16px;
+          opacity: 0.45;
+      }
 
-}
+      .booking-modal-title-wrap {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+      }
+
+      .booking-modal-icon {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+      }
+
+      .booking-modal-icon i {
+          color: #fff;
+          font-size: 18px;
+      }
+
+      .booking-modal-title {
+          color: #fff;
+          font-size: 20px;
+          font-weight: 700;
+          margin: 0 0 4px;
+          line-height: 1.2;
+      }
+
+      .booking-modal-subtitle {
+          color: rgba(255,255,255,0.65);
+          font-size: 13px;
+          margin: 0;
+      }
+
+      .booking-modal-close {
+          background: rgba(255,255,255,0.15);
+          border: none;
+          color: #fff;
+          font-size: 15px;
+          cursor: pointer;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.9;
+          transition: background 0.2s, opacity 0.2s;
+          flex-shrink: 0;
+      }
+
+      .booking-modal-close:hover {
+          background: rgba(255,255,255,0.28);
+          opacity: 1;
+      }
+
+      /* Body */
+      .booking-modal-body {
+          padding: 18px 24px 12px;
+          background: #fff;
+      }
+
+      .booking-label {
+          font-size: 12px;
+          font-weight: 600;
+          color: #1a1a2e;
+          margin-bottom: 5px;
+          display: block;
+      }
+
+      /* Input wrapper with icon */
+      .booking-input-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
+      }
+
+      .booking-input-icon {
+          position: absolute;
+          left: 12px;
+          color: #6c63ff;
+          font-size: 16px;
+          pointer-events: none;
+          background: #ebe9ff;
+          width: 30px;
+          height: 30px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+
+      .booking-input {
+          width: 100%;
+          padding: 9px 14px 9px 48px;
+          border: 1.5px solid #e8e6f0;
+          border-radius: 12px;
+          font-size: 13px;
+          color: #333;
+          background: #f7f6ff;
+          transition: border-color 0.2s, box-shadow 0.2s;
+          appearance: none;
+          -webkit-appearance: none;
+      }
+
+      .booking-input:focus {
+          outline: none;
+          border-color: #6c63ff;
+          background: #fff;
+          box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
+      }
+
+      /* Select arrow */
+      select.booking-input {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236c63ff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 14px center;
+          padding-right: 36px;
+          cursor: pointer;
+      }
+
+      /* Footer */
+      .booking-modal-footer {
+          padding: 12px 24px 18px;
+          background: #fff;
+          display: flex;
+          justify-content: flex-end;
+          gap: 14px;
+          border-top: none;
+          position: relative;
+      }
+
+      /* Hot air balloon decoration */
+      .booking-modal-footer::before {
+          content: '🎈';
+          position: absolute;
+          left: 20px;
+          bottom: 18px;
+          font-size: 34px;
+          opacity: 0.55;
+      }
+
+      .booking-btn-cancel {
+          padding: 12px 28px;
+          border-radius: 10px;
+          border: 1.5px solid #6c63ff;
+          background: transparent;
+          color: #6c63ff;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          transition: background 0.2s, color 0.2s;
+      }
+
+      .booking-btn-cancel:hover {
+          background: #f0eeff;
+      }
+
+      .booking-btn-whatsapp {
+          padding: 12px 28px;
+          border-radius: 10px;
+          border: none;
+          background: linear-gradient(135deg, #f26388, #f07040);
+          color: #fff;
+          font-size: 14px;
+          font-weight: 700;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          transition: opacity 0.2s, transform 0.2s;
+          box-shadow: 0 4px 14px rgba(242, 99, 126, 0.4);
+      }
+
+      .booking-btn-whatsapp:hover {
+          opacity: 0.92;
+          transform: translateY(-1px);
+      }
+
+      .booking-btn-whatsapp .bi-whatsapp {
+          font-size: 18px;
+          background: rgba(255,255,255,0.2);
+          border-radius: 50%;
+          padding: 3px;
+      }
+
+         /* Modal style  Content end */
+
+            .loading-area {
+              display: none !important;
+            }
+            #ark-preloader {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: #ffffff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              z-index: 99999;
+              transition:
+                opacity 0.7s ease,
+                visibility 0.7s ease;
+            }
+            #ark-preloader.ark-hide {
+              opacity: 0;
+              visibility: hidden;
+            }
+            #ark-preloader-gif {
+              width: 280px;
+              max-width: 60vw;
+            }
+
+          /* Default state - reduce size */
+          .payment-btn-wrapper {
+          display: flex;
+          align-items: center;
+      }
+      /* Align the payment button li vertically with other nav items */
+      .nav.navbar-nav li:has(.payment-btn) {
+          display: flex;
+          align-items: center;
+      }
+      .payment-btn {
+          background-image: linear-gradient(135deg, rgb(242, 153, 121), rgb(242, 99, 126));
+          border:none;
+          color: white;
+          padding: 18px 24px !important;
+          border-radius: 50px !important;
+          transition: 0.3s ease;
+          font-weight: 600 !important;
+          font-size: 18px !important;
+          line-height: 1.2 !important;
+          display: inline-flex !important;
+          align-items: center;
+          justify-content: center;
+          white-space: nowrap;
+          transition: all 0.3s ease !important;
+      }
+
+      .payment-btn:hover {
+
+        transform: translateY(-3px);
+        color: #fff;
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
+
+      }
 
 
-{% comment %} .payment-btn:hover {
-    background: #2a034f !important;
-    color: #fff !important;
-    cursor: pointer;
-} {% endcomment %}
+      {% comment %} .payment-btn:hover {
+          background: #2a034f !important;
+          color: #fff !important;
+          cursor: pointer;
+      } {% endcomment %}
 
-@media (min-width: 992px) and (max-width: 1199px) {
-    .nav.navbar-nav li a {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-        font-size: 13px !important;
-    }
+      @media (min-width: 992px) and (max-width: 1199px) {
+          .nav.navbar-nav li a {
+              padding-left: 8px !important;
+              padding-right: 8px !important;
+              font-size: 13px !important;
+          }
 
-    .payment-btn {
-        padding: 8px 14px !important;
-        font-size: 12px !important;
-        border-width: 1.5px !important;
-    }
+          .payment-btn {
+              padding: 8px 14px !important;
+              font-size: 12px !important;
+              border-width: 1.5px !important;
+          }
 
-    .main-bar {
-        flex-wrap: nowrap !important;
-    }
-}
+          .main-bar {
+              flex-wrap: nowrap !important;
+          }
+      }
 
-@media (min-width: 992px) and (max-width: 1199px) {
-    .nav.navbar-nav li a {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-        font-size: 13px !important;
-    }
+      @media (min-width: 992px) and (max-width: 1199px) {
+          .nav.navbar-nav li a {
+              padding-left: 8px !important;
+              padding-right: 8px !important;
+              font-size: 13px !important;
+          }
 
-    /* Shrink both buttons equally */
-    .payment-btn,
-    .site-button.butn-bg-shape {
-        padding: 8px 14px !important;
-        font-size: 12px !important;
-    }
+          /* Shrink both buttons equally */
+          .payment-btn,
+          .site-button.butn-bg-shape {
+              padding: 8px 14px !important;
+              font-size: 12px !important;
+          }
 
-    .payment-btn {
-        border-width: 1.5px !important;
-    }
+          .payment-btn {
+              border-width: 1.5px !important;
+          }
 
-    .extra-nav.header-1-nav {
-        gap: 6px !important;
-    }
-    .main-bar {
-        flex-wrap: nowrap !important;
-    }
-} 
+          .extra-nav.header-1-nav {
+              gap: 6px !important;
+          }
+          .main-bar {
+              flex-wrap: nowrap !important;
+          }
+      }
 
-@media (min-width: 1100px) and (max-width: 1300px) {
-    .nav.navbar-nav li a {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-        font-size: 18px !important;
-    }
+      @media (min-width: 1100px) and (max-width: 1300px) {
+          .nav.navbar-nav li a {
+              padding-left: 8px !important;
+              padding-right: 8px !important;
+              font-size: 18px !important;
+          }
 
-    /* Shrink both buttons equally */
-    .payment-btn,
-    .site-button.butn-bg-shape {
-        padding: 8px 14px !important;
-        font-size: 12px !important;
-    }
+          /* Shrink both buttons equally */
+          .payment-btn,
+          .site-button.butn-bg-shape {
+              padding: 8px 14px !important;
+              font-size: 12px !important;
+          }
 
-    .payment-btn {
-        border-width: 1.5px !important;
-    }
+          .payment-btn {
+              border-width: 1.5px !important;
+          }
 
-    .extra-nav.header-1-nav {
-        gap: 6px !important;
-    }
-    .main-bar {
-        flex-wrap: nowrap !important;
-    }
-}
-/* Fix wrapping when sticky/scrolled */
-.sticky-header .main-bar {
-    flex-wrap: nowrap !important;
-}
+          .extra-nav.header-1-nav {
+              gap: 6px !important;
+          }
+          .main-bar {
+              flex-wrap: nowrap !important;
+          }
+      }
+      /* Fix wrapping when sticky/scrolled */
+      .sticky-header .main-bar {
+          flex-wrap: nowrap !important;
+      }
 
-.sticky-header .extra-nav.header-1-nav {
-    flex-shrink: 0 !important;
-}
-
-
-    
+      .sticky-header .extra-nav.header-1-nav {
+          flex-shrink: 0 !important;
+      }
     </style>
     {% block extra_css %}{% endblock %}
   </head>
@@ -535,10 +555,11 @@ select.booking-input {
     <!-- LOADING AREA  END ====== -->
 
     <!-- Curser Pointer -->
-   
 
     <!-- HEADER START -->
-    <header class="sticky-header site-header {% block header_class %}header-style-2{% endblock %} mobile-sider-drawer-menu">
+    <header
+      class="sticky-header site-header {% block header_class %}header-style-2{% endblock %} mobile-sider-drawer-menu"
+    >
       <div class="main-bar-wraper navbar-expand-lg">
         <div class="main-bar">
           <!-- NAV Toggle Button -->
@@ -567,7 +588,9 @@ select.booking-input {
           </div>
 
           <!-- MAIN Vav -->
-          <div class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-end">
+          <div
+            class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-end"
+          >
             <ul class="nav navbar-nav">
               <li><a href="{% url 'home' %}">Home</a></li>
               <li><a href="{% url 'about' %}">About Us</a></li>
@@ -588,7 +611,15 @@ select.booking-input {
               <li><a href="{% url 'packages' %}">Packages</a></li>
               <li><a href="{% url 'blogs' %}">Blogs</a></li>
               <li><a href="{% url 'gallery' %}">Gallery</a></li>
-              <li class="d-lg-none"> <a href="#" class="payment-btn" data-bs-toggle="modal" data-bs-target="#paymentModal">Make Payment</a></li>
+              <li class="d-lg-none">
+                <a
+                  href="#"
+                  class="payment-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#paymentModal"
+                  >Make Payment</a
+                >
+              </li>
             </ul>
           </div>
 
@@ -596,10 +627,18 @@ select.booking-input {
           <!-- Header Right Section-->
           <div class="extra-nav header-1-nav d-none d-lg-flex">
             <div class="extra-cell">
-                <a href="#" class="payment-btn" data-bs-toggle="modal" data-bs-target="#paymentModal">Make Payment</a>
+              <a
+                href="#"
+                class="payment-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#paymentModal"
+                >Make Payment</a
+              >
             </div>
             <div class="extra-cell">
-              <a href="{% url 'contact' %}" class="site-button butn-bg-shape">Contact</a>
+              <a href="{% url 'contact' %}" class="site-button butn-bg-shape"
+                >Contact</a
+              >
             </div>
           </div>
 
@@ -719,210 +758,458 @@ select.booking-input {
     <!-- HEADER END -->
 
     <div class="page-wraper">
+      <!-- Toast Notification start -->
+      <div
+        id="global-toast"
+        style="
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          min-width: 300px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          padding: 16px 20px;
+          display: flex;
+          align-items: center;
+          z-index: 99999;
+          transform: translateX(120%);
+          opacity: 0;
+          transition: all 0.3s ease;
+          border-left: 4px solid #4caf50;
+        "
+      >
+        <span
+          id="global-toast-icon"
+          style="font-size: 20px; margin-right: 12px"
+        ></span>
+        <span
+          id="global-toast-message"
+          style="font-size: 14px; color: #333"
+        ></span>
+      </div>
 
-    <!-- Toast Notification start -->
-<div id="global-toast" style="
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    min-width: 300px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    z-index: 99999;
-    transform: translateX(120%);
-    opacity: 0;
-    transition: all 0.3s ease;
-    border-left: 4px solid #4CAF50;
-">
-    <span id="global-toast-icon" style="font-size:20px; margin-right:12px;"></span>
-    <span id="global-toast-message" style="font-size:14px; color:#333;"></span>
-</div>
+      <!-- Toast Notification end -->
 
-<!-- Toast Notification end -->
-
-<!-- PAYMENT MODAL -->
-<div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width:520px;">
-        <div class="modal-content booking-modal-content">
-
+      <!-- PAYMENT MODAL -->
+      <div
+        class="modal fade"
+        id="paymentModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-centered"
+          style="max-width: 520px"
+        >
+          <div class="modal-content booking-modal-content">
             <!-- Header -->
             <div class="booking-modal-header">
-                <div class="booking-modal-title-wrap">
-                    <div class="booking-modal-icon">
-                        <i class="bi bi-credit-card"></i>
-                    </div>
-                    <div>
-                        <h5 class="booking-modal-title">Make Payment</h5>
-                        <p class="booking-modal-subtitle">Secure payment for your booking</p>
-                    </div>
+              <div class="booking-modal-title-wrap">
+                <div class="booking-modal-icon">
+                  <i class="bi bi-credit-card"></i>
                 </div>
-                <button type="button" class="booking-modal-close" data-bs-dismiss="modal">
-                    <i class="bi bi-x-lg"></i>
-                </button>
+                <div>
+                  <h5 class="booking-modal-title">Make Payment</h5>
+                  <p class="booking-modal-subtitle">
+                    Secure payment for your booking
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="booking-modal-close"
+                data-bs-dismiss="modal"
+              >
+                <i class="bi bi-x-lg"></i>
+              </button>
             </div>
 
             <!-- Body -->
             <div class="booking-modal-body">
-                <form id="paymentForm">
-                    {% csrf_token %}
-                    <div class="row g-3">
-                        <div class="col-6">
-                            <label class="booking-label">Full Name <span class="text-danger">*</span></label>
-                            <div class="booking-input-wrap">
-                                <div class="booking-input-icon"><i class="bi bi-person"></i></div>
-                                <input type="text" class="booking-input" name="name" placeholder="Your name" required>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <label class="booking-label">Phone <span class="text-danger">*</span></label>
-                            <div class="booking-input-wrap">
-                                <div class="booking-input-icon"><i class="bi bi-telephone"></i></div>
-                                <input type="tel" class="booking-input" name="phone" placeholder="Phone number" required>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <label class="booking-label">Email <span class="text-danger">*</span></label>
-                            <div class="booking-input-wrap">
-                                <div class="booking-input-icon"><i class="bi bi-envelope"></i></div>
-                                <input type="email" class="booking-input" name="email" placeholder="your@email.com" required>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <label class="booking-label">Amount (₹) <span class="text-danger">*</span></label>
-                            <div class="booking-input-wrap">
-                                <div class="booking-input-icon"><i class="bi bi-currency-rupee"></i></div>
-                                <input type="number" class="booking-input" name="amount" placeholder="Enter amount" min="1" required>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="booking-label">Package / Purpose</label>
-                            <div class="booking-input-wrap">
-                                <div class="booking-input-icon"><i class="bi bi-briefcase"></i></div>
-                                <input type="text" class="booking-input" name="package" placeholder="e.g. Maldives honeymoon package">
-                            </div>
-                        </div>
+              <form id="paymentForm">
+                {% csrf_token %}
+                <div class="row g-3">
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >Full Name <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-person"></i>
+                      </div>
+                      <input
+                        type="text"
+                        class="booking-input"
+                        id="customerName"
+                        name="name"
+                        placeholder="Your name"
+                        required
+                      />
                     </div>
-                </form>
+                  </div>
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >Phone <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-telephone"></i>
+                      </div>
+                      <input
+                        type="tel"
+                        class="booking-input"
+                        id="mobNo"
+                        name="phone"
+                        placeholder="Phone number"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >Email <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-envelope"></i>
+                      </div>
+                      <input
+                        type="email"
+                        class="booking-input"
+                        name="email"
+                        id="email"
+                        placeholder="your@email.com"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >Amount (₹) <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-currency-rupee"></i>
+                      </div>
+                      <input
+                        type="number"
+                        class="booking-input"
+                        name="amount"
+                        id="amount"
+                        placeholder="Enter amount"
+                        min="1"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label class="booking-label">Package / Purpose</label>
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-briefcase"></i>
+                      </div>
+                      <input
+                        type="text"
+                        class="booking-input"
+                        name="package"
+                        id="package"
+                        placeholder="e.g. Maldives honeymoon package"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
 
             <!-- Footer -->
             <div class="booking-modal-footer">
-                <button type="button" class="booking-btn-cancel" data-bs-dismiss="modal">
-                    Cancel
-                </button>
-                <button type="button" class="booking-btn-whatsapp" id="proceedPaymentBtn">
-                    <i class="bi bi-credit-card"></i> Proceed to Pay
-                </button>
+              <button
+                type="button"
+                class="booking-btn-cancel"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="button" class="booking-btn-whatsapp" id="submit">
+                <i class="bi bi-credit-card"></i> Proceed to Pay
+              </button>
             </div>
-
+          </div>
         </div>
-    </div>
-</div>
-<!-- PAYMENT MODAL END -->
+      </div>
+      <!-- PAYMENT MODAL END -->
 
+      <script>
+        $(document).ready(function () {
+          function handleResponse(res) {
+            if (
+              res &&
+              res.paymentMethod &&
+              res.paymentMethod.paymentTransaction
+            ) {
+              var status = res.paymentMethod.paymentTransaction.statusCode;
 
+              if (status === "0300") {
+                showGlobalToast('Payment Successful');
+              } else if (status === "0398") {
+                showGlobalToast('Payment Initiated');
+              } else {
+                showGlobalToast('Payment Failed');
+              }
+            }
+          }
 
+          $("#submit").click(function (e) {
+            e.preventDefault();
+
+            var customerName = $("#customerName").val().trim();
+            var mobNo = $("#mobNo").val().trim();
+            var email = $("#email").val().trim();
+            var amount = $("#amount").val().trim();
+            var packageName = $("#package").val().trim();
+
+            if (customerName == "") {
+              showGlobalToast('Please enter your name');
+              return;
+            }
+
+            if (mobNo == "") {
+              showGlobalToast('Please enter your mobile number');
+              return;
+            }
+
+            if (email == "") {
+              showGlobalToast('Please enter your email');
+              return;
+            }
+
+            if (amount == "") {
+              showGlobalToast('Please enter amount');
+              return;
+            }
+
+            $.ajax({
+              url: "/payment/",
+              type: "POST",
+
+              headers: {
+                "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
+              },
+
+              data: {
+                customerName: customerName,
+                mobNo: mobNo,
+                email: email,
+                amount: amount,
+                package: packageName,
+              },
+
+              success: function (response) {
+                console.log(response);
+
+                response.consumerData.responseHandler = handleResponse;
+
+                $.pnCheckout(response);
+
+                if (response.features.enableNewWindowFlow) {
+                  pnCheckoutShared.openNewWindow();
+                }
+              },
+
+              error: function (xhr, status, error) {
+                console.log("Status:", xhr.status);
+                console.log("Error:", error);
+                console.log("Response:", xhr.responseText);
+
+                {% comment %} alert(xhr.responseText); {% endcomment %}
+                showGlobalToast('Error occurred while processing payment');
+              },
+            });
+          });
+        });
+      </script>
 
       <!-- QUICK BOOKING MODAL -->
-<div class="modal fade" id="bookingModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content booking-modal-content">
-            
+      <div
+        class="modal fade"
+        id="bookingModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content booking-modal-content">
             <!-- Header -->
-             <div class="booking-modal-header">
-                <div class="booking-modal-title-wrap">
-                   <div class="booking-modal-icon">
-                     <i class="bi bi-send"></i>
-                   </div>
-                   <div>
-                     <h5 class="booking-modal-title">Quick Booking Enquiry</h5>
-                     <p class="booking-modal-subtitle">Fill the details below and we'll get back to you</p>
-                   </div>
+            <div class="booking-modal-header">
+              <div class="booking-modal-title-wrap">
+                <div class="booking-modal-icon">
+                  <i class="bi bi-send"></i>
                 </div>
-                <button type="button" class="booking-modal-close" data-bs-dismiss="modal">
-                 <i class="bi bi-x-lg"></i>
-                </button>
-             </div>
+                <div>
+                  <h5 class="booking-modal-title">Quick Booking Enquiry</h5>
+                  <p class="booking-modal-subtitle">
+                    Fill the details below and we'll get back to you
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="booking-modal-close"
+                data-bs-dismiss="modal"
+              >
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
 
             <!-- Body -->
             <div class="booking-modal-body">
-                <form id="bookingEnquiryForm">
-                    {% csrf_token %}
-                    <input type="hidden" id="bookingPackageName" name="package_name">
+              <form id="bookingEnquiryForm">
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  id="bookingPackageName"
+                  name="package_name"
+                />
 
-                    <div class="row g-3">
-    <div class="col-6">
-        <label class="booking-label">Name <span class="text-danger">*</span></label>
-        <div class="booking-input-wrap">
-            <div class="booking-input-icon"><i class="bi bi-person"></i></div>
-            <input type="text" class="booking-input" name="name" placeholder="Your name" required>
-        </div>
-    </div>
-    <div class="col-6">
-        <label class="booking-label">Phone <span class="text-danger">*</span></label>
-        <div class="booking-input-wrap">
-            <div class="booking-input-icon"><i class="bi bi-telephone"></i></div>
-            <input type="tel" class="booking-input" name="phone" placeholder="Phone number" required>
-        </div>
-    </div>
-    <div class="col-6">
-        <label class="booking-label">Start Date <span class="text-danger">*</span></label>
-        <div class="booking-input-wrap">
-            <div class="booking-input-icon"><i class="bi bi-calendar3"></i></div>
-            <input type="date" class="booking-input" name="start_date" required>
-        </div>
-    </div>
-    <div class="col-6">
-        <label class="booking-label">End Date <span class="text-danger">*</span></label>
-        <div class="booking-input-wrap">
-            <div class="booking-input-icon"><i class="bi bi-calendar3"></i></div>
-            <input type="date" class="booking-input" name="end_date" required>
-        </div>
-    </div>
-    <div class="col-6">
-        <label class="booking-label">Adults <span class="text-danger">*</span></label>
-        <div class="booking-input-wrap">
-            <div class="booking-input-icon"><i class="bi bi-people"></i></div>
-            <input type="number" class="booking-input" name="adults" placeholder="No. of adults" min="1" required>
-        </div>
-    </div>
-    <div class="col-6">
-        <label class="booking-label">Children</label>
-        <div class="booking-input-wrap">
-            <div class="booking-input-icon"><i class="bi bi-people"></i></div>
-            <input type="number" class="booking-input" name="children" value="0" min="0">
-        </div>
-    </div>
-    <div class="col-12">
-        <label class="booking-label">Package</label>
-        <div class="booking-input-wrap">
-            <div class="booking-input-icon"><i class="bi bi-briefcase"></i></div>
-            <input type="text" class="booking-input" id="bookingPackageDisplay" placeholder="Enter package name">
-        </div>
-    </div>
-</div>
-                </form>
+                <div class="row g-3">
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >Name <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-person"></i>
+                      </div>
+                      <input
+                        type="text"
+                        class="booking-input"
+                        name="name"
+                        placeholder="Your name"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >Phone <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-telephone"></i>
+                      </div>
+                      <input
+                        type="tel"
+                        class="booking-input"
+                        name="phone"
+                        placeholder="Phone number"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >Start Date <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-calendar3"></i>
+                      </div>
+                      <input
+                        type="date"
+                        class="booking-input"
+                        name="start_date"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >End Date <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-calendar3"></i>
+                      </div>
+                      <input
+                        type="date"
+                        class="booking-input"
+                        name="end_date"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="booking-label"
+                      >Adults <span class="text-danger">*</span></label
+                    >
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-people"></i>
+                      </div>
+                      <input
+                        type="number"
+                        class="booking-input"
+                        name="adults"
+                        placeholder="No. of adults"
+                        min="1"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="booking-label">Children</label>
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-people"></i>
+                      </div>
+                      <input
+                        type="number"
+                        class="booking-input"
+                        name="children"
+                        value="0"
+                        min="0"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label class="booking-label">Package</label>
+                    <div class="booking-input-wrap">
+                      <div class="booking-input-icon">
+                        <i class="bi bi-briefcase"></i>
+                      </div>
+                      <input
+                        type="text"
+                        class="booking-input"
+                        id="bookingPackageDisplay"
+                        placeholder="Enter package name"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
 
             <!-- Footer -->
             <div class="booking-modal-footer">
-                <button type="button" class="booking-btn-cancel" data-bs-dismiss="modal">
-                    Cancel
-                </button>
-                <button type="button" class="booking-btn-whatsapp" id="sendWhatsApp">
-                    <i class="bi bi-whatsapp"></i> Send via WhatsApp
-                </button>
+              <button
+                type="button"
+                class="booking-btn-cancel"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="booking-btn-whatsapp"
+                id="sendWhatsApp"
+              >
+                <i class="bi bi-whatsapp"></i> Send via WhatsApp
+              </button>
             </div>
-
+          </div>
         </div>
-    </div>
-</div> 
-<!-- QUICK BOOKING MODAL end -->
-
+      </div>
+      <!-- QUICK BOOKING MODAL end -->
 
       {% block content %} {% endblock %}
       <!-- FOOTER START -->
@@ -963,7 +1250,9 @@ select.booking-input {
                     /></a>
                   </div>
                   <p>
-                    World By ARK is your trusted travel partner, offering unforgettable journeys, holiday packages, and seamless travel booking services.
+                    World By ARK is your trusted travel partner, offering
+                    unforgettable journeys, holiday packages, and seamless
+                    travel booking services.
                   </p>
 
                   <ul class="social-icons">
@@ -1006,13 +1295,15 @@ select.booking-input {
               <div class="col-xl-2 col-lg-3 col-md-6 col-sm-4 col-4 m-b20">
                 <div class="widget widget_services">
                   <h3 class="widget-title">Destinations</h3>
-                   <ul>
-                     {% for dest in footer_destinations %}
-                     <li>
-                      <a href="{% url 'destination_detail' slug=dest.slug %}">{{ dest.name }}</a>
-                     </li>
-                     {% endfor %}
-                   </ul>
+                  <ul>
+                    {% for dest in footer_destinations %}
+                    <li>
+                      <a href="{% url 'destination_detail' slug=dest.slug %}"
+                        >{{ dest.name }}</a
+                      >
+                    </li>
+                    {% endfor %}
+                  </ul>
                 </div>
               </div>
 
@@ -1062,7 +1353,8 @@ select.booking-input {
           <div class="footer-bottom">
             <div class="container">
               <div class="copyrights-text">
-                Copyright © 2026 World By ARK. All rights reserved. Designed By <a class="text-white" href="https://vynzora.com">VynZora</a>
+                Copyright © 2026 World By ARK. All rights reserved. Designed By
+                <a class="text-white" href="https://vynzora.com">VynZora</a>
               </div>
             </div>
           </div>
@@ -1117,62 +1409,72 @@ select.booking-input {
     <!-- CURSOR -->
     <script src="{% static 'assets/js/custom.js' %}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-     <!-- WhatsApp Booking Modal start -->
-     <script>
-// Your WhatsApp number (with country code, no + or spaces)
-const WHATSAPP_NUMBER = "8485749214"; // change this
+    <!-- WhatsApp Booking Modal start -->
+    <script>
+      // Your WhatsApp number (with country code, no + or spaces)
+      const WHATSAPP_NUMBER = "8485749214"; // change this
 
-function openBookingModal(packageName) {
-    document.getElementById('bookingPackageName').value = packageName;
-    document.getElementById('bookingPackageDisplay').value = packageName;
-}
+      function openBookingModal(packageName) {
+        document.getElementById("bookingPackageName").value = packageName;
+        document.getElementById("bookingPackageDisplay").value = packageName;
+      }
 
-document.getElementById('sendWhatsApp').addEventListener('click', async function () {
-    const form = document.getElementById('bookingEnquiryForm');
+      document
+        .getElementById("sendWhatsApp")
+        .addEventListener("click", async function () {
+          const form = document.getElementById("bookingEnquiryForm");
 
-    const name         = form.querySelector('[name="name"]').value.trim();
-    const phone        = form.querySelector('[name="phone"]').value.trim();
-    const start_date   = form.querySelector('[name="start_date"]').value;
-    const end_date     = form.querySelector('[name="end_date"]').value;
-    const adults       = form.querySelector('[name="adults"]').value;
-    const children     = form.querySelector('[name="children"]').value;
-    const package_name = document.getElementById('bookingPackageDisplay').value.trim();
+          const name = form.querySelector('[name="name"]').value.trim();
+          const phone = form.querySelector('[name="phone"]').value.trim();
+          const start_date = form.querySelector('[name="start_date"]').value;
+          const end_date = form.querySelector('[name="end_date"]').value;
+          const adults = form.querySelector('[name="adults"]').value;
+          const children = form.querySelector('[name="children"]').value;
+          const package_name = document
+            .getElementById("bookingPackageDisplay")
+            .value.trim();
 
-    // Basic validation
-   if (!name || !phone || !start_date || !end_date || !adults) {
-    showGlobalToast('Please fill in all required fields.', 'warning');
-    return;
-   }
+          // Basic validation
+          if (!name || !phone || !start_date || !end_date || !adults) {
+            showGlobalToast("Please fill in all required fields.", "warning");
+            return;
+          }
 
-    const btn = this;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving...';
+          const btn = this;
+          btn.disabled = true;
+          btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving...';
 
-    try {
-        // Step 1: Save to database
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          try {
+            // Step 1: Save to database
+            const csrfToken = document.querySelector(
+              "[name=csrfmiddlewaretoken]",
+            ).value;
 
-        const response = await fetch("{% url 'save_booking_enquiry' %}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken,
-            },
-            body: JSON.stringify({
-                name, phone, 
+            const response = await fetch("{% url 'save_booking_enquiry' %}", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+              },
+              body: JSON.stringify({
+                name,
+                phone,
                 package: package_name,
-                start_date, end_date, 
-                adults, children
-            })
-        });
+                start_date,
+                end_date,
+                adults,
+                children,
+              }),
+            });
 
-        const result = await response.json();
+            const result = await response.json();
 
-        if (result.status === 'success') {
-            // Step 2: Open WhatsApp
-            const message =
-`*Quick Booking Enquiry - World By ARK*
+            if (result.status === "success") {
+              // Step 2: Open WhatsApp
+              const message = `*Quick Booking Enquiry - World By ARK*
 
 *Name:* ${name}
 *Phone:* ${phone}
@@ -1182,125 +1484,129 @@ document.getElementById('sendWhatsApp').addEventListener('click', async function
 *Adults:* ${adults}
 *Children:* ${children}`;
 
-            const encoded = encodeURIComponent(message);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
+              const encoded = encodeURIComponent(message);
+              window.open(
+                `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`,
+                "_blank",
+              );
 
-            // Step 3: Close modal and reset form
-            bootstrap.Modal.getInstance(
-                document.getElementById('bookingModal')
-            ).hide();
-            form.reset();
-
-        } else {
-           showGlobalToast('Something went wrong. Please try again.', 'error');
-        }
-
-    } catch (err) {
-        console.error(err);
-        showGlobalToast('Network error. Please try again.', 'error');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-whatsapp"></i> Send via WhatsApp';
-    }
-});
-</script>
-    <!-- WhatsApp Booking Modal End -->
-     
-  <!-- payment  Modal start -->
-    <script>
-document.getElementById('proceedPaymentBtn').addEventListener('click', async function () {
-    const form = document.getElementById('paymentForm');
-    const name    = form.querySelector('[name="name"]').value.trim();
-    const phone   = form.querySelector('[name="phone"]').value.trim();
-    const email   = form.querySelector('[name="email"]').value.trim();
-    const amount  = form.querySelector('[name="amount"]').value.trim();
-    const package_name = form.querySelector('[name="package"]').value.trim();
-
-    if (!name || !phone || !email || !amount) {
-        showGlobalToast('Please fill in all required fields.', 'warning');
-        return;
-    }
-
-    const btn = this;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Processing...';
-
-    try {
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-        {% comment %} const response = await fetch("{% url 'save_payment' %}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken,
-            },
-            body: JSON.stringify({ name, phone, email, amount, package: package_name })
-        }); {% endcomment %}
-
-        const result = await response.json();
-
-        if (result.status === 'success') {
-            // Redirect to Razorpay / payment gateway URL returned from backend
-            if (result.payment_url) {
-                window.location.href = result.payment_url;
+              // Step 3: Close modal and reset form
+              bootstrap.Modal.getInstance(
+                document.getElementById("bookingModal"),
+              ).hide();
+              form.reset();
             } else {
-                showGlobalToast('Payment initiated! We will contact you shortly.', 'success');
-                bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
-                form.reset();
+              showGlobalToast(
+                "Something went wrong. Please try again.",
+                "error",
+              );
             }
-        } else {
-            showGlobalToast(result.message || 'Something went wrong. Please try again.', 'error');
-        }
-    } catch (err) {
-        console.error(err);
-        showGlobalToast('Network error. Please try again.', 'error');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-credit-card"></i> Proceed to Pay';
-    }
-});
-</script>
+          } catch (err) {
+            console.error(err);
+            showGlobalToast("Network error. Please try again.", "error");
+          } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-whatsapp"></i> Send via WhatsApp';
+          }
+        });
+    </script>
+    <!-- WhatsApp Booking Modal End -->
 
+    <!-- payment  Modal start -->
+    <script>
+      document.getElementById('proceedPaymentBtn').addEventListener('click', async function () {
+          const form = document.getElementById('paymentForm');
+          const name    = form.querySelector('[name="name"]').value.trim();
+          const phone   = form.querySelector('[name="phone"]').value.trim();
+          const email   = form.querySelector('[name="email"]').value.trim();
+          const amount  = form.querySelector('[name="amount"]').value.trim();
+          const package_name = form.querySelector('[name="package"]').value.trim();
 
+          if (!name || !phone || !email || !amount) {
+              showGlobalToast('Please fill in all required fields.', 'warning');
+              return;
+          }
+
+          const btn = this;
+          btn.disabled = true;
+          btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Processing...';
+
+          try {
+              const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+              {% comment %} const response = await fetch("{% url 'save_payment' %}", {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': csrfToken,
+                  },
+                  body: JSON.stringify({ name, phone, email, amount, package: package_name })
+              }); {% endcomment %}
+
+              const result = await response.json();
+
+              if (result.status === 'success') {
+                  // Redirect to Razorpay / payment gateway URL returned from backend
+                  if (result.payment_url) {
+                      window.location.href = result.payment_url;
+                 } else {
+                      showGlobalToast('Payment initiated! We will contact you shortly.', 'success');
+                      bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+                      form.reset();
+                  }
+              } else {
+                  showGlobalToast(result.message || 'Something went wrong. Please try again.', 'error');
+              }
+          } catch (err) {
+              console.error(err);
+              showGlobalToast('Network error. Please try again.', 'error');
+          } finally {
+              btn.disabled = false;
+              btn.innerHTML = '<i class="bi bi-credit-card"></i> Proceed to Pay';
+          }
+      });
+    </script>
 
     <!-- popup message js-->
     <script>
-function showGlobalToast(message, type = 'success') {
-    const toast = document.getElementById('global-toast');
-    const msg   = document.getElementById('global-toast-message');
-    const icon  = document.getElementById('global-toast-icon');
+      function showGlobalToast(message, type = "success") {
+        const toast = document.getElementById("global-toast");
+        const msg = document.getElementById("global-toast-message");
+        const icon = document.getElementById("global-toast-icon");
 
-    const config = {
-        success: { color: '#4CAF50', icon: '✅' },
-        error:   { color: '#f44336', icon: '❌' },
-        warning: { color: '#ff9800', icon: '⚠️' },
-        info:    { color: '#2196F3', icon: 'ℹ️' },
-    };
+        const config = {
+          success: { color: "#4CAF50", icon: "✅" },
+          error: { color: "#f44336", icon: "❌" },
+          warning: { color: "#ff9800", icon: "⚠️" },
+          info: { color: "#2196F3", icon: "ℹ️" },
+        };
 
-    const c = config[type] || config.info;
-    toast.style.borderLeftColor = c.color;
-    icon.textContent  = c.icon;
-    msg.textContent   = message;
+        const c = config[type] || config.info;
+        toast.style.borderLeftColor = c.color;
+        icon.textContent = c.icon;
+        msg.textContent = message;
 
-    // Show
-    toast.style.transform = 'translateX(0)';
-    toast.style.opacity   = '1';
+        // Show
+        toast.style.transform = "translateX(0)";
+        toast.style.opacity = "1";
 
-    // Auto hide after 4 seconds
-    clearTimeout(toast._timer);
-    toast._timer = setTimeout(() => {
-        toast.style.transform = 'translateX(120%)';
-        toast.style.opacity   = '0';
-    }, 4000);
-}
+        // Auto hide after 4 seconds
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => {
+          toast.style.transform = "translateX(120%)";
+          toast.style.opacity = "0";
+        }, 4000);
+      }
 
-// Click to dismiss
-document.getElementById('global-toast').addEventListener('click', function () {
-    this.style.transform = 'translateX(120%)';
-    this.style.opacity   = '0';
-});
-</script>
-<!-- popup message js end-->
+      // Click to dismiss
+      document
+        .getElementById("global-toast")
+        .addEventListener("click", function () {
+          this.style.transform = "translateX(120%)";
+          this.style.opacity = "0";
+        });
+    </script>
+    <!-- popup message js end-->
 
     <!-- CUSTOM FUCTIONS  -->
     <script>
@@ -1327,6 +1633,336 @@ document.getElementById('global-toast').addEventListener('click', function () {
     <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
     <!-- BOOTSTRAP DATEPICKER -->
 
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}{% endblock %} {% load static %}
+
+    <!-- ==========================================
+        PAYMENT RESULT MODAL
+=========================================== -->
+
+    <div
+      class="modal fade"
+      id="paymentResultModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content payment-result-modal">
+          <!-- Close Button -->
+          <button
+            type="button"
+            class="payment-close-btn"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+          <div id="receiptContent">
+            <div class="row g-0">
+              <!-- ======================================
+                          LEFT RECEIPT PANEL
+                  ======================================= -->
+
+              <div class="col-lg-3">
+                <div class="receipt-panel">
+                  <div class="text-center">
+                    <img
+                      src="{% static 'assets/images/logo-light.png' %}"
+                      class="receipt-logo"
+                      alt="World By Ark"
+                    />
+                  </div>
+
+                  <hr />
+
+                  <h4 class="receipt-title">PAYMENT RECEIPT</h4>
+
+                  <p class="receipt-text">Thank you for your payment.</p>
+
+                  <div class="receipt-price">₹ {{ payment_result.amount }}</div>
+
+                  <div class="receipt-status">
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    Completed
+                  </div>
+
+                  <hr />
+
+                  <div class="receipt-info">
+                    <div>
+                      <i class="bi bi-calendar-event"></i>
+
+                      {{ payment_result.date }}
+                    </div>
+
+                    <div>
+                      <i class="bi bi-receipt"></i>
+
+                      Ref : {{ payment_result.txn_ref }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ======================================
+                          RIGHT SIDE
+                  ======================================= -->
+
+              <div class="col-lg-9">
+                <div class="payment-content">
+                  <!-- Success -->
+
+                  <div class="text-center mb-4">
+                    <div class="success-icon">
+                      <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <h2 class="success-title">Payment Completed</h2>
+
+                    <p class="success-subtitle">
+                      Your payment has been processed successfully. A
+                      confirmation has been generated for your transaction.
+                    </p>
+                  </div>
+
+                  <!-- Transaction -->
+
+                  <div class="payment-card">
+                    <h5 class="section-title">
+                      <i class="bi bi-credit-card"></i>
+
+                      Transaction Details
+                    </h5>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="detail-row">
+                          <span>Status</span>
+
+                          <strong>Completed</strong>
+                        </div>
+
+                        <div class="detail-row">
+                          <span>Transaction ID</span>
+
+                          <strong>{{ payment_result.txn_id }}</strong>
+                        </div>
+
+                        <div class="detail-row">
+                          <span>Amount</span>
+
+                          <strong> ₹ {{ payment_result.amount }} </strong>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="detail-row">
+                          <span>Reference No</span>
+
+                          <strong>{{ payment_result.txn_ref }}</strong>
+                        </div>
+
+                        <div class="detail-row">
+                          <span>Bank Code</span>
+
+                          <strong>{{ payment_result.bank_code }}</strong>
+                        </div>
+
+                        <div class="detail-row">
+                          <span>Date</span>
+
+                          <strong>{{ payment_result.date }}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Customer -->
+
+                  <div class="payment-card mt-4">
+                    <h5 class="section-title">
+                      <i class="bi bi-person-circle"></i>
+
+                      Customer Details
+                    </h5>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="customer-box">
+                          <i class="bi bi-person-fill"></i>
+
+                          <h6>Name</h6>
+
+                          <p>{{ payment_result.name }}</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="customer-box">
+                          <i class="bi bi-envelope-fill"></i>
+
+                          <h6>Email</h6>
+
+                          <p>{{ payment_result.email }}</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="customer-box">
+                          <i class="bi bi-telephone-fill"></i>
+
+                          <h6>Phone</h6>
+
+                          <p>{{ payment_result.phone }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Message -->
+
+                  <div class="payment-card mt-4">
+                    <h5 class="section-title">
+                      <i class="bi bi-chat-left-text-fill"></i>
+
+                      Message
+                    </h5>
+
+                    <div class="payment-message">
+                      Thank you for your payment. Your transaction has been
+                      completed successfully. Please keep this receipt for
+                      future reference.
+                    </div>
+                  </div>
+
+                  <!-- Buttons -->
+
+                  <div class="payment-footer">
+                    <button
+                      class="btn btn-outline-success btn-lg"
+                      data-bs-dismiss="modal"
+                    >
+                      <i class="bi bi-x-circle"></i>
+
+                      Close
+                    </button>
+
+                    <button class="btn btn-success btn-lg" id="downloadReceipt">
+                      <i class="bi bi-download"></i>
+
+                      Download Receipt
+                    </button>
+                  </div>
+
+                  <div class="receipt-note">
+                    <i class="bi bi-shield-check"></i>
+
+                    This is a system generated receipt and does not require a
+                    signature.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const downloadBtn = document.getElementById("downloadReceipt");
+
+    if (!downloadBtn) return;
+
+    downloadBtn.addEventListener("click", function () {
+        const receipt = document.getElementById("receiptContent");
+
+        if (typeof html2pdf === "undefined") {
+            showGlobalToast("PDF library not loaded. Check internet/CDN.", "error");
+            return;
+        }
+
+        const btn = this;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating...';
+
+        const clone = receipt.cloneNode(true);
+        clone.classList.add("pdf-mode");
+
+        const wrapper = document.createElement("div");
+        wrapper.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: -9999px;
+            width: 800px;
+            background: #fff;
+            z-index: -1;
+        `;
+
+        wrapper.appendChild(clone);
+        document.body.appendChild(wrapper);
+
+        // Give the browser a tick to lay out the clone before measuring it
+        setTimeout(function () {
+
+            const widthPx  = clone.offsetWidth;
+            const heightPx = clone.scrollHeight;
+
+            const widthIn  = widthPx  / 96;
+            const heightIn = heightPx / 96;
+
+            const options = {
+                margin: 0,
+                filename: "WorldByArk-Payment-Receipt.pdf",
+                image: {
+                    type: "jpeg",
+                    quality: 1
+                },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: "#ffffff",
+                    windowWidth: 800
+                },
+                jsPDF: {
+                    unit: "in",
+                    format: [widthIn, heightIn],   // page size = content size -> always 1 page
+                    orientation: "portrait"
+                },
+                pagebreak: { mode: ["css", "avoid-all"] }
+            };
+
+            html2pdf()
+                .set(options)
+                .from(clone)
+                .save()
+                .then(function () {
+                    document.body.removeChild(wrapper);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-download"></i> Download Receipt';
+                })
+                .catch(function (err) {
+                    console.error(err);
+                    document.body.removeChild(wrapper);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-download"></i> Download Receipt';
+                    showGlobalToast("Could not generate PDF.", "error");
+                });
+
+        }, 150);
+    });
+});
+    </script>
+    {% if payment_result %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var modal = new bootstrap.Modal(
+          document.getElementById("paymentResultModal"),
+        );
+
+        modal.show();
+      });
+    </script>
+
+    {% endif %}
   </body>
 </html>

@@ -1,0 +1,1553 @@
+/* ==========================================================
+   WORLD BY ARK - PAYMENT RECEIPT MODAL
+   PART 1A
+========================================================== */
+
+:root{
+
+    --primary:#3C2D73;
+    --primary-light:#9D4EDD;
+    --primary-dark:#5A189A;
+
+    --orange:#FF7A18;
+    --pink:#AF002D;
+
+    --success:#002fff;
+    --danger:#EF4444;
+
+    --white:#ffffff;
+    --light:#faf7ff;
+    --border:#ebe5ff;
+
+    --text:#1E293B;
+    --text-light:#64748B;
+
+    --shadow:
+        0 15px 45px rgba(123,47,247,.15);
+
+    --transition:.35s ease;
+
+}
+
+/* ==========================================================
+   MODAL
+========================================================== */
+
+#paymentResultModal{
+
+    backdrop-filter:blur(8px);
+
+}
+
+#paymentResultModal .modal-dialog{
+
+    max-width:1150px;
+
+    margin:1.5rem auto;
+
+}
+
+.payment-result-modal{
+
+    border:none;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    background:#fff;
+
+    box-shadow:0 25px 70px rgba(0,0,0,.15);
+
+    position:relative;
+
+}
+
+/* ==========================================================
+   CLOSE BUTTON
+========================================================== */
+
+.payment-close-btn{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    color:#444;
+
+    font-size:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.10);
+
+    transition:var(--transition);
+
+    z-index:999;
+
+}
+
+.payment-close-btn:hover{
+
+    transform:rotate(90deg);
+
+    background:#f7f7f7;
+
+}
+
+/* ==========================================================
+   SCROLL
+========================================================== */
+
+#receiptContent{
+
+    max-height:88vh;
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+}
+
+#receiptContent::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+#receiptContent::-webkit-scrollbar-thumb{
+
+    background:linear-gradient(
+    var(--primary),
+    var(--primary-light)
+    );
+
+    border-radius:20px;
+
+}
+
+/* ==========================================================
+   LEFT RECEIPT
+========================================================== */
+
+.receipt-panel{
+
+    background:linear-gradient(
+        180deg,
+        #3C2D73 0%,
+        #300057 100%
+    );
+
+    color:#fff;
+
+    padding:45px 35px;
+
+    height:100%;
+
+    position:relative;
+
+}
+
+.receipt-panel::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-80px;
+
+    right:-80px;
+
+    width:180px;
+
+    height:180px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.receipt-panel::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-70px;
+
+    left:-70px;
+
+    width:160px;
+
+    height:160px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.05);
+
+}
+
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.receipt-logo{
+
+    width:170px;
+
+    display:block;
+
+    margin:auto;
+
+    margin-bottom:35px;
+
+}
+
+/* ==========================================================
+   RECEIPT TITLE
+========================================================== */
+
+.receipt-title {
+    color: #fcfbff;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.receipt-subtitle{
+
+    text-align:center;
+
+    opacity:.85;
+
+    font-size:15px;
+
+    margin-bottom:35px;
+
+}
+
+/* ==========================================================
+   AMOUNT
+========================================================== */
+
+.receipt-price{
+
+    font-size:52px;
+
+    font-weight:700;
+
+    text-align:center;
+
+    margin:20px 0;
+
+}
+
+.receipt-status{
+
+    width:max-content;
+
+    margin:auto;
+
+    padding:10px 22px;
+
+    border-radius:40px;
+
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(10px);
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.receipt-status i{
+
+    color:#7dff9d;
+
+}
+
+
+/* ==========================================================
+   PDF EXPORT MODE (used only on the detached clone)
+========================================================== */
+.pdf-mode{
+    width:800px !important;
+    max-width:800px !important;
+    margin:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    background:#fff !important;
+    border-radius:20px;
+    box-shadow:none !important;
+}
+
+.pdf-mode .row.g-0{
+    display:block !important;
+    width:100% !important;
+    margin:0 !important;
+}
+
+.pdf-mode .col-lg-3,
+.pdf-mode .col-lg-9{
+    flex:0 0 100% !important;
+    max-width:100% !important;
+    width:100% !important;
+    padding:0 !important;
+    box-sizing:border-box !important;
+}
+
+.pdf-mode .receipt-panel{
+    border-radius:20px 20px 0 0 !important;
+    height:auto !important;
+    box-sizing:border-box !important;
+    padding:35px !important;
+    text-align:center;
+}
+
+.pdf-mode .payment-content{
+    border-radius:0 0 20px 20px !important;
+    height:auto !important;
+    box-sizing:border-box !important;
+}
+
+.pdf-mode .payment-close-btn,
+.pdf-mode .payment-footer{
+    display:none !important;
+}
+
+.pdf-mode .payment-card,
+.pdf-mode .receipt-panel,
+.pdf-mode .customer-box{
+    break-inside:avoid;
+}
+
+/* ==========================================================
+   RECEIPT INFO
+========================================================== */
+
+.receipt-info{
+
+    margin-top:45px;
+
+}
+
+.receipt-info-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+
+.receipt-info-item:last-child{
+
+    border:none;
+
+}
+
+.receipt-info-item span{
+
+    font-size:14px;
+
+    opacity:.85;
+
+}
+
+.receipt-info-item strong{
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   RIGHT CONTENT
+========================================================== */
+
+.payment-content{
+    background:#fcfbff;
+    padding:45px;
+    height:100%;
+}
+
+/* Success Section */
+
+.success-section{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.success-icon{
+    width:100px;
+    height:100px;
+    margin:0 auto 25px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#16A34A,#22C55E);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:48px;
+    box-shadow:0 15px 35px rgba(34,197,94,.35);
+    animation:successPulse 2s infinite;
+}
+
+@keyframes successPulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+.success-title{
+    font-size:34px;
+    font-weight:700;
+    color:#16A34A;
+    margin-bottom:10px;
+}
+
+.success-subtitle{
+    font-size:16px;
+    color:#64748B;
+    max-width:650px;
+    margin:auto;
+    line-height:30px;
+}
+
+/* ==========================================================
+   PAYMENT CARDS
+========================================================== */
+
+.payment-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    margin-bottom:30px;
+
+    border:1px solid #ECE7FF;
+
+    box-shadow:
+        0 10px 30px rgba(123,47,247,.08);
+
+    transition:.35s;
+
+}
+
+.payment-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 20px 40px rgba(123,47,247,.12);
+
+}
+
+/* ==========================================================
+   SECTION TITLE
+========================================================== */
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:25px;
+
+    color:#1E293B;
+
+    font-weight:700;
+
+    font-size:20px;
+
+}
+
+.section-title i{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:12px;
+
+    background:#F6F1FF;
+
+    color:#3C2D73;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+
+}
+
+/* ==========================================================
+   DETAIL ROW
+========================================================== */
+
+.detail-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 0;
+
+    border-bottom:1px dashed #E8E8F0;
+
+}
+
+.detail-row:last-child{
+
+    border-bottom:none;
+
+}
+
+.detail-row span{
+
+    color:#64748B;
+
+    font-size:15px;
+
+}
+
+.detail-row strong{
+
+    color:#111827;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    word-break:break-word;
+
+}
+
+/* ==========================================================
+   STATUS BADGE
+========================================================== */
+
+.status-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+    font-weight:600;
+
+}
+
+.status-badge i{
+
+    color:#16A34A;
+
+}
+
+/* ==========================================================
+   CUSTOMER BOX
+========================================================== */
+
+.customer-box{
+
+    background:#FAF7FF;
+
+    border:1px solid #EADFFF;
+
+    border-radius:18px;
+
+    padding:28px 20px;
+
+    text-align:center;
+
+    transition:.35s;
+
+    height:100%;
+
+}
+
+.customer-box:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 20px 35px rgba(123,47,247,.12);
+
+}
+
+.customer-box i{
+
+    width:70px;
+
+    height:70px;
+
+    margin:auto;
+
+    margin-bottom:18px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #3C2D73,
+        #9D4EDD
+    );
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+}
+
+.customer-box h6{
+
+    font-size:18px;
+
+    color:#1E293B;
+
+    margin-bottom:8px;
+
+    font-weight:700;
+
+}
+
+.customer-box p{
+
+    margin:0;
+
+    color:#64748B;
+
+    font-size:15px;
+
+    word-break:break-word;
+
+}
+
+/* ==========================================================
+   MESSAGE BOX
+========================================================== */
+
+.payment-message{
+
+    background:linear-gradient(
+        135deg,
+        #F8F4FF,
+        #FFFFFF
+    );
+
+    border-left:5px solid #3C2D73;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    color:#475569;
+
+    line-height:30px;
+
+    font-size:15px;
+
+}
+/* ==========================================================
+   PAYMENT FOOTER
+========================================================== */
+
+.payment-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-top:35px;
+
+    padding-top:25px;
+
+    border-top:1px solid #ECE7FF;
+
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.payment-footer .btn{
+
+    flex:1;
+
+    height:56px;
+
+    border-radius:16px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+    letter-spacing:.3px;
+
+}
+
+/* Cancel */
+
+.payment-footer .btn-outline-primary{
+
+    border:2px solid #3C2D73;
+
+    color:#3C2D73;
+
+    background:#fff;
+
+}
+
+.payment-footer .btn-outline-primary:hover{
+
+    background:#3C2D73;
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+}
+
+/* Download */
+
+.payment-footer .btn-success{
+
+    border:none;
+
+    color:#fff;
+
+    background:linear-gradient(
+        135deg,
+        #FF7A18,
+        #AF002D 70%,
+        #3C2D73
+    );
+
+    box-shadow:
+
+        0 10px 25px rgba(123,47,247,.25);
+
+}
+
+.payment-footer .btn-success:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+        0 18px 35px rgba(123,47,247,.35);
+
+}
+
+/* ==========================================================
+   RECEIPT NOTE
+========================================================== */
+
+.receipt-note{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#64748B;
+
+    font-size:14px;
+
+    line-height:26px;
+
+}
+
+.receipt-note i{
+
+    color:#3C2D73;
+
+    margin-right:6px;
+
+}
+
+/* ==========================================================
+   INFO BOX
+========================================================== */
+
+.info-box{
+
+    background:#FAF7FF;
+
+    border:1px solid #ECE7FF;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    margin-top:25px;
+
+}
+
+.info-box-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-bottom:15px;
+
+    color:#1E293B;
+
+}
+
+.info-box-title i{
+
+    color:#3C2D73;
+
+}
+
+.info-box p{
+
+    margin:0;
+
+    color:#64748B;
+
+    line-height:28px;
+
+}
+
+/* ==========================================================
+   PAYMENT SUMMARY
+========================================================== */
+
+.summary-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    border:1px solid #ECE7FF;
+
+    overflow:hidden;
+
+    margin-bottom:25px;
+
+}
+
+.summary-header{
+
+    padding:18px 25px;
+
+    background:linear-gradient(
+        135deg,
+        #3C2D73,
+        #9D4EDD
+    );
+
+    color:#fff;
+
+    font-size:18px;
+
+    font-weight:600;
+
+}
+
+.summary-body{
+
+    padding:25px;
+
+}
+
+.summary-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:14px 0;
+
+    border-bottom:1px dashed #EAEAEA;
+
+}
+
+.summary-item:last-child{
+
+    border:none;
+
+}
+
+.summary-item span{
+
+    color:#64748B;
+
+}
+
+.summary-item strong{
+
+    color:#111827;
+
+}
+
+/* ==========================================================
+   TIMELINE
+========================================================== */
+
+.timeline{
+
+    position:relative;
+
+    margin-top:30px;
+
+    padding-left:25px;
+
+}
+
+.timeline::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:8px;
+
+    top:0;
+
+    bottom:0;
+
+    width:2px;
+
+    background:#D8C7FF;
+
+}
+
+.timeline-item{
+
+    position:relative;
+
+    margin-bottom:25px;
+
+}
+
+.timeline-item:last-child{
+
+    margin-bottom:0;
+
+}
+
+.timeline-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-23px;
+
+    top:6px;
+
+    width:14px;
+
+    height:14px;
+
+    border-radius:50%;
+
+    background:#3C2D73;
+
+    border:3px solid #fff;
+
+    box-shadow:0 0 0 3px rgba(123,47,247,.2);
+
+}
+
+.timeline-item h6{
+
+    margin-bottom:4px;
+
+    color:#1E293B;
+
+    font-weight:700;
+
+}
+
+.timeline-item p{
+
+    margin:0;
+
+    color:#64748B;
+
+    font-size:14px;
+
+}
+
+/* ==========================================================
+   BADGES
+========================================================== */
+
+.badge-success{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.badge-primary{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#F4EBFF;
+
+    color:#3C2D73;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   ICON BOX
+========================================================== */
+
+.icon-box{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:16px;
+
+    background:#F6F1FF;
+
+    color:#3C2D73;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:22px;
+
+}
+
+/* ==========================================================
+   SHADOW UTILITIES
+========================================================== */
+
+.shadow-sm-purple{
+
+    box-shadow:0 8px 20px rgba(123,47,247,.08);
+
+}
+
+.shadow-purple{
+
+    box-shadow:0 15px 40px rgba(123,47,247,.15);
+
+}
+
+.shadow-lg-purple{
+
+    box-shadow:0 25px 60px rgba(123,47,247,.20);
+
+}
+/* ==========================================================
+   RESPONSIVE - LARGE TABLET
+========================================================== */
+
+@media (max-width: 991px){
+
+    #paymentResultModal .modal-dialog{
+        max-width:95%;
+        margin:1rem auto;
+    }
+
+    .payment-result-modal{
+        border-radius:20px;
+    }
+
+    .receipt-panel{
+        border-radius:20px 20px 0 0;
+        padding:35px 25px;
+        text-align:center;
+    }
+
+    .payment-content{
+        padding:30px;
+    }
+
+    .payment-footer{
+        flex-direction:column;
+    }
+
+    .payment-footer .btn{
+        width:100%;
+    }
+
+    .customer-box{
+        margin-bottom:20px;
+    }
+
+    .detail-row{
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+}
+
+/* ==========================================================
+   RESPONSIVE - TABLET
+========================================================== */
+
+@media (max-width:768px){
+
+    #paymentResultModal .modal-dialog{
+        margin:.75rem;
+    }
+
+    .receipt-logo{
+        width:140px;
+    }
+
+    .receipt-title{
+        font-size:24px;
+    }
+
+    .receipt-price{
+        font-size:40px;
+    }
+
+    .success-title{
+        font-size:28px;
+    }
+
+    .success-subtitle{
+        font-size:15px;
+        line-height:26px;
+    }
+
+    .payment-content{
+        padding:25px;
+    }
+
+    .payment-card{
+        padding:20px;
+    }
+
+    .section-title{
+        font-size:18px;
+    }
+
+    .customer-box{
+        padding:20px;
+    }
+
+    .customer-box i{
+        width:60px;
+        height:60px;
+        font-size:24px;
+    }
+
+    .detail-row{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .detail-row strong{
+        width:100%;
+    }
+
+}
+
+/* ==========================================================
+   RESPONSIVE - MOBILE
+========================================================== */
+
+@media (max-width:576px){
+
+    #paymentResultModal .modal-dialog{
+        margin:.4rem;
+    }
+
+    .payment-result-modal{
+        border-radius:18px;
+    }
+
+    .payment-close-btn{
+        width:40px;
+        height:40px;
+        top:12px;
+        right:12px;
+        font-size:15px;
+    }
+
+    .receipt-panel{
+        padding:25px 18px;
+    }
+
+    .receipt-logo{
+        width:120px;
+    }
+
+    .receipt-title{
+        font-size:20px;
+    }
+
+    .receipt-subtitle{
+        font-size:13px;
+    }
+
+    .receipt-price{
+        font-size:32px;
+    }
+
+    .receipt-status{
+        width:100%;
+        justify-content:center;
+        font-size:14px;
+    }
+
+    .receipt-info-item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:5px;
+    }
+
+    .payment-content{
+        padding:18px;
+    }
+
+    .success-icon{
+        width:75px;
+        height:75px;
+        font-size:36px;
+    }
+
+    .success-title{
+        font-size:22px;
+    }
+
+    .success-subtitle{
+        font-size:14px;
+    }
+
+    .payment-card{
+        padding:16px;
+        border-radius:16px;
+    }
+
+    .section-title{
+        font-size:17px;
+    }
+
+    .customer-box{
+        padding:18px;
+        margin-bottom:15px;
+    }
+
+    .customer-box h6{
+        font-size:16px;
+    }
+
+    .customer-box p{
+        font-size:14px;
+    }
+
+    .payment-message{
+        padding:18px;
+        font-size:14px;
+        line-height:25px;
+    }
+
+    .payment-footer{
+        gap:12px;
+    }
+
+    .payment-footer .btn{
+        height:50px;
+        font-size:15px;
+    }
+
+    .receipt-note{
+        font-size:12px;
+        line-height:22px;
+    }
+
+}
+
+/* ==========================================================
+   PRINT STYLES
+========================================================== */
+
+@media print{
+
+    body{
+        background:#fff !important;
+    }
+
+    .payment-close-btn,
+    .payment-footer{
+        display:none !important;
+    }
+
+    #receiptContent{
+        overflow:visible !important;
+        max-height:none !important;
+    }
+
+    .payment-result-modal{
+        box-shadow:none;
+        border-radius:0;
+    }
+
+}
+
+/* ==========================================================
+   ANIMATIONS
+========================================================== */
+
+.fade-up{
+
+    animation:fadeUp .6s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.fade-in{
+
+    animation:fadeIn .5s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+/* Floating */
+
+.float-card{
+
+    transition:.35s;
+
+}
+
+.float-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+/* ==========================================================
+   CUSTOM SCROLLBAR
+========================================================== */
+
+#receiptContent::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+#receiptContent::-webkit-scrollbar-track{
+
+    background:#f3f4f6;
+
+}
+
+#receiptContent::-webkit-scrollbar-thumb{
+
+    background:#9D4EDD;
+
+    border-radius:20px;
+
+}
+
+#receiptContent::-webkit-scrollbar-thumb:hover{
+
+    background:#3C2D73;
+
+}
+
+/* ==========================================================
+   UTILITIES
+========================================================== */
+
+.text-purple{
+
+    color:#3C2D73 !important;
+
+}
+
+.bg-purple{
+
+    background:#3C2D73 !important;
+
+}
+
+.bg-light-purple{
+
+    background:#F8F4FF !important;
+
+}
+
+.border-purple{
+
+    border-color:#E9D5FF !important;
+
+}
+
+.rounded-xl{
+
+    border-radius:24px;
+
+}
+
+.rounded-lg{
+
+    border-radius:18px;
+
+}
+
+.shadow-soft{
+
+    box-shadow:0 15px 40px rgba(123,47,247,.12);
+
+}
+
+.shadow-hover{
+
+    transition:.35s;
+
+}
+
+.shadow-hover:hover{
+
+    box-shadow:0 25px 55px rgba(123,47,247,.20);
+
+    transform:translateY(-5px);
+
+}
+
+/* ==========================================================
+   END
+========================================================== */
