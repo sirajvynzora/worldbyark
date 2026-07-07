@@ -15,8 +15,7 @@ ENV/
 # Database
 db.sqlite3
 
-# User uploads
-media/
+
 
 # Static files (collected)
 staticfiles/
