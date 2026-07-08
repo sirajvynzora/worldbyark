@@ -2799,14 +2799,14 @@ THEMEFOREST REQUIRED CLASSES
 /* Mobile large (481px - 767px) */
 @media (max-width: 767px) {
     .logo-header-inner img {
-        max-width: 160px;
+        max-width: 160px !important;
     }
 }
 
 /* Mobile small (320px - 480px) */
 @media (max-width: 480px) {
     .logo-header-inner img {
-        max-width: 140px;
+        max-width: 140px !important;
     }
 }
 .header-style-1 .company-site-info {

@@ -1,5 +1,587 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
+
+{% comment %} {% block extra_css %}
+<style>
+    .founder-story-section {
+    padding: 100px 0;
+    background: #fff;
+}
+
+.founder-story-card {
+    background: linear-gradient(135deg, #fff 0%, #fff7f4 100%);
+    border-radius: 36px;
+    padding: 55px;
+    box-shadow: 0 25px 70px rgba(36, 18, 89, 0.08);
+    border: 1px solid rgba(243, 144, 123, 0.18);
+}
+
+.founder-image-wrap {
+    position: relative;
+    max-width: 430px;
+    margin: auto;
+}
+
+.founder-image-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -18px;
+    background: #dff6f6;
+    border-radius: 38px;
+    transform: rotate(-4deg);
+    z-index: 0;
+}
+
+.founder-image-wrap img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    border-radius: 34px;
+    display: block;
+}
+
+.founder-content {
+    padding-left: 35px;
+}
+
+.founder-subtitle {
+    display: inline-block;
+    color: #f47f72;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.founder-content h2 {
+    font-size: 46px;
+    line-height: 1.1;
+    color: #2e1765;
+    margin-bottom: 8px;
+}
+
+.founder-content h5 {
+    font-size: 20px;
+    color: #159399;
+    margin-bottom: 24px;
+    font-weight: 600;
+}
+
+.founder-content p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #27515b;
+    margin-bottom: 18px;
+}
+
+.founder-signature {
+    margin-top: 28px;
+    padding-left: 22px;
+    border-left: 4px solid #f47f72;
+}
+
+.founder-signature span {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2e1765;
+    font-family: cursive;
+}
+
+.founder-signature small {
+    color: #527179;
+    font-size: 15px;
+}
+
+@media (max-width: 991px) {
+    .founder-story-section {
+        padding: 70px 0;
+    }
+
+    .founder-story-card {
+        padding: 35px;
+    }
+
+    .founder-content {
+        padding-left: 0;
+        padding-top: 45px;
+        text-align: center;
+    }
+
+    .founder-signature {
+        display: inline-block;
+        text-align: left;
+    }
+
+    .founder-image-wrap img {
+        height: 450px;
+    }
+}
+
+@media (max-width: 575px) {
+    .founder-story-section {
+        padding: 50px 0;
+    }
+
+    .founder-story-card {
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .founder-image-wrap::before {
+        inset: -10px;
+        border-radius: 26px;
+    }
+
+    .founder-image-wrap img {
+        height: 360px;
+        border-radius: 24px;
+    }
+
+    .founder-content h2 {
+        font-size: 34px;
+    }
+
+    .founder-content p {
+        font-size: 15px;
+    }
+}
+</style>
+
+{% endblock %} {% endcomment %}
+
+
+{% block extra_css %}
+<style>
+.ark-founder-section {
+    padding: 110px 0;
+    background: linear-gradient(135deg, #eefefe 0%, #fff7f4 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.ark-founder-heading {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.ark-founder-heading span {
+    color: #f47f72;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ark-founder-heading h2 {
+    font-size: 46px;
+    color: #2e1765;
+    margin-top: 10px;
+}
+
+.ark-founder-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ark-founder-image {
+    width: 48%;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(46, 23, 101, 0.16);
+}
+
+.ark-founder-image img {
+    width: 100%;
+    height: 620px;
+    object-fit: cover;
+    display: block;
+}
+
+.ark-founder-card {
+    width: 52%;
+    margin-left: -90px;
+    background: #ffffff;
+    border-radius: 34px;
+    padding: 55px;
+    position: relative;
+    box-shadow: 0 35px 90px rgba(46, 23, 101, 0.14);
+    border: 1px solid rgba(244, 127, 114, 0.18);
+    z-index: 2;
+}
+
+.ark-quote-mark {
+    font-size: 90px;
+    line-height: 1;
+    color: #f47f72;
+    font-family: serif;
+    margin-bottom: -25px;
+}
+
+.ark-founder-card h3 {
+    font-size: 30px;
+    line-height: 1.35;
+    color: #2e1765;
+    margin-bottom: 25px;
+}
+
+.ark-founder-card p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #28535d;
+    margin-bottom: 16px;
+}
+
+.ark-founder-name {
+    margin-top: 28px;
+    padding-left: 20px;
+    border-left: 4px solid #f47f72;
+}
+
+.ark-founder-name strong {
+    display: block;
+    font-size: 26px;
+    color: #2e1765;
+}
+
+.ark-founder-name span {
+    color: #159399;
+    font-weight: 600;
+}
+
+.ark-founder-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 55px;
+}
+
+.ark-founder-stats div {
+    min-width: 180px;
+    background: #fff;
+    border-radius: 24px;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(46, 23, 101, 0.08);
+}
+
+.ark-founder-stats h4 {
+    font-size: 38px;
+    color: #f47f72;
+    margin-bottom: 5px;
+}
+
+.ark-founder-stats p {
+    margin: 0;
+    color: #2e1765;
+    font-weight: 600;
+}
+
+@media (max-width: 991px) {
+    .ark-founder-section {
+        padding: 80px 0;
+    }
+
+    .ark-founder-heading h2 {
+        font-size: 36px;
+    }
+
+    .ark-founder-wrap {
+        flex-direction: column;
+    }
+
+    .ark-founder-image {
+        width: 100%;
+    }
+
+    .ark-founder-image img {
+        height: 520px;
+    }
+
+    .ark-founder-card {
+        width: 90%;
+        margin-left: 0;
+        margin-top: -70px;
+        padding: 40px;
+    }
+
+    .ark-founder-stats {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 575px) {
+    .ark-founder-section {
+        padding: 60px 0;
+    }
+
+    .ark-founder-heading {
+        margin-bottom: 35px;
+    }
+
+    .ark-founder-heading h2 {
+        font-size: 30px;
+    }
+
+    .ark-founder-image img {
+        height: 430px;
+    }
+
+    .ark-founder-card {
+        width: 94%;
+        padding: 28px;
+        border-radius: 26px;
+    }
+
+    .ark-founder-card h3 {
+        font-size: 23px;
+    }
+
+    .ark-founder-card p {
+        font-size: 15px;
+    }
+
+    .ark-founder-stats {
+        gap: 16px;
+    }
+
+    .ark-founder-stats div {
+        width: 100%;
+    }
+}
+
+
+
+
+ {% comment %} service style 2 start {% endcomment %}
+.ark-service-scroll{
+  position:relative;
+  height:100vh;
+  min-height:720px;
+  background:#3C2D73;
+  overflow:hidden;
+  color:#fff;
+}
+
+.ark-service-bg-text{
+  position:absolute;
+  left:50%;
+  bottom:2%;
+  transform:translateX(-50%);
+  font-size:clamp(90px,18vw,260px);
+  font-weight:900;
+  color:rgba(255,255,255,.04);
+  pointer-events:none;
+}
+
+.ark-service-inner{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:grid;
+  grid-template-columns:42% 58%;
+  gap:50px;
+  padding:105px 7% 55px;
+  align-items:start;              /* was: align-items:flex-start (harmless typo-fix, keep) */
+}
+
+.ark-service-small{
+  color:#F29979;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  font-weight:800;
+}
+
+.ark-service-left{
+  display:flex;
+  flex-direction:column;
+}
+
+.ark-service-left h2{
+  color:#fff !important;
+  font-size:clamp(44px,5vw,78px);
+  line-height:.95;
+  margin:12px 0 24px;             /* was 18px 0 38px — tighter gap under heading */
+}
+
+.ark-service-left h2 span{
+  color:#F29979;
+}
+
+.ark-service-text-wrap{
+  position:relative;
+  min-height:170px;            /* was 250px */
+}
+
+.ark-service-item{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transform:translateY(35px);
+  pointer-events:none;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  column-gap:20px;
+  align-items:center;         /* vertically centers num against h3 */
+}
+
+.ark-service-item.active{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.ark-service-num{
+  grid-column:1;
+  grid-row:1;
+  font-size:56px;
+  font-weight:900;
+  color:rgba(242,153,121,.3);
+  line-height:1;
+  margin-bottom:0;             /* was 8px — no longer needed, sits inline now */
+}
+
+.ark-service-item h3{
+  grid-column:2;
+  grid-row:1;
+  color:#fff !important;
+  font-size:clamp(32px,3.5vw,52px);
+  margin-bottom:0;             /* was 14px — handled by paragraph's margin-top instead */
+}
+
+.ark-service-item p{
+  grid-column:1 / -1;          /* spans both columns, full width */
+  grid-row:2;
+  margin-top:16px;
+  color:rgba(255,255,255,.78);
+  font-size:17px;
+  line-height:1.55;
+  max-width:450px;
+}
+
+.ark-service-btn{
+  margin-top:28px;                /* fixed, predictable space above the button */
+  align-self:flex-start;          /* keeps button left-aligned, not stretched */
+  display:inline-flex;
+  align-items:center;
+  gap:18px;
+  width:max-content;
+  padding:8px 8px 8px 28px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.45);
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  font-size:17px;
+  font-weight:700;
+  z-index:50;
+  position:relative;
+}
+
+.ark-service-btn span{
+  color:#fff;
+}
+
+.ark-service-btn i{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#F29979;
+  color:#3C2D73;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.ark-service-right{
+  position:relative;
+  width:100%;
+  height:440px;
+  margin-top:20px;
+  border-radius:34px;
+  overflow:hidden;
+  box-shadow:0 45px 120px rgba(0,0,0,.35);
+}
+
+.ark-service-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transform:scale(1.08);
+}
+
+.ark-service-img.active{
+  opacity:1;
+  transform:scale(1);
+}
+
+
+@media(max-width:991px){
+  .ark-service-scroll{
+    min-height:auto;           /* was 700px — let content dictate real height */
+    padding-bottom:40px;       /* small breathing room instead of a fixed min-height */
+  }
+
+  .ark-service-inner{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    padding:95px 18px 0;       /* removed bottom padding, let right image close the section */
+  }
+
+  .ark-service-left h2{
+    font-size:31px;
+    margin:12px 0 20px;
+  }
+
+ .ark-service-text-wrap{
+    min-height:150px;          /* was 250px */
+  }
+
+   .ark-service-num{
+    font-size:38px;
+  }
+
+  .ark-service-item h3{
+    font-size:23px;
+  }
+
+  .ark-service-item p{
+    font-size:14px;
+    line-height:1.45;
+  }
+
+  .ark-service-btn{
+    margin-top:6px;
+    font-size:14px;
+    padding:6px 6px 6px 20px;
+  }
+
+  .ark-service-btn i{
+    width:42px;
+    height:42px;
+  }
+
+  .ark-service-right{
+    height:45vh;                /* was 180px — scales with viewport instead of a tiny fixed box */
+    min-height:280px;
+    max-height:380px;
+    margin-top:10px;
+    margin-bottom:0;
+    border-radius:22px;
+  }
+}
+{% comment %} service 2 style end {% endcomment %}
+
+
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="page-content">
 
@@ -137,6 +719,116 @@
             <!--WE RECOMMEND SECTION END-->
 
 
+            {% comment %} <!-- FOUNDER STORY SECTION START -->
+<section class="founder-story-section">
+    <div class="container">
+        <div class="founder-story-card">
+            <div class="row align-items-center">
+
+                <div class="col-lg-5 col-md-12">
+                    <div class="founder-image-wrap">
+                        <img src="{% static 'assets/images/owner.jpg' %}" alt="Founder Teen Joby">
+                    </div>
+                </div>
+
+                <div class="col-lg-7 col-md-12">
+                    <div class="founder-content">
+                        <span class="founder-subtitle">Meet Our Founder</span>
+                        <h2>Teen Joby</h2>
+                        <h5>Founder & Director</h5>
+
+                        <p>
+                            World By ARK was founded with a passion to make travel more personal,
+                            comfortable, and memorable. With years of experience in the travel industry,
+                            our founder believes every journey should be planned with care, trust,
+                            and attention to detail.
+                        </p>
+
+                        <p>
+                            From European holidays to customized Indian travel experiences, World By ARK
+                            continues to create journeys that are smooth, meaningful, and unforgettable
+                            for every traveler.
+                        </p>
+
+                        <div class="founder-signature">
+                            <span>Teen Joby</span>
+                            <small>Founder, World By ARK</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- FOUNDER STORY SECTION END --> {% endcomment %}
+
+
+<!-- FOUNDER STORY SECTION START -->
+<section class="ark-founder-section">
+    <div class="container">
+
+        <div class="ark-founder-heading">
+            <span>Meet The Founder</span>
+            <h2>The Journey Behind World By ARK</h2>
+        </div>
+
+        <div class="ark-founder-wrap">
+
+            <div class="ark-founder-image">
+                <img src="{% static 'assets/images/founder/worldbyark-founder.png' %}" alt="Founder Teen Joby">
+            </div>
+
+            <div class="ark-founder-card">
+                <div class="ark-quote-mark">“</div>
+
+                <h3>Travel is more than visiting places. It is creating stories people remember forever.</h3>
+
+                <p>
+                    World By ARK was founded with a passion to make travel more personal,
+                    comfortable, and memorable. With years of experience in the travel industry,
+                    our founder believes every journey should be planned with care, trust,
+                    and attention to detail.
+                </p>
+
+                <p>
+                    From European holidays to customized Indian travel experiences, World By ARK
+                    continues to create journeys that are smooth, meaningful, and unforgettable
+                    for every traveler.
+                </p>
+
+                <div class="ark-founder-name">
+                    <strong>Teen Joby</strong>
+                    <span>Founder & Director</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="ark-founder-stats">
+            <div>
+                <h4>10+</h4>
+                <p>Years Experience</p>
+            </div>
+            <div>
+                <h4>50+</h4>
+                <p>Destinations</p>
+            </div>
+            <div>
+                <h4>900+</h4>
+                <p>Happy Travelers</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- FOUNDER STORY SECTION END -->
+
+
+
+
+
+
             <!--POPULAR DESTINATION SECTION START-->
             <div class="section-full p-t120 p-b90 trv-popular-destination tvr-hot-ballon-wrap"
                  style="background-image: url({% static 'assets/images/background/Cloud-bg.png' %})">
@@ -193,7 +885,7 @@
             </div>
             <!--POPULAR DESTINATION SECTION END-->
 
-            <!-- tv service style 1 start -->
+            {% comment %} <!-- tv service style 1 start -->
             <div class="trv-service-st1" id="services">
                 <div class="container">
                     <!-- TITLE START-->
@@ -307,7 +999,81 @@
                     </div>
                 </div>
             </div>
-            <!-- tv service style 1 end-->
+            <!-- tv service style 1 end--> {% endcomment %}
+
+            
+{% comment %} service style 2 start {% endcomment %}
+
+<section class="ark-service-scroll" id="services">
+  <div class="ark-service-bg-text">SERVICES</div>
+
+  <div class="ark-service-inner">
+
+    <div class="ark-service-left">
+      <span class="ark-service-small">What We Offer</span>
+      <h2>Our Amazing <span>Services</span></h2>
+
+      <div class="ark-service-text-wrap">
+
+        <div class="ark-service-item active">
+          <span class="ark-service-num">01</span>
+          <h3>Hotel Bookings</h3>
+          <p>Choose comfortable hotels and stays that match your budget and journey.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">02</span>
+          <h3>Flight Bookings</h3>
+          <p>Book domestic and international flights with smooth travel support.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">03</span>
+          <h3>Holiday Packages</h3>
+          <p>Explore curated packages for family trips, couples, and solo travelers.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">04</span>
+          <h3>Cabs & Transfers</h3>
+          <p>Reliable local transfers and cab services for a hassle-free journey.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">05</span>
+          <h3>Experiences</h3>
+          <p>Enjoy activities, adventures, and unforgettable destination experiences.</p>
+        </div>
+
+        <div class="ark-service-item">
+          <span class="ark-service-num">06</span>
+          <h3>Train & Bus Rentals</h3>
+          <p>Easy train, bus, and group travel solutions for every trip.</p>
+        </div>
+
+      </div>
+
+      <button type="button"
+              class="ark-service-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#bookingModal"
+              onclick="openBookingModal(document.querySelector('.ark-service-item.active h3').innerText)">
+        <span>Enquire Now</span>
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+
+    <div class="ark-service-right">
+      <img class="ark-service-img active" src="{% static 'assets/images/trv-services/hotel-booking.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/flight-booking.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/holiday-packages.png' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/localcabs.jpeg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/Activities-and-experience.jpg' %}" alt="">
+      <img class="ark-service-img" src="{% static 'assets/images/trv-services/bus-rental.jpeg' %}" alt="">
+    </div>
+
+  </div>
+</section>
 
 
             <!--TESTIMONIAL SECTION START-->
@@ -397,4 +1163,83 @@
 
         </div>
         <!-- CONTENT END -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+
+{% endblock %}
+
+
+  {% block extra_js %}      
+{% comment %} service 2 js start {% endcomment %}
+<<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.querySelector(".ark-service-scroll");
+  if (!section) return;
+
+  const items = gsap.utils.toArray(".ark-service-item");
+  const images = gsap.utils.toArray(".ark-service-img");
+
+  gsap.set(items, { opacity: 0, y: 35 });
+  gsap.set(images, { opacity: 0, scale: 1.08 });
+
+  gsap.set(items[0], { opacity: 1, y: 0 });
+  gsap.set(images[0], { opacity: 1, scale: 1 });
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top 100px",
+      end: "+=550%",
+      scrub: 1.4,
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  });
+
+  items.forEach((item, index) => {
+    if (index === 0) return;
+
+    tl.to(items[index - 1], {
+      opacity: 0,
+      y: -35,
+      duration: 1,
+      onStart: () => items[index - 1].classList.remove("active"),
+      onReverseComplete: () => items[index - 1].classList.add("active")
+    });
+
+    tl.to(images[index - 1], {
+      opacity: 0,
+      scale: 0.96,
+      duration: 1
+    }, "<");
+
+    tl.to(item, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      onStart: () => item.classList.add("active"),
+      onReverseComplete: () => item.classList.remove("active")
+    }, "<0.2");
+
+    tl.to(images[index], {
+      opacity: 1,
+      scale: 1,
+      duration: 1.2
+    }, "<");
+  });
+
+  window.addEventListener("load", function () {
+    ScrollTrigger.refresh();
+  });
+});
+</script>
+{% comment %} js for service 2 end {% endcomment %}
 {% endblock %}

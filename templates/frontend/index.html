@@ -815,7 +815,7 @@
                  id="ark-hero-video" 
                  poster="{% static 'assets/images/background/vid-bg2.jpg' %}"
                  onloadstart="this.volume=0; this.play();">
-                <source src="{% static 'assets/videos/hero-section-1.mp4' %}" type="video/mp4">
+                <source src="{% static 'assets/videos/hero-section-video.mp4' %}" type="video/mp4">
               </video>
 
   <div class="hero-scrim"></div>
@@ -1448,111 +1448,6 @@
 
 
 {% comment %} service style 2 start {% endcomment %}
-            {% comment %} <section class="ark-service-scroll" id="services">
-  <div class="ark-service-bg-text">SERVICES</div>
-
-  <div class="ark-service-inner">
-    <div class="ark-service-left">
-      <span class="ark-service-small">What We Offer</span>
-      <h2>Our Amazing <span>Services</span></h2>
-
-      <div class="ark-service-content">
-        <div class="ark-service-item active">
-          <span>01</span>
-          <h3>Hotel Bookings</h3>
-          <p>Choose comfortable hotels and stays that match your budget and journey.</p>
-          <button type="button"
-        class="ark-service-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#bookingModal"
-        onclick="openBookingModal('Holiday Packages')">
-  <span>Enquire Now</span>
-  <i class="bi bi-arrow-right"></i>
-</button>
-        </div>
-
-        <div class="ark-service-item">
-          <span>02</span>
-          <h3>Flight Bookings</h3>
-          <p>Book domestic and international flights with smooth travel support.</p>
-          <button type="button"
-        class="ark-service-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#bookingModal"
-        onclick="openBookingModal('Flight Bookings')">
-  <span>Enquire Now</span>
-  <i class="bi bi-arrow-right"></i>
-</button>
-        </div>
-
-        <div class="ark-service-item">
-          <span>03</span>
-          <h3>Holiday Packages</h3>
-          <p>Explore curated packages for family trips, couples, and solo travelers.</p>
-          <button type="button"
-        class="ark-service-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#bookingModal"
-        onclick="openBookingModal('Flight Bookings')">
-  <span>Enquire Now</span>
-  <i class="bi bi-arrow-right"></i>
-</button>
-        </div>
-
-        <div class="ark-service-item">
-          <span>04</span>
-          <h3>Cabs & Transfers</h3>
-          <p>Reliable local transfers and cab services for a hassle-free journey.</p>
-          <button type="button"
-        class="ark-service-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#bookingModal"
-        onclick="openBookingModal('Flight Bookings')">
-  <span>Enquire Now</span>
-  <i class="bi bi-arrow-right"></i>
-</button>
-        </div>
-
-        <div class="ark-service-item">
-          <span>05</span>
-          <h3>Experiences</h3>
-          <p>Enjoy activities, adventures, and unforgettable destination experiences.</p>
-          <button type="button"
-        class="ark-service-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#bookingModal"
-        onclick="openBookingModal('Flight Bookings')">
-  <span>Enquire Now</span>
-  <i class="bi bi-arrow-right"></i>
-</button>
-        </div>
-
-        <div class="ark-service-item">
-          <span>06</span>
-          <h3>Train & Bus Rentals</h3>
-          <p>Easy train, bus, and group travel solutions for every trip.</p>
-          <button type="button"
-        class="ark-service-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#bookingModal"
-        onclick="openBookingModal('Flight Bookings')">
-  <span>Enquire Now</span>
-  <i class="bi bi-arrow-right"></i>
-</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="ark-service-right">
-      <img class="ark-service-img active" src="{% static 'assets/images/trv-services/hotel-booking.jpeg' %}" alt="">
-      <img class="ark-service-img" src="{% static 'assets/images/trv-services/flight-booking.jpeg' %}" alt="">
-      <img class="ark-service-img" src="{% static 'assets/images/trv-services/holiday-packages.png' %}" alt="">
-      <img class="ark-service-img" src="{% static 'assets/images/trv-services/localcabs.jpeg' %}" alt="">
-      <img class="ark-service-img" src="{% static 'assets/images/trv-services/Activities-and-experience.jpg' %}" alt="">
-      <img class="ark-service-img" src="{% static 'assets/images/trv-services/bus-rental.jpeg' %}" alt="">
-    </div>
-  </div>
-</section> {% endcomment %}
 
 <section class="ark-service-scroll" id="services">
   <div class="ark-service-bg-text">SERVICES</div>
@@ -2126,7 +2021,7 @@
         <!-- CONTENT END -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 {% endblock %}
 
