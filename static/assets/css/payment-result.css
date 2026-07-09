@@ -293,10 +293,10 @@
     width:800px !important;
     max-width:800px !important;
     margin:0 !important;
-    max-height:none !important;
-    overflow:visible !important;
     background:#fff !important;
-    border-radius:20px;
+    overflow:visible !important;
+    max-height:none !important;
+    border-radius:20px !important;
     box-shadow:none !important;
 }
 
@@ -308,27 +308,32 @@
 
 .pdf-mode .col-lg-3,
 .pdf-mode .col-lg-9{
-    flex:0 0 100% !important;
-    max-width:100% !important;
     width:100% !important;
+    max-width:100% !important;
+    flex:0 0 100% !important;
     padding:0 !important;
-    box-sizing:border-box !important;
 }
 
+/* Purple section top */
 .pdf-mode .receipt-panel{
+    width:100% !important;
+    height:auto !important;
+    min-height:260px !important;
     border-radius:20px 20px 0 0 !important;
-    height:auto !important;
-    box-sizing:border-box !important;
     padding:35px !important;
-    text-align:center;
+    text-align:center !important;
 }
 
+/* White section bottom */
 .pdf-mode .payment-content{
-    border-radius:0 0 20px 20px !important;
+    width:100% !important;
     height:auto !important;
-    box-sizing:border-box !important;
+    padding:35px !important;
+    border-radius:0 0 20px 20px !important;
+    background:#fcfbff !important;
 }
 
+/* Hide buttons in PDF */
 .pdf-mode .payment-close-btn,
 .pdf-mode .payment-footer{
     display:none !important;
@@ -337,7 +342,7 @@
 .pdf-mode .payment-card,
 .pdf-mode .receipt-panel,
 .pdf-mode .customer-box{
-    break-inside:avoid;
+    break-inside:avoid !important;
 }
 
 /* ==========================================================
