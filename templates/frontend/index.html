@@ -41,9 +41,13 @@
 .hero-video-wrapper video {
   position: absolute;
   inset: 0;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
+  object-position: center center;
+
   z-index: 0;
 }
 
@@ -175,9 +179,12 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  min-height: 560px;
+  min-height: 650px;
+
   overflow: hidden;
   isolation: isolate;
+  background: #000;
+
   border-radius: 0 0 40px 40px;
 }
 
@@ -378,6 +385,39 @@
   display: none;
 }
 
+/* Large desktop */
+@media (min-width: 1400px) {
+  .hero-video-wrapper {
+    height: 100vh;
+    min-height: 720px;
+  }
+}
+
+/* Laptop */
+@media (min-width: 992px) and (max-width: 1399px) {
+  .hero-video-wrapper {
+    height: 100vh;
+    min-height: 620px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+  .hero-video-wrapper {
+    height: 90vh;
+    min-height: 650px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .hero-video-wrapper {
+    height: 100svh;
+    min-height: 650px;
+    border-radius: 0 0 22px 22px;
+  }
+}
+
 /* ── Mobile ── */
 @media (max-width: 575px) {
   .hero-bottom-left {
@@ -401,6 +441,98 @@
   .hero-cta-btn .arrow-circle {
     width: 34px;
     height: 34px;
+  }
+}
+
+/* ==========================================
+   FINAL RESPONSIVE HERO VIDEO
+========================================== */
+
+.hero-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 650px;
+
+  overflow: hidden;
+  isolation: isolate;
+  background: #000;
+
+  border-radius: 0 0 40px 40px;
+}
+
+.hero-video-wrapper video {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center center;
+
+  filter: contrast(1.04) saturate(1.04);
+
+  z-index: 0;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.46) 0%,
+      rgba(0, 0, 0, 0.20) 45%,
+      rgba(0, 0, 0, 0.04) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.08) 55%,
+      transparent 100%
+    );
+}
+
+/* Large desktop */
+@media (min-width: 1400px) {
+  .hero-video-wrapper {
+    min-height: 720px;
+  }
+}
+
+/* Laptop */
+@media (min-width: 992px) and (max-width: 1399px) {
+  .hero-video-wrapper {
+    min-height: 620px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+  .hero-video-wrapper {
+    height: 90vh;
+    min-height: 650px;
+  }
+
+  .hero-video-wrapper video {
+    object-position: 55% center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .hero-video-wrapper {
+    height: 100svh;
+    min-height: 650px;
+    border-radius: 0 0 22px 22px;
+  }
+
+  .hero-video-wrapper video {
+    object-position: 60% center;
   }
 }
 
@@ -1181,7 +1313,7 @@
                                             </div>
                                             <div class="trv-icon-content-info">
                                                 <h4 class="trv-icon-title">Our Experience</h4>
-                                                <div class="counter-out"><span class="counter">25</span><b>+</b></div>
+                                                <div class="counter-out"><span class="counter">10</span><b>+</b></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1403,8 +1535,8 @@
                                                 <div class="trv-tour-price">
                                                     <span class="price">₹{{ package.price_from }}</span>
                                                 </div>
-                                                 <div class="trv-tour-info" style="height: 10px;">
-                                                    <a href="{% url 'package_detail' package.slug %}">{{ package.description|safe|truncatewords:30 }}</a>
+                                                 <div class="trv-tour-info">
+                                                    <a href="{% url 'package_detail' package.slug %}">{{ package.description|safe|truncatewords:8 }}</a>
                                                 </div>
                                             </div>
                                             <div class="trv-content-bottom-section">

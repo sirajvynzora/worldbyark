@@ -77,14 +77,69 @@ def packages(request):
     return render(request, 'frontend/packages.html', {"packages": packages_page})
 
 
+# def package_detail(request, slug):
+#     package = get_object_or_404(TourPackage, slug=slug)
+#     related_packages = TourPackage.objects.exclude(slug=slug).order_by("-created_at")[:4]
+#     return render(request, 'frontend/package-detail.html', {
+#         "package": package,
+#         "related_packages": related_packages,
+#     })
+
 def package_detail(request, slug):
     package = get_object_or_404(TourPackage, slug=slug)
     related_packages = TourPackage.objects.exclude(slug=slug).order_by("-created_at")[:4]
+
+    def extract_list_items(html_content):
+        """Parse CKEditor HTML content into a clean list of items.
+        Handles real <ul>/<ol><li> lists, one-<p>-per-line output,
+        and single <p> blocks separated by <br> tags."""
+        if not html_content:
+            return []
+
+        soup = BeautifulSoup(html_content, "html.parser")
+
+        # Normalize all <br> tags into newlines everywhere in the document
+        for br in soup.find_all("br"):
+            br.replace_with("\n")
+
+        items = []
+
+        # Case 1: actual <ul>/<ol> lists
+        list_tags = soup.find_all(["ul", "ol"])
+        if list_tags:
+            for tag in list_tags:
+                for li in tag.find_all("li"):
+                    for line in li.get_text().split("\n"):
+                        line = line.strip()
+                        if line:
+                            items.append(line)
+            if items:
+                return items
+
+        # Case 2: <p> tags (possibly containing <br>-separated lines)
+        paragraphs = soup.find_all("p")
+        if paragraphs:
+            for p in paragraphs:
+                for line in p.get_text().split("\n"):
+                    line = line.strip()
+                    if line:
+                        items.append(line)
+            if items:
+                return items
+
+        # Case 3: fallback - raw text separated by line breaks
+        text = soup.get_text(separator="\n")
+        return [line.strip() for line in text.split("\n") if line.strip()]
+
+    highlights_list = extract_list_items(package.highlights)
+    inclusions_list = extract_list_items(package.inclusions)
+
     return render(request, 'frontend/package-detail.html', {
         "package": package,
         "related_packages": related_packages,
+        "highlights_list": highlights_list,
+        "inclusions_list": inclusions_list,
     })
-
 
 def destinations(request):
     destinations_qs = Destination.objects.all().order_by("-created_at")
@@ -311,6 +366,11 @@ def save_booking_enquiry(request):
 
 
 
+def terms_and_conditions(request):
+    return render(
+        request,
+        "frontend/terms-and-conditions.html"
+    )
 
 
 # ==========================================

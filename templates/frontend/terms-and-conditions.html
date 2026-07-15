@@ -1,0 +1,1603 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+:root {
+    --ark-purple: #3C2D73;
+    --ark-peach: #F29979;
+    --ark-pink: #F2637E;
+    --ark-text: #426669;
+    --ark-bg: #F6FFFF;
+    --ark-border: rgba(60, 45, 115, .12);
+}
+
+.ark-terms-page {
+    background:
+        radial-gradient(circle at 5% 12%, rgba(242,153,121,.13), transparent 26%),
+        radial-gradient(circle at 95% 78%, rgba(60,45,115,.09), transparent 30%),
+        var(--ark-bg);
+}
+
+.ark-terms-section {
+    padding: 110px 0 120px;
+}
+
+.ark-terms-intro {
+    max-width: 820px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.ark-terms-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    color: var(--ark-pink);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.ark-terms-eyebrow::before,
+.ark-terms-eyebrow::after {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--ark-peach);
+}
+
+.ark-terms-intro h1 {
+    margin: 0 0 18px;
+    color: var(--ark-purple);
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1.05;
+}
+
+.ark-terms-intro p {
+    margin: 0;
+    color: var(--ark-text);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.ark-terms-layout {
+    display: grid;
+    grid-template-columns: 285px minmax(0, 1fr);
+    gap: 34px;
+    align-items: start;
+}
+
+.ark-terms-sidebar {
+    position: sticky;
+    top: 115px;
+}
+
+.ark-terms-sidebar-card {
+    padding: 25px;
+    border: 1px solid var(--ark-border);
+    border-radius: 26px;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 18px 50px rgba(60,45,115,.08);
+    backdrop-filter: blur(12px);
+}
+
+.ark-terms-sidebar-card h3 {
+    margin: 0 0 18px;
+    color: var(--ark-purple);
+    font-size: 21px;
+}
+
+.ark-terms-nav {
+    display: grid;
+    gap: 8px;
+}
+
+.ark-terms-nav-link {
+    display: block;
+    padding: 11px 13px;
+    border-radius: 13px;
+    color: #567578;
+    font-size: 14px;
+    font-weight: 650;
+    transition: .3s ease;
+}
+
+.ark-terms-nav-link:hover,
+.ark-terms-nav-link.active {
+    color: var(--ark-purple);
+    background: rgba(242,153,121,.16);
+    transform: translateX(4px);
+}
+
+.ark-terms-help {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ark-border);
+}
+
+.ark-terms-help p {
+    margin: 0 0 12px;
+    color: #6e8587;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.ark-terms-help a {
+    color: var(--ark-pink);
+    font-weight: 750;
+}
+
+.ark-terms-main {
+    min-width: 0;
+}
+
+.ark-terms-search {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.ark-terms-search i {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    color: var(--ark-purple);
+    transform: translateY(-50%);
+}
+
+.ark-terms-search input {
+    width: 100%;
+    height: 58px;
+    padding: 0 20px 0 52px;
+    border: 1px solid var(--ark-border);
+    border-radius: 18px;
+    outline: none;
+    background: #fff;
+    color: var(--ark-text);
+    box-shadow: 0 14px 35px rgba(60,45,115,.06);
+}
+
+.ark-terms-search input:focus {
+    border-color: rgba(242,99,126,.55);
+    box-shadow: 0 0 0 4px rgba(242,99,126,.08);
+}
+
+.ark-terms-item {
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 1px solid var(--ark-border);
+    border-radius: 24px;
+    background: rgba(255,255,255,.94);
+    box-shadow: 0 16px 42px rgba(60,45,115,.065);
+}
+
+.ark-terms-item-heading {
+    margin: 0;
+}
+
+.ark-terms-toggle {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 48px 1fr 42px;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 24px;
+    border: 0;
+    background: transparent;
+    text-align: left;
+}
+
+.ark-terms-index {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: var(--ark-purple);
+    color: var(--ark-peach);
+    font-family: "Afacad", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.ark-terms-title {
+    color: var(--ark-purple);
+    font-family: "Afacad", sans-serif;
+    font-size: 24px;
+    font-weight: 750;
+}
+
+/* Accordion Icon */
+
+.ark-terms-icon{
+    position:relative;
+    width:42px;
+    height:42px;
+    flex-shrink:0;
+    border-radius:50%;
+    background:rgba(242,153,121,.16);
+}
+
+/* Horizontal line */
+
+.ark-terms-icon::before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:18px;
+    height:2px;
+    background:#3C2D73;
+    border-radius:5px;
+    transform:translate(-50%,-50%);
+    transition:.35s ease;
+}
+
+/* Vertical line */
+
+.ark-terms-icon::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:2px;
+    height:18px;
+    background:#3C2D73;
+    border-radius:5px;
+    transform:translate(-50%,-50%);
+    transition:.35s ease;
+}
+
+/* Expanded state */
+
+.ark-terms-toggle[aria-expanded="true"] .ark-terms-icon::after{
+    opacity:0;
+    transform:translate(-50%,-50%) scaleY(0);
+}
+
+.ark-terms-body {
+    padding: 0 28px 30px 86px;
+}
+
+.ark-terms-copy{
+    color: var(--ark-text);
+    font-size:15px;
+    line-height:1.9;
+    counter-reset:item;
+}
+
+/* Style numbers at the beginning of each line */
+.ark-terms-copy{
+    font-variant-numeric: tabular-nums;
+}
+
+.ark-terms-copy p {
+    position: relative;
+    margin: 0 0 20px;
+    padding-left: 44px;
+    color: var(--ark-text);
+    font-size: 15px;
+    line-height: 1.85;
+}
+
+.ark-term-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 34px;
+    color: #3C2D73;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.85;
+}
+
+/* Align inside bullet points with numbered paragraph text */
+.ark-terms-list {
+    margin: -8px 0 22px 44px;
+    padding-left: 20px;
+    color: var(--ark-text);
+    font-size: 15px;
+    line-height: 1.85;
+}
+
+.ark-terms-list li {
+    margin-bottom: 5px;
+    padding-left: 3px;
+}
+
+.ark-terms-list li:last-child {
+    margin-bottom: 0;
+}
+
+.ark-terms-list li::marker {
+    color: var(--ark-text);
+}
+
+.ark-terms-copy p:last-child {
+    margin-bottom: 0;
+}
+
+.ark-terms-copy::first-line {
+    font-weight: 600;
+}
+
+.ark-no-results {
+    display: none;
+    padding: 45px 25px;
+    border: 1px dashed var(--ark-border);
+    border-radius: 22px;
+    text-align: center;
+    color: #71888a;
+    background: rgba(255,255,255,.72);
+}
+
+.ark-terms-notice {
+    margin-top: 28px;
+    padding: 24px 26px;
+    border-left: 4px solid var(--ark-peach);
+    border-radius: 0 20px 20px 0;
+    background: rgba(242,153,121,.12);
+    color: var(--ark-text);
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+@media (max-width: 991px) {
+    .ark-terms-section {
+        padding: 85px 0 95px;
+    }
+
+    .ark-terms-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ark-terms-sidebar {
+        position: static;
+    }
+
+    .ark-terms-sidebar-card {
+        padding: 20px;
+    }
+
+    .ark-terms-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+
+    .ark-terms-copy p {
+        padding-left: 38px;
+    }
+
+    .ark-term-number {
+        min-width: 28px;
+        font-size: 15px;
+    }
+
+    .ark-terms-list {
+        margin-left: 38px;
+        padding-left: 18px;
+        font-size: 14px;
+    }
+    .ark-terms-section {
+        padding: 70px 0 80px;
+    }
+
+    .ark-terms-nav {
+        grid-template-columns: 1fr;
+    }
+
+    .ark-terms-toggle {
+        grid-template-columns: 42px 1fr 34px;
+        gap: 10px;
+        padding: 18px 16px;
+    }
+
+    .ark-terms-index {
+        width: 40px;
+        height: 40px;
+    }
+
+    .ark-terms-title {
+        font-size: 20px;
+    }
+
+    .ark-terms-body {
+        padding: 0 18px 24px;
+    }
+
+    .ark-terms-copy {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+}
+
+
+
+
+.ark-terms-title-image {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0 22px;
+}
+
+.ark-terms-title-image img {
+    width: 145px;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 575px) {
+    .ark-terms-title-image {
+        margin: 14px 0 18px;
+    }
+
+    .ark-terms-title-image img {
+        width: 115px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-content ark-terms-page">
+
+    <!-- INNER PAGE BANNER -->
+    <div class="wt-bnr-inr overlay-wraper bg-center">
+        <div class="overlay-main innr-bnr-olay"></div>
+
+        <div class="wt-bnr-inr-entry">
+            <div class="banner-title-outer">
+                <div class="banner-title-name">
+                    <h2 class="wt-title">Terms &amp; Conditions</h2>
+                </div>
+
+                <ul class="wt-breadcrumb breadcrumb-style-2">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Terms &amp; Conditions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="trv-inr-bnr-bloon-1">
+            <img src="{% static 'assets/images/hotballon-Left.png' %}" alt="">
+        </div>
+
+        <div class="trv-inr-bnr-bloon-2">
+            <img src="{% static 'assets/images/hotballon-right.png' %}" alt="">
+        </div>
+    </div>
+    <!-- INNER PAGE BANNER END -->
+
+    <section class="ark-terms-section">
+        <div class="container">
+
+            <div class="ark-terms-layout">
+
+                <aside class="ark-terms-sidebar">
+                    <div class="ark-terms-sidebar-card">
+                        <h3>On this page</h3>
+
+                        <nav class="ark-terms-nav">
+                            <a href="#terms-section-1" class="ark-terms-nav-link">01. Important Notes</a>
+<a href="#terms-section-2" class="ark-terms-nav-link">02. Visa Terms</a>
+<a href="#terms-section-3" class="ark-terms-nav-link">03. Flight Terms</a>
+<a href="#terms-section-4" class="ark-terms-nav-link">04. Hotel Terms</a>
+<a href="#terms-section-5" class="ark-terms-nav-link">05. Transfers and Sightseeing</a>
+<a href="#terms-section-6" class="ark-terms-nav-link">06. Cancellation and Refund</a>
+                        </nav>
+
+                        <div class="ark-terms-help">
+                            <p>
+                                Need clarification before confirming your booking?
+                            </p>
+                            <a href="{% url 'contact' %}">
+                                Contact WORLD BY ARK
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+
+                <main class="ark-terms-main">
+
+                    <div class="ark-terms-search">
+                        <i class="bi bi-search"></i>
+                        <input
+                            type="search"
+                            id="arkTermsSearch"
+                            placeholder="Search visa, refund, hotel, flight..."
+                            aria-label="Search terms and conditions"
+                        >
+                    </div>
+
+                    <div class="accordion" id="arkTermsAccordion">
+                        
+    <article class="ark-terms-item" id="terms-section-1" data-search-section>
+        <h2 class="ark-terms-item-heading">
+            <button class="ark-terms-toggle" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#termsCollapse1"
+                    aria-expanded="true"
+                    aria-controls="termsCollapse1">
+                <span class="ark-terms-index">01</span>
+                <span class="ark-terms-title">Important Notes</span>
+                <span class="ark-terms-icon"></span>
+            </button>
+        </h2>
+
+        <div id="termsCollapse1" class="collapse show" data-bs-parent="#arkTermsAccordion">
+            <div class="ark-terms-body">
+                <div class="ark-terms-copy">
+
+    <p>
+        <span class="ark-term-number">1.</span>
+        WORLD BY ARK acts solely as a third-party booking facilitator. We do not accept
+        liability for any loss, injury, damage, delay, inconvenience, or additional
+        expenses incurred by passengers during any services.
+    </p>
+
+    <p>
+        <span class="ark-term-number">2.</span>
+        By choosing to participate in the tour or any services despite all advisories,
+        guests acknowledge that they are willing to travel at their own risk.
+    </p>
+
+    <p>
+        <span class="ark-term-number">3.</span>
+        World By ARK shall not be held liable for any financial or medical emergency,
+        physical discomfort, or other complications that may arise during the tour.
+    </p>
+
+    <p>
+        <span class="ark-term-number">4.</span>
+        Our goal is to save your time and effort by providing a seamless, hassle-free
+        and memorable travel experience through a single point of contact for all your
+        travel requirements.
+    </p>
+
+    <p>
+        <span class="ark-term-number">5.</span>
+        All tour package confirmations are valid only when confirmed through official
+        email communication from World By ARK. We accept bookings only through a reply
+        email with an advance payment. Any other mode of communication will be
+        considered void.
+    </p>
+
+    <p>
+        <span class="ark-term-number">6.</span>
+        All tour packages, flights and visa services are non-refundable unless otherwise
+        specified, as they are offered at dynamic promotional rates.
+    </p>
+
+    <p>
+        <span class="ark-term-number">7.</span>
+        Any advance payment made towards a booking is strictly non-refundable.
+    </p>
+
+    <p>
+        <span class="ark-term-number">8.</span>
+        We do not provide third-party booking vouchers, booking confirmations or
+        screenshots. All travel documents and confirmations will be issued only through
+        official vouchers, bills and communications from World By ARK.
+    </p>
+
+    <p>
+        <span class="ark-term-number">9.</span>
+        Hotel bookings, flight tickets, airport transfers, visa processing and travel
+        insurance may also be booked individually through WhatsApp.
+    </p>
+
+    <p>
+        <span class="ark-term-number">10.</span>
+        To confirm your tour package, you must share clear scanned passport copies of
+        all passengers. Each passport must remain valid for at least six months beyond
+        the date of return.
+    </p>
+
+    <p>
+        <span class="ark-term-number">11.</span>
+        Submission of PAN card copies is mandatory for all international tour packages,
+        hotel bookings and invoicing.
+    </p>
+
+    <p>
+        <span class="ark-term-number">12.</span>
+        Please provide your company GST details at the time of tour confirmation if you
+        require a GST invoice for billing purposes.
+    </p>
+
+    <p>
+        <span class="ark-term-number">13.</span>
+        To proceed with the booking, we require your reply email confirmation to our
+        official email proposal.
+    </p>
+
+    <p>
+        <span class="ark-term-number">14.</span>
+        For visa processing, the customer must submit all documents required for the
+        respective destination within the timeline communicated by World By ARK.
+        Failure to provide the required documents within the specified time may result
+        in delays, visa rejection or inability to process the application. This may
+        affect the planned travel dates. World By ARK shall not be held responsible for
+        delays, rescheduling or losses arising from such circumstances.
+    </p>
+
+    <p>
+        <span class="ark-term-number">15.</span>
+        If you require a refundable or amendable tour package, please inform us before
+        booking. Such packages are generally priced higher than non-refundable options.
+        Any eligible refund will be processed only after it is received from the
+        supplier and after applicable cancellation charges have been deducted.
+    </p>
+
+    <p>
+        <span class="ark-term-number">16.</span>
+        Quotations or proposals sent by email will clearly mention the applicable
+        payment details, payment schedule and deadlines specific to the selected package
+        and travel date.
+    </p>
+
+    <p>
+        <span class="ark-term-number">17.</span>
+        Full payment is required for flight tickets and visa charges at the time of
+        confirmation.
+    </p>
+
+    <p>
+        <span class="ark-term-number">18.</span>
+        An advance payment of 75% of the total tour cost is required to confirm the
+        booking. The remaining balance of 25% must be paid at least 21 days before the
+        travel date or according to the deadline mentioned in the confirmation email.
+    </p>
+
+    <p>
+        <span class="ark-term-number">19.</span>
+        The customer must pay the outstanding balance within the stipulated payment
+        deadline. If the balance is not received on time and the customer fails to
+        inform us in advance, especially when the travel date is approaching and the
+        customer is not responding to calls or messages, World By ARK reserves the
+        right to cancel the booking without further notice. Any applicable cancellation
+        charges and non-refundable costs shall be borne by the customer.
+    </p>
+
+    <p>
+        <span class="ark-term-number">20.</span>
+        No advance payment means no confirmation. Bookings will be confirmed only after
+        the required advance payment has been received.
+    </p>
+
+    <p>
+        <span class="ark-term-number">21.</span>
+        World By ARK acts only as a travel booking facilitator and does not accept
+        liability for any loss, damage, delay, injury or inconvenience arising from
+        services or circumstances beyond our control.
+    </p>
+
+    <p>
+        <span class="ark-term-number">22.</span>
+        Travel insurance may be provided as a complimentary basic cover according to
+        the package. Passengers are advised to review the policy coverage, benefits and
+        exclusions before travel. Upgraded coverage may be available at an additional
+        cost.
+    </p>
+
+    <p>
+        <span class="ark-term-number">23.</span>
+        In the event of an insurance claim, passengers must contact the respective
+        insurance company directly. Please retain all supporting documents, including
+        airport slips, hospital reports, bills, receipts, invoices and other proof of
+        expenses required for the claim process.
+    </p>
+
+    <p>
+        <span class="ark-term-number">24.</span>
+        We recommend purchasing a local SIM card or activating an international roaming
+        plan before departure to ensure uninterrupted communication during the trip, as
+        most communication will take place through WhatsApp.
+    </p>
+
+    <p>
+        <span class="ark-term-number">25.</span>
+        World By ARK shall not be held responsible for unforeseen events or
+        circumstances beyond our reasonable control, including war, civil unrest,
+        natural disasters, severe weather conditions, pandemics, government
+        restrictions, strikes or force majeure events.
+    </p>
+
+    <p>
+        <span class="ark-term-number">26.</span>
+        The itinerary routes, sightseeing schedule and listed amenities are based on
+        information available at the time of booking. World By ARK does not own, manage
+        or operate airlines, hotels, transportation services, sightseeing providers or
+        other third-party travel services. Changes may be made without prior notice due
+        to road closures, strikes, natural calamities, weather conditions, government
+        regulations, operational requirements or safety reasons.
+    </p>
+
+    <p>
+        <span class="ark-term-number">27.</span>
+        A dedicated WhatsApp group will be created one day before the travel date to
+        provide travel updates and facilitate communication. Our ground support team
+        will remain available in the group throughout the journey.
+    </p>
+
+    <p>
+        <span class="ark-term-number">28.</span>
+        For tours and transfers booked on a private basis, minor adjustments to the
+        itinerary or timings may be requested, subject to operational feasibility and
+        destination-specific regulations. Such changes cannot be guaranteed. The final
+        schedule will remain at the discretion of the local operator and World By ARK.
+    </p>
+
+    <p>
+        <span class="ark-term-number">29.</span>
+        We will provide an itinerary that is practical, well planned and designed to
+        ensure a comfortable travel experience for all passengers. If the customer
+        requests additional sightseeing, activities or destinations beyond the
+        recommended itinerary and the tour cannot be completed within the available
+        time, World By ARK shall not be held responsible for missed attractions, delays
+        or incomplete sightseeing.
+    </p>
+
+    <p>
+        <span class="ark-term-number">30.</span>
+        Any complaints or concerns regarding tours, accommodation, transportation or
+        other services must be reported immediately during the tour or on the same day
+        to World By ARK or its local partners so that an opportunity is provided to
+        resolve the issue. World By ARK shall not be held responsible for issues that
+        were not reported during the tour or for the conduct, attitude or service
+        standards of third-party service providers.
+    </p>
+
+</div>
+            </div>
+        </div>
+    </article>
+    
+
+    <article class="ark-terms-item" id="terms-section-2" data-search-section>
+        <h2 class="ark-terms-item-heading">
+            <button class="ark-terms-toggle collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#termsCollapse2"
+                    aria-expanded="false"
+                    aria-controls="termsCollapse2">
+                <span class="ark-terms-index">02</span>
+                <span class="ark-terms-title">Visa Terms</span>
+                <span class="ark-terms-icon"></span>
+            </button>
+        </h2>
+
+        <div id="termsCollapse2" class="collapse" data-bs-parent="#arkTermsAccordion">
+            <div class="ark-terms-body">
+               <div class="ark-terms-copy">
+
+    <p>
+        <span class="ark-term-number">1.</span>
+        Visa charges are strictly non-refundable under any circumstances.
+    </p>
+
+    <p>
+        <span class="ark-term-number">2.</span>
+        World By ARK acts solely as a VISA facilitation service provider and does not
+        guarantee the approval, issuance or processing time of any visa application.
+    </p>
+
+    <p>
+        <span class="ark-term-number">3.</span>
+        The final decision regarding the approval or rejection of a visa rests entirely
+        with the respective Embassy, Consulate or Immigration Authority. World By ARK
+        shall not be held liable for any visa refusal, delay or losses arising from
+        such decisions.
+    </p>
+
+    <p>
+        <span class="ark-term-number">4.</span>
+        We provide tourist visa documentation assistance only, which includes:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>Preparing covering letters</li>
+        <li>Completing visa application forms</li>
+        <li>Preparing travel itineraries</li>
+        <li>Scheduling biometric appointments</li>
+        <li>Arranging hotel reservations and flight bookings</li>
+        <li>Preparing other related supporting documents</li>
+    </ul>
+
+    <p>
+        <span class="ark-term-number">5.</span>
+        A visa may be refused for various reasons, including but not limited to:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>Insufficient financial stability</li>
+        <li>Inadequate or inconsistent bank statements</li>
+        <li>Incomplete or unsatisfactory supporting documents</li>
+        <li>Failure to satisfy the Embassy or Consulate regarding the applicant's personal circumstances or eligibility</li>
+    </ul>
+
+    <p>
+        <span class="ark-term-number">6.</span>
+        Visa processing may be delayed due to public holidays, peak application
+        periods, operational issues, administrative processing or other unforeseen
+        circumstances. World By ARK shall not be responsible for such delays.
+    </p>
+
+    <p>
+        <span class="ark-term-number">7.</span>
+        Before submitting your visa application, please disclose all relevant
+        information, including:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>Your financial status and source of funds</li>
+        <li>Your previous international travel history</li>
+        <li>Any previous visa refusals, cancellations or immigration issues</li>
+        <li>Any concerns relating to previous visa applications</li>
+    </ul>
+
+    <p>
+        Providing complete and accurate information helps us prepare your application
+        efficiently. However, the final decision always remains at the sole discretion
+        of the respective Embassy or Consulate.
+    </p>
+
+    <p>
+        <span class="ark-term-number">8.</span>
+        The applicant is solely responsible for ensuring that all submitted documents
+        are genuine, accurate, valid and up to date. The applicant is also responsible
+        for any late or incomplete document submission.
+    </p>
+
+    <p>
+        We prepare the visa application solely based on the information and documents
+        provided by the applicant. Before submission, a draft application will be
+        shared for review and confirmation (depending on the destination country).
+        Once confirmed by the applicant, no further corrections or modifications can
+        be made after submission.
+    </p>
+
+    <p>
+        <span class="ark-term-number">9.</span>
+        After receiving your approved e-Visa, you must carefully verify all details,
+        including:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>First name and surname</li>
+        <li>Passport number</li>
+        <li>Visa validity dates</li>
+        <li>Date of birth</li>
+        <li>Any other personal information appearing on the visa</li>
+    </ul>
+
+    <p>
+        If you notice any mistake or have any concerns, please notify us immediately
+        so that we can report the issue to the relevant authority as early as possible.
+    </p>
+
+    <p>
+        <span class="ark-term-number">10.</span>
+        The respective Embassy or Consulate may request additional documents or
+        information at any stage during the visa process. If such requests are made,
+        the applicant must provide the required documents within the stipulated
+        timeframe.
+    </p>
+
+    <p>
+        For example, if the visa officer is not satisfied with the submitted bank
+        statement, the applicant must provide an updated bank statement or any other
+        document requested by the Embassy or Consulate.
+    </p>
+
+</div>
+            </div>
+        </div>
+    </article>
+    
+
+    <article class="ark-terms-item" id="terms-section-3" data-search-section>
+        <h2 class="ark-terms-item-heading">
+            <button class="ark-terms-toggle collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#termsCollapse3"
+                    aria-expanded="false"
+                    aria-controls="termsCollapse3">
+                <span class="ark-terms-index">03</span>
+                <span class="ark-terms-title">Flight Terms</span>
+                <span class="ark-terms-icon"></span>
+            </button>
+        </h2>
+
+        <div id="termsCollapse3" class="collapse" data-bs-parent="#arkTermsAccordion">
+            <div class="ark-terms-body">
+               <div class="ark-terms-copy">
+
+    <p>
+        <span class="ark-term-number">1.</span>
+        World By ARK is not responsible for web check-in on behalf of customers.
+        Flight check-in may be provided as a complimentary service only if our team
+        is available at the relevant time. This service is not guaranteed unless
+        specifically confirmed by us.
+    </p>
+
+    <p>
+        <span class="ark-term-number">2.</span>
+        If you have a preferred seat or require extra legroom, you must inform us
+        at the time of booking. Additional charges may apply. Seat allocation is
+        subject to airline availability, and neither front-row nor emergency-exit
+        seats guarantee extra legroom on every aircraft.
+    </p>
+
+    <p>
+        <span class="ark-term-number">3.</span>
+        Emergency exit seats vary depending on the airline and aircraft
+        configuration. Legroom, seat location and seating arrangements differ
+        between aircraft, and World By ARK cannot guarantee the exact position or
+        available space.
+    </p>
+
+    <p>
+        <span class="ark-term-number">4.</span>
+        During web check-in, if complimentary seats are available, they will be
+        assigned randomly. If paid seats are required, we will select the lowest
+        available fare unless otherwise instructed by the customer.
+        Complimentary or low-cost seats are often located in the last rows of the
+        aircraft.
+    </p>
+
+    <p>
+        <span class="ark-term-number">5.</span>
+        Requests for wheelchair assistance, bassinets or any other special
+        assistance will be forwarded to the respective airline. Approval and
+        availability are entirely at the discretion of the airline and airport.
+        World By ARK does not guarantee these services.
+    </p>
+
+    <p>
+        <span class="ark-term-number">6.</span>
+        The quality of service provided by airline staff, cabin crew, airport
+        personnel or other service providers is solely the responsibility of the
+        respective airline or authority. World By ARK shall not be held responsible
+        for their conduct, attitude or service standards.
+    </p>
+
+    <p>
+        <span class="ark-term-number">7.</span>
+        Immigration and visa clearance are entirely at the discretion of the
+        immigration authorities of the destination or transit country. Authorities
+        may request additional documents or deny entry even if a valid visa has
+        been issued. World By ARK has no control over such decisions.
+    </p>
+
+    <p>
+        <span class="ark-term-number">8.</span>
+        It is the traveller's responsibility to carry and present all required
+        travel documents and provide accurate information to immigration
+        authorities when entering or leaving any country.
+    </p>
+
+    <p>
+        <span class="ark-term-number">9.</span>
+        Budget or low-cost airlines may not include meals, checked baggage,
+        cabin baggage, seat selection, drinking water or other food services in
+        the ticket fare. These services, if required, must be purchased
+        separately.
+    </p>
+
+    <p>
+        <span class="ark-term-number">10.</span>
+        At the time of booking, World By ARK will inform customers if checked
+        baggage is not included with the airline ticket. Guests requiring
+        additional baggage allowance must inform us before the ticket is issued.
+    </p>
+
+    <p>
+        <span class="ark-term-number">11.</span>
+        Airlines may begin boarding up to one hour before the scheduled departure
+        time. Passengers are advised to reach the boarding gate well in advance
+        and follow the airline's instructions.
+    </p>
+
+    <p>
+        <span class="ark-term-number">12.</span>
+        Meals may be provided as a fixed or pre-selected menu. Meal preferences
+        may need to be selected during web check-in or purchased onboard, subject
+        to airline availability and applicable charges.
+    </p>
+
+    <p>
+        <span class="ark-term-number">13.</span>
+        Most promotional or discounted airline tickets are non-refundable,
+        non-transferable and non-amendable, and are subject to the fare rules of
+        the respective airline.
+    </p>
+
+    <p>
+        <span class="ark-term-number">14.</span>
+        Customers are advised to carefully read and understand the respective
+        airline's website, terms and conditions, as airline policies may differ.
+    </p>
+
+    <p>
+        <span class="ark-term-number">15.</span>
+        Airlines strictly prohibit the carriage of certain items, including but
+        not limited to explosives, compressed gases, flammable substances, sharp
+        objects and other dangerous goods in accordance with aviation safety
+        regulations.
+    </p>
+
+</div>
+        </div>
+    </article>
+    
+
+    <article class="ark-terms-item" id="terms-section-4" data-search-section>
+        <h2 class="ark-terms-item-heading">
+            <button class="ark-terms-toggle collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#termsCollapse4"
+                    aria-expanded="false"
+                    aria-controls="termsCollapse4">
+                <span class="ark-terms-index">04</span>
+                <span class="ark-terms-title">Hotel Terms</span>
+                <span class="ark-terms-icon"></span>
+            </button>
+        </h2>
+
+        <div id="termsCollapse4" class="collapse" data-bs-parent="#arkTermsAccordion">
+            <div class="ark-terms-body">
+               <div class="ark-terms-copy">
+
+    <p>
+        <span class="ark-term-number">1.</span>
+        Before confirming your hotel booking, we strongly recommend reviewing the
+        hotel photographs, guest ratings, amenities and recent reviews on Google or
+        other trusted platforms to ensure the property meets your expectations.
+    </p>
+
+    <p>
+        <span class="ark-term-number">2.</span>
+        Hotels may temporarily close or restrict access to facilities such as
+        restaurants, bars, swimming pools, gyms or other amenities due to
+        maintenance, renovation, weather conditions or operational reasons without
+        prior notice. World By ARK shall not be responsible for such temporary
+        closures.
+    </p>
+
+    <p>
+        <span class="ark-term-number">3.</span>
+        Standard hotel timings are generally:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li><strong>Check-in:</strong> 3:00 PM – 3:30 PM</li>
+        <li><strong>Check-out:</strong> 11:00 AM – 12:30 PM</li>
+    </ul>
+
+    <p>
+        These timings may vary depending on the hotel's policy and destination.
+    </p>
+
+    <p>
+        <span class="ark-term-number">4.</span>
+        At the time of check-in, guests must present:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>Hotel confirmation voucher</li>
+        <li>Valid Passport and Visa for international travel</li>
+    </ul>
+
+    <p>
+        <span class="ark-term-number">5.</span>
+        For hotel bookings within India, Indian nationals may present a valid
+        government-issued photo ID such as an Aadhaar Card, Driving Licence or
+        Passport. Some hotels may also accept digital copies; however, acceptance
+        remains entirely at the hotel's discretion.
+    </p>
+
+    <p>
+        <span class="ark-term-number">6.</span>
+        Most hotels may require a refundable security deposit during check-in.
+        This deposit is collected directly by the hotel and may be payable in local
+        currency, by credit card or through another payment method accepted by the
+        hotel. Refunds are subject to the hotel's policies after check-out.
+    </p>
+
+    <p>
+        <span class="ark-term-number">7.</span>
+        If you intend to use your credit card abroad, please ensure international
+        transactions are enabled before departure. Kindly check with your bank
+        regarding activation, spending limits and any applicable foreign
+        transaction charges.
+    </p>
+
+    <p>
+        <span class="ark-term-number">8.</span>
+        Hotel rates may vary depending on several factors, including:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>Destination</li>
+        <li>Location of the property</li>
+        <li>Room category and size</li>
+        <li>Travel season</li>
+        <li>Hotel brand or branch</li>
+        <li>Facilities and services offered</li>
+        <li>Occupancy and demand</li>
+    </ul>
+
+    <p>
+        <span class="ark-term-number">9.</span>
+        Hotel room sizes, layouts, facilities and service standards may vary
+        depending on the property category, country regulations and destination.
+        Expectations should be based on the hospitality standards of the
+        destination rather than those of another country. Photographs shown online
+        are for reference only and may differ slightly from the room allocated at
+        check-in.
+    </p>
+
+    <p>
+        <span class="ark-term-number">10.</span>
+        If you are particular about your room, please visit the hotel's official
+        website to review room sizes and available facilities. Certain hotels,
+        attractions or transportation facilities may not have elevators or
+        escalators, and guests may be required to use stairs.
+    </p>
+
+    <p>
+        <span class="ark-term-number">11.</span>
+        During festive seasons, public holidays, special events, peak travel
+        periods or blackout dates, hotel rates may increase significantly. Many
+        resorts and hotels may also impose compulsory gala dinner charges, which
+        are mandatory according to hotel policy.
+    </p>
+
+    <p>
+        <span class="ark-term-number">12.</span>
+        We are happy to request your preferred room type, including:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>Double or Twin Bed</li>
+        <li>Higher or Lower Floor</li>
+        <li>Adjacent Rooms</li>
+        <li>Interconnecting Rooms</li>
+        <li>Specific Room Location</li>
+    </ul>
+
+    <p>
+        These are treated only as special requests and cannot be guaranteed, as
+        they are entirely subject to hotel availability at the time of check-in.
+    </p>
+
+    <p>
+        <span class="ark-term-number">13.</span>
+        An extra bed may be provided as a rollaway bed, mattress, sofa bed or any
+        other bedding arrangement depending on the hotel's category and policy.
+        Unless otherwise specified, triple-sharing rooms may not include three
+        separate standard beds.
+    </p>
+
+    <p>
+        <span class="ark-term-number">14.</span>
+        Rooms included in your tour package are generally the basic non-smoking
+        category offered by the respective hotel. Complimentary requests are
+        communicated to the hotel; however, approval remains entirely at the
+        hotel's discretion and cannot be guaranteed.
+    </p>
+
+    <p>
+        <span class="ark-term-number">15.</span>
+        Some hotels and resorts may offer complimentary honeymoon benefits such
+        as:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>Room upgrades</li>
+        <li>Flower bed decoration</li>
+        <li>Honeymoon cake</li>
+        <li>Special discounts</li>
+        <li>Sparkling wine</li>
+        <li>Other complimentary amenities</li>
+    </ul>
+
+    <p>
+        These benefits vary by resort and destination and are provided solely at
+        the property's discretion.
+    </p>
+
+    <p>
+        <span class="ark-term-number">16.</span>
+        Honeymoon offers are generally available only for couples travelling
+        within six months of their wedding date. Guests may be required to present
+        a valid marriage certificate or wedding invitation with photographs during
+        check-in if requested by the hotel or resort.
+    </p>
+
+    <p>
+        <span class="ark-term-number">17.</span>
+        Standard room categories may offer different views such as city, lake,
+        garden, mountain or neighbouring building views depending on the hotel's
+        location and room position. For example, hotels in busy city centres such
+        as Hong Kong may have rooms facing nearby buildings rather than open
+        landscapes.
+    </p>
+
+    <p>
+        <span class="ark-term-number">18.</span>
+        If you specifically require an Ocean View, Mountain View or Lake View,
+        please inform us at the time of booking. Additional charges may apply.
+    </p>
+
+    <p>
+        <span class="ark-term-number">19.</span>
+        If you require larger rooms, family rooms, suites, accessible rooms or any
+        other specific accommodation, please inform us before confirming your
+        booking. This allows us to recommend suitable accommodation and helps avoid
+        misunderstandings during check-in.
+    </p>
+
+    <p>
+        <span class="ark-term-number">20.</span>
+        Guests following vegan, gluten-free or other dietary preferences, as well
+        as those with food allergies or medical dietary restrictions, should
+        inform the restaurant staff before consuming meals. Hotels and restaurants
+        will generally try to accommodate such requests, subject to availability.
+    </p>
+
+</div>
+</div>
+        </div>
+    </article>
+    
+
+    <article class="ark-terms-item" id="terms-section-5" data-search-section>
+        <h2 class="ark-terms-item-heading">
+            <button class="ark-terms-toggle collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#termsCollapse5"
+                    aria-expanded="false"
+                    aria-controls="termsCollapse5">
+                <span class="ark-terms-index">05</span>
+                <span class="ark-terms-title">Transfers and Sightseeing</span>
+                <span class="ark-terms-icon"></span>
+            </button>
+        </h2>
+
+        <div id="termsCollapse5" class="collapse" data-bs-parent="#arkTermsAccordion">
+            <div class="ark-terms-body">
+                <div class="ark-terms-copy">
+
+    <p>
+        <span class="ark-term-number">1.</span>
+        We offer two types of transfer and sightseeing services:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>
+            <strong>SIC (Seat in Coach):</strong> This is a shared service where guests
+            travel together with other passengers in a common vehicle. Pickup and
+            drop-off timings may vary depending on traffic conditions, road conditions
+            and the schedules of other passengers.
+        </li>
+
+        <li>
+            <strong>PVT (Private):</strong> This is an exclusive service where the
+            vehicle is reserved solely for you and your travel companions. It offers
+            greater privacy, flexibility and convenience without sharing the vehicle
+            with other travellers.
+        </li>
+    </ul>
+
+    <p>
+        <span class="ark-term-number">2.</span>
+        Transfer and sightseeing timings mentioned in the proposal or quotation are
+        approximate and are provided for reference only. The exact pickup timings
+        will be communicated one day before each scheduled transfer or tour and
+        must be strictly followed.
+    </p>
+
+    <p>
+        <span class="ark-term-number">3.</span>
+        In many destinations, sightseeing tours are conducted with a
+        driver-cum-guide. The driver will provide basic directions and travel
+        instructions but may not accompany guests to every attraction unless
+        specifically mentioned in your itinerary or booking confirmation.
+    </p>
+
+    <p>
+        <span class="ark-term-number">4.</span>
+        If you are dissatisfied with the assigned driver or guide, please inform us
+        immediately through the designated WhatsApp group so that corrective action
+        can be taken as early as possible. We will make every reasonable effort to
+        resolve the issue or arrange a replacement whenever feasible.
+    </p>
+
+    <p>
+        <span class="ark-term-number">5.</span>
+        Complaints raised only after the completion of the tour or after departing
+        from the destination may not be investigated or resolved.
+    </p>
+
+    <p>
+        <span class="ark-term-number">6.</span>
+        Guests must report to the designated pickup location at the specified time.
+        If a guest arrives late or misses the scheduled coach transfer or
+        sightseeing tour, no refund or partial refund will be provided. Guests will
+        be responsible for arranging alternative transportation or sightseeing at
+        their own expense.
+    </p>
+
+    <p>
+        <span class="ark-term-number">7.</span>
+        Flights scheduled during late-night or early-morning hours may attract
+        additional transfer surcharges depending on the destination.
+    </p>
+
+    <p>
+        <span class="ark-term-number">8.</span>
+        SIC (Seat in Coach) services operate on fixed routes and predetermined
+        schedules. Coaches cannot deviate from the planned route or make
+        unscheduled stops for individual passenger requests.
+    </p>
+
+    <p>
+        <span class="ark-term-number">9.</span>
+        Many sightseeing tours involve considerable walking, climbing stairs,
+        standing for extended periods and other physical activities depending on
+        the destination. Guests should ensure they are physically comfortable with
+        the activity level before confirming the tour.
+    </p>
+
+    <p>
+        <span class="ark-term-number">10.</span>
+        Certain tour components may include activities such as:
+    </p>
+
+    <ul class="ark-terms-list">
+        <li>Speedboat rides</li>
+        <li>Hot air balloon rides</li>
+        <li>Cable cars</li>
+        <li>Trekking</li>
+        <li>Safari excursions</li>
+        <li>Amusement parks</li>
+        <li>Other adventure experiences</li>
+    </ul>
+
+    <p>
+        These activities are not recommended for guests who are not medically or
+        physically fit to participate.
+    </p>
+
+    <p>
+        <span class="ark-term-number">11.</span>
+        We strongly advise pregnant women, senior citizens requiring special
+        assistance, and guests with heart conditions, respiratory disorders,
+        uncontrolled blood pressure or other serious medical conditions to inform
+        us before planning the itinerary. They should also consult their doctor
+        before travelling or participating in any activities.
+    </p>
+
+    <p>
+        <span class="ark-term-number">12.</span>
+        It is the guest's responsibility to assess their own physical fitness and
+        medical condition before booking or participating in any sightseeing or
+        adventure activity. World By ARK shall not be held responsible for any
+        injury, illness, discomfort or inability to participate resulting from the
+        guest's medical or physical condition.
+    </p>
+
+    <p>
+        <span class="ark-term-number">13.</span>
+        Local tour operators, activity providers, cruise companies and attraction
+        management reserve the right to refuse participation if they believe a
+        guest's medical condition, physical fitness or safety may be at risk.
+    </p>
+
+    <p>
+        <span class="ark-term-number">14.</span>
+        Luggage assistance is generally not provided. Each guest is responsible
+        for handling and carrying their own baggage.
+    </p>
+
+    <p>
+        <span class="ark-term-number">15.</span>
+        No refund will be provided for any unused or unutilized services.
+    </p>
+
+</div>
+            </div>
+        </div>
+    </article>
+    
+
+    <article class="ark-terms-item" id="terms-section-6" data-search-section>
+        <h2 class="ark-terms-item-heading">
+            <button class="ark-terms-toggle collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#termsCollapse6"
+                    aria-expanded="false"
+                    aria-controls="termsCollapse6">
+                <span class="ark-terms-index">06</span>
+                <span class="ark-terms-title">Cancellation and Refund</span>
+                <span class="ark-terms-icon"></span>
+            </button>
+        </h2>
+
+        <div id="termsCollapse6" class="collapse" data-bs-parent="#arkTermsAccordion">
+            <div class="ark-terms-body">
+                <div class="ark-terms-copy">
+
+    <p>
+        <span class="ark-term-number">1.</span>
+        Most tour packages are non-refundable unless otherwise specified. Hotel,
+        airline and travel service rates are based on dynamic pricing and are
+        subject to the terms and conditions of the respective suppliers.
+    </p>
+
+    <p>
+        <span class="ark-term-number">2.</span>
+        If a hotel approves a refund, the processing time may take approximately
+        <strong>6 to 9 months</strong>, depending on the hotel's internal refund
+        policies, banking procedures and operational timelines.
+    </p>
+
+    <p>
+        <span class="ark-term-number">3.</span>
+        In certain cases, airlines or branded hotels may issue the refund as a
+        <strong>Credit Shell</strong> instead of a monetary refund. Such credit
+        can be used for future bookings within the validity period specified by
+        the respective service provider. World By ARK has no control over this
+        decision.
+    </p>
+
+    <p>
+        <span class="ark-term-number">4.</span>
+        World By ARK reserves the right to refuse or withhold any refund where
+        the booking is non-refundable. Whenever a refund is applicable, it will
+        be processed only after deducting applicable cancellation charges,
+        convenience fees, banking charges, supplier penalties and any other
+        non-refundable components.
+    </p>
+
+    <p>
+        <span class="ark-term-number">5.</span>
+        No refund will be provided for any unused or partially used services due
+        to the client's choice, missed flights, late arrivals, no-shows, early
+        departures or any circumstances beyond the reasonable control of World By
+        ARK.
+    </p>
+
+    <p>
+        <span class="ark-term-number">6.</span>
+        Once the tour has commenced, no refund will be provided for any unused
+        services, cancellations, itinerary changes or early termination of the
+        trip unless the issue is directly caused by the service provider.
+    </p>
+
+    <p>
+        <span class="ark-term-number">7.</span>
+        Cancellation charges and refund eligibility are governed by the terms and
+        conditions of the respective airline, cruise line, hotel,
+        transportation provider and other travel suppliers involved in the
+        booking.
+    </p>
+
+    <p>
+        <span class="ark-term-number">8.</span>
+        World By ARK cannot guarantee refunds if the respective supplier refuses,
+        rejects or delays the refund process.
+    </p>
+
+    <p>
+        <span class="ark-term-number">9.</span>
+        World By ARK shall not be held responsible for any delay in refund
+        processing that occurs due to circumstances beyond our control.
+    </p>
+
+    <p>
+        <span class="ark-term-number">10.</span>
+        Once World By ARK receives the approved refund from the respective
+        service provider, the eligible refund amount will be transferred to the
+        client's registered bank account within
+        <strong>two weeks</strong>, after deducting all applicable cancellation
+        charges, convenience fees and other non-refundable deductions.
+    </p>
+
+</div>
+            </div>
+        </div>
+    </article>
+    
+                    </div>
+
+                    <div class="ark-no-results" id="arkTermsNoResults">
+                        <i class="bi bi-search"></i>
+                        <p>No matching terms were found.</p>
+                    </div>
+
+                    <div class="ark-terms-notice">
+                        <strong>Important:</strong>
+                        This page presents the terms supplied by WORLD BY ARK.
+                        Because these terms affect payments, refunds, liability and
+                        customer rights, the final wording should be reviewed by a
+                        qualified legal professional before publication.
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("arkTermsSearch");
+    const sections = Array.from(
+        document.querySelectorAll("[data-search-section]")
+    );
+    const noResults = document.getElementById("arkTermsNoResults");
+    const navLinks = Array.from(
+        document.querySelectorAll(".ark-terms-nav-link")
+    );
+
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            const query = this.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            sections.forEach(function (section) {
+                const matches = section.textContent
+                    .toLowerCase()
+                    .includes(query);
+
+                section.style.display = matches ? "" : "none";
+
+                if (matches) {
+                    visibleCount++;
+                }
+            });
+
+            noResults.style.display =
+                visibleCount === 0 ? "block" : "none";
+        });
+    }
+
+    navLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const target = document.querySelector(
+                this.getAttribute("href")
+            );
+
+            if (!target) return;
+
+            const collapse = target.querySelector(".collapse");
+            const toggle = target.querySelector(".ark-terms-toggle");
+
+            if (collapse && !collapse.classList.contains("show")) {
+                bootstrap.Collapse.getOrCreateInstance(collapse).show();
+            }
+
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+            navLinks.forEach(item => item.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+});
+</script>
+{% endblock %}

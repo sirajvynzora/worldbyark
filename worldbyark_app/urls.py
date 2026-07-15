@@ -14,6 +14,7 @@ urlpatterns = [
     path('gallery/', views.gallery, name='gallery'),
     path('contact/', views.contact, name='contact'),
     path('booking/enquiry/', views.save_booking_enquiry, name='save_booking_enquiry'),
+    path("terms-and-conditions/",views.terms_and_conditions,name="terms_and_conditions",),
 
     # Admin Auth
     path('admin-login/', views.admin_login, name='admin_login'),
